@@ -1,21 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-/// <summary>
-/// Diipa daapa
-/// </summary>
-public class Camera : MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
+    private GameObject _player;
 
+    void Awake()
+    {
+        _player = GameObject.Find("Player");
+    }
 
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    
+    void Update()
+    {
+        //transform.position = new Vector3(_player.transform.position.x, 10f, _player.transform.position.z - 5);
+    }
 }
