@@ -25,7 +25,6 @@ public class Gun : MonoBehaviour
         {
             _reload -= Time.deltaTime * 1;
         }
-        Debug.Log(_reload);
     }
 
     public void Shoot()

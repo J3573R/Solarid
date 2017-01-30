@@ -31,7 +31,7 @@ public class InputController : MonoBehaviour
     }
 
     /// <summary>
-    /// Defines mouse position from screen size and turns the players Y axis the right amount.
+    /// Defines mouse position from screen size and rotates the players Y axis by the angle.
     /// </summary>
     private void ListenMouse()
     {
