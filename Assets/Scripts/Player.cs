@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool ShootingEnabled = true;
+
 
     private Gun _gun;
 
@@ -14,7 +16,10 @@ public class Player : MonoBehaviour
 
     public void Shoot()
     {
-        _gun.Shoot();
+        if (ShootingEnabled)
+        {
+            _gun.Shoot();
+        }
     }
-
+    
 }
