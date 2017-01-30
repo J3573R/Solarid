@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private Gun _gun;
+
+    void Awake()
+    {
+        _gun = GetComponentInChildren<Gun>();
+    }
+
+    public void Shoot()
+    {
+        _gun.Shoot();
+    }
+
 }

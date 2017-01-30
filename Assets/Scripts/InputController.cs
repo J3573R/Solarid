@@ -6,7 +6,8 @@ public class InputController : MonoBehaviour
     public float Speed = 5f;
     // Rotation speed of the player
     public float RotationSpeed = 8f;
-    
+
+    private Player _player;
     private Rigidbody _rigidbody;
     private Vector3 _vMousePos;
     private float _fAngle;
@@ -15,6 +16,7 @@ public class InputController : MonoBehaviour
 
     void Awake()
     {
+        _player = FindObjectOfType<Player>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -22,6 +24,10 @@ public class InputController : MonoBehaviour
     {
         ListenMouse();
         Move();
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _player.Shoot();
+        }
     }
 
     /// <summary>
