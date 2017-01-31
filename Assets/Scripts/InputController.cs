@@ -4,10 +4,16 @@ public class InputController : MonoBehaviour
 {
 
     private Rigidbody _rigidbody;
+    private bool _targeting;
+    private PlayerDash _dash;
+    private Camera _camera;
+
 
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _camera = FindObjectOfType<Camera>();
+        _dash = GetComponent<PlayerDash>();
     }
 
     void Update()
@@ -28,12 +34,37 @@ public class InputController : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, angle + 180, 0);
 
-  
+
         var horizontalDirection = Input.GetAxis("Horizontal");
         var verticalDirection = Input.GetAxis("Vertical");
         //transform.Translate(horizontalDirection * 10f *Time.deltaTime, 0f, verticalDirection * 10f * Time.deltaTime);
-        _rigidbody.velocity = new Vector3(horizontalDirection * 5f, 0f, verticalDirection * 5f);
- 
+        _rigidbody.velocity = new Vector3(horizontalDirection * 10f, 0f, verticalDirection * 10f);
+
+        if (Input.GetButtonDown("Ability1"))
+            _dash.Targeting();
+         
+        if (Input.GetButtonDown("Fire1")) {
+            _dash.Dash();
+
+            
+
+
+            _targeting = false;
+        }
+
+
+
+        
+        
+
+        
+
+
+
+
+
+
+
     }
    
 }
