@@ -9,11 +9,17 @@ public class InputController : MonoBehaviour
 
     private Player _player;
     private Rigidbody _rigidbody;
+<<<<<<< HEAD
     private Vector3 _vMousePos;
     private float _fAngle;
     private float _fHDir;
     private float _fVDir;
+=======
+    private bool _targeting;
     private PlayerDash _dash;
+    private Camera _camera;
+
+>>>>>>> Teemun_devi
 
     void Awake()
     {
@@ -51,13 +57,9 @@ public class InputController : MonoBehaviour
             _fAngle = 360 - _fAngle;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _fAngle, 0), Time.deltaTime * RotationSpeed);
-        if (Input.GetButtonDown("Ability1"))
-            _dash.Targeting();
-         
-        if (Input.GetButtonDown("Fire1")) {
-            _dash.Dash();
     }
 
+<<<<<<< HEAD
     /// <summary>
     /// Listens keyboard input and increases horizontal & vertical velocity of player times Speed.
     /// </summary>
@@ -66,6 +68,39 @@ public class InputController : MonoBehaviour
         _fHDir = Input.GetAxis("Horizontal");
         _fVDir = Input.GetAxis("Vertical");
         _rigidbody.velocity = new Vector3(_fHDir * Speed, 0f, _fVDir * Speed);
+=======
+
+        var horizontalDirection = Input.GetAxis("Horizontal");
+        var verticalDirection = Input.GetAxis("Vertical");
+        //transform.Translate(horizontalDirection * 10f *Time.deltaTime, 0f, verticalDirection * 10f * Time.deltaTime);
+        _rigidbody.velocity = new Vector3(horizontalDirection * 10f, 0f, verticalDirection * 10f);
+
+        if (Input.GetButtonDown("Ability1"))
+            _dash.Targeting();
+         
+        if (Input.GetButtonDown("Fire1")) {
+            _dash.Dash();
+
+            
+
+
+            _targeting = false;
+        }
+
+
+
+        
+        
+
+        
+
+
+
+
+
+
+
+>>>>>>> Teemun_devi
     }
 
 }
