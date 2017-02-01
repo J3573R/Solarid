@@ -11,6 +11,7 @@ public class PlayerDash : MonoBehaviour {
     private ParticleSystem _particleSystem;
     private MeshRenderer _renderer;
     private Vector3 _targetPosition;
+    private Player _player;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,7 @@ public class PlayerDash : MonoBehaviour {
         _particleSystem = Instantiate(_particleSystem, transform.position, Quaternion.identity);
         _particleSystem.Stop();
         _renderer = GetComponent<MeshRenderer>();
+        _player = GetComponent<Player>();
 	}
 	
 	// Update is called once per frame
@@ -26,12 +28,14 @@ public class PlayerDash : MonoBehaviour {
         if (_moving)
         {
             _particleSystem.transform.position = Vector3.MoveTowards(_particleSystem.transform.position, _targetPosition, Time.deltaTime * 20);
+            transform.position = Vector3.MoveTowards(_particleSystem.transform.position, _targetPosition, Time.deltaTime * 20);
 
             if (_particleSystem.transform.position == _targetPosition)
             {
                 _moving = false;
-                _renderer.enabled = true;
+                //_renderer.enabled = true;
                 _particleSystem.Stop();
+                _player.ShootingEnabled = true;
             }
         }
 		
@@ -43,7 +47,7 @@ public class PlayerDash : MonoBehaviour {
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)) - _camera.transform.position;
+            var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1)) - _camera.transform.position;
 
             var distance = heading.magnitude;
             var direction = heading / distance; // This is now the normalized direction.
@@ -63,15 +67,16 @@ public class PlayerDash : MonoBehaviour {
                 Debug.Log(hit.transform.position);
                 _targetPosition.y = 1;
                 _particleSystem.transform.position = transform.position;
-                _renderer.enabled = false;              
-                transform.position = _targetPosition;
+                //_renderer.enabled = false;              
+                //transform.position = _targetPosition;
                 
                 
                 _particleSystem.Play();
                 _moving = true;
 
+                _targeting = false;
             }
-            _targeting = false;
+            
             
         }
     }
@@ -82,11 +87,13 @@ public class PlayerDash : MonoBehaviour {
         {
             Debug.Log("stoptargeting");
             _targeting = false;
+            _player.ShootingEnabled = true;
         }
         else
+        {
             _targeting = true;
+            _player.ShootingEnabled = false;
+        }         
 
-
-        
     }
 }

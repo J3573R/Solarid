@@ -19,18 +19,19 @@ public class InputController : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _rigidbody = GetComponent<Rigidbody>();
-        _camera = FindObjectOfType<Camera>();
         _dash = GetComponent<PlayerDash>();
     }
 
     void Update()
-    {
-        ListenMouse();
+    {        
         Move();
-        if (Input.GetButtonDown("Fire1"))
+
+        if (Input.GetButton("Fire1"))
         {
             _player.Shoot();
         }
+
+        ListenMouse();
     }
 
     /// <summary>
@@ -53,9 +54,11 @@ public class InputController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _fAngle, 0), Time.deltaTime * RotationSpeed);
         if (Input.GetButtonDown("Ability1"))
             _dash.Targeting();
-         
-        if (Input.GetButtonDown("Fire1")) {
+
+        if (Input.GetButtonDown("Fire1"))
+        {
             _dash.Dash();
+        }
     }
 
     /// <summary>
