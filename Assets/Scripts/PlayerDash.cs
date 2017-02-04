@@ -52,8 +52,6 @@ public class PlayerDash : MonoBehaviour {
             var distance = heading.magnitude;
             var direction = heading / distance; // This is now the normalized direction.
 
-            Debug.Log(direction);
-
             Ray ray = new Ray(pos, direction);
             Debug.DrawRay(pos, direction, Color.red, 1);
             RaycastHit hit;
