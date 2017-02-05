@@ -8,18 +8,18 @@ public class InputController : MonoBehaviour
     public float RotationSpeed = 8f;
 
     private Player _player;
+    private Camera _camera;
     private Rigidbody _rigidbody;
     private Vector3 _vMousePos;
     private float _fAngle;
     private float _fHDir;
     private float _fVDir;
-    private PlayerDash _dash;
 
     void Awake()
     {
-        _player = FindObjectOfType<Player>();
+        _player = GetComponent<Player>();
         _rigidbody = GetComponent<Rigidbody>();
-        _dash = GetComponent<PlayerDash>();
+        _camera = FindObjectOfType<Camera>();
     }
 
     void Update()
@@ -52,13 +52,11 @@ public class InputController : MonoBehaviour
             _fAngle = 360 - _fAngle;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _fAngle, 0), Time.deltaTime * RotationSpeed);
-        if (Input.GetButtonDown("Ability1"))
-            _dash.Targeting();
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            _dash.Dash();
-        }
+        if (Input.GetButtonDown("Ability"))
+        {            
+            _player.abilityController.Execute();
+        }           
     }
 
     /// <summary>
@@ -71,6 +69,29 @@ public class InputController : MonoBehaviour
         _rigidbody.velocity = new Vector3(_fHDir * Speed, 0f, _fVDir * Speed);
     }
 
+    /// <summary>
+    /// uses raycast to determine mouseposition and returns it.
+    /// </summary>
+    /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>
+    public Vector3 GetMousePosition()
+    {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1)) - _camera.transform.position;
+
+        var distance = heading.magnitude;
+        var direction = heading / distance; 
+
+        Ray ray = new Ray(pos, direction);
+        Debug.DrawRay(pos, direction, Color.red, 1);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
+            return hit.point;
+        }
+             
+        return Vector3.zero;
+    }
 }
 
 
