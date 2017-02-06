@@ -99,6 +99,9 @@ public class GameStateManager : MonoBehaviour
         DontDestroyOnLoad(_gameStateObj);
     }
 
+    /// <summary>
+    /// Creates and initialize correct state AFTER scene is loaded.
+    /// </summary>
     private void sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         SetState(_gameState);

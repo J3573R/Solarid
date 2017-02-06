@@ -24,19 +24,16 @@ public class StateMainMenu : GameStateBase {
 
     void PressPlay()
     {
-        Debug.Log("PLAY PRESSED");
         GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, "Default");
     }
 
     void PressOptions()
     {
-        Debug.Log("OPTIONS PRESSED");
         GameStateManager.Instance.ChangeState(GameStateManager.GameState.Options, "Options");
     }
 
     void PressExit()
     {
-        Debug.Log("EXIT PRESSED");
         Application.Quit();
     }
 }

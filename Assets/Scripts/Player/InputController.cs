@@ -10,7 +10,10 @@ public class InputController : MonoBehaviour
     private Player _player;
     private Camera _camera;
     private Rigidbody _rigidbody;
-    private Vector3 _vMousePos;
+    private Vector2 _vMousePos;
+    private Vector2 _fPlayerPosInScreen;
+    private Vector2 _fDiff;
+    private float _fSign;
     private float _fAngle;
     private float _fHDir;
     private float _fVDir;
@@ -40,18 +43,13 @@ public class InputController : MonoBehaviour
     private void ListenMouse()
     {
         _vMousePos = Input.mousePosition;
+        
+        _fPlayerPosInScreen = Camera.main.WorldToScreenPoint(_player.transform.position);
+        _fDiff = _fPlayerPosInScreen - _vMousePos;
+        _fSign = (_fPlayerPosInScreen.y < _vMousePos.y) ? 1.0f : -1.0f;
+        _fAngle = (Vector3.Angle(Vector3.right, _fDiff) * _fSign) - 90;
 
-        _vMousePos.x -= (float)Screen.width / 2;
-        _vMousePos.y -= (float)Screen.height / 2;
-
-        _vMousePos += transform.position;
-
-        _fAngle = Vector3.Angle(_vMousePos, Vector3.up);
-
-        if (_vMousePos.x < 0)
-            _fAngle = 360 - _fAngle;
-
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _fAngle, 0), Time.deltaTime * RotationSpeed);
+        transform.rotation = Quaternion.Euler(0, _fAngle, 0);
 
         if (Input.GetButtonDown("Ability"))
         {            

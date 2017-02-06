@@ -14,10 +14,12 @@ public class StateSplashScreen : GameStateBase {
         LevelName = "SplashScreen";        
     }
 
+
     protected override void Update()
     {
         _switchTimer += Time.deltaTime;
 
+        // Change scene to main menu when time is up or any key is pressed
         if(_switchTimer > TimeToSwitch || Input.anyKey)
         {
             GameStateManager.Instance.ChangeState(GameStateManager.GameState.MainMenu, "MainMenu");

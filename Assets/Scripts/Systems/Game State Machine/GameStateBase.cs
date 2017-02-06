@@ -7,6 +7,9 @@ public class GameStateBase : MonoBehaviour
 
     public string LevelName = "BaseClass";
 
+    /// <summary>
+    /// Fix for lightning map bake bug
+    /// </summary>
     protected virtual void Awake()
     {
         #if UNITY_EDITOR
