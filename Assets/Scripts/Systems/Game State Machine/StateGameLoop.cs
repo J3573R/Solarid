@@ -11,6 +11,6 @@ public class StateGameLoop : GameStateBase
 
     protected override void Update()
     {
-        Debug.Log("Running GameLoop Code");
+        //Debug.Log("Running GameLoop Code");
     }
 }
