@@ -6,6 +6,7 @@ public class AbilityController : MonoBehaviour {
 
     private Player _player;
     private AbilityBlink _blink;
+    private AbilityGrenade _grenade;
     private AbilityBase _currentAbility;
 
 
@@ -14,7 +15,8 @@ public class AbilityController : MonoBehaviour {
     {
         _player = GetComponent<Player>();
         _blink = GetComponent<AbilityBlink>();
-        _currentAbility = _blink;
+        _grenade = GetComponent<AbilityGrenade>();
+        _currentAbility = _grenade;
     }
 
 

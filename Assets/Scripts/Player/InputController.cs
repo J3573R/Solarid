@@ -75,14 +75,15 @@ public class InputController : MonoBehaviour
     /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>
     public Vector3 GetMousePosition()
     {
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1)) - _camera.transform.position;
+        //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 pos = _camera.transform.position;
+        var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)) - _camera.transform.position;
 
         var distance = heading.magnitude;
         var direction = heading / distance; 
 
         Ray ray = new Ray(pos, direction);
-        Debug.DrawRay(pos, direction, Color.red, 1);
+        Debug.DrawRay(pos, direction * 20, Color.green, 5, false);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 100f))
