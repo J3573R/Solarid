@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateSplashScreen : MonoBehaviour {
+public class StateSplashScreen : GameStateBase {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private float _switchTimer = 0;
+
+    void Awake()
+    {
+        LevelName = "SplashScreen";
+    }
+
+    protected override void Update()
+    {
+
+    }
 }
