@@ -27,6 +27,7 @@ public class GameStateManager : MonoBehaviour
     {
         SplashScreen,
         MainMenu,
+        Options,
         GameLoop
     }
 
@@ -82,6 +83,10 @@ public class GameStateManager : MonoBehaviour
             case GameState.MainMenu:
                 _gameStateObj.AddComponent<StateMainMenu>();
                 _gameStateObj.name = "Game State: MainMenu";
+                break;
+            case GameState.Options:
+                _gameStateObj.AddComponent<StateOptions>();
+                _gameStateObj.name = "Game State: Options";
                 break;
             case GameState.GameLoop:
                 _gameStateObj.AddComponent<StateGameLoop>();

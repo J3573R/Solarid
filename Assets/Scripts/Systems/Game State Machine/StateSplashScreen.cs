@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StateSplashScreen : GameStateBase {
 
+    public float TimeToSwitch = 3f;
+
     private float _switchTimer = 0;
 
     void Awake()
@@ -13,6 +15,12 @@ public class StateSplashScreen : GameStateBase {
 
     protected override void Update()
     {
+        _switchTimer += Time.deltaTime;
+
+        if(_switchTimer > TimeToSwitch || Input.anyKey)
+        {
+            GameStateManager.Instance.ChangeState(GameStateManager.GameState.MainMenu, "MainMenu");
+        }
 
     }
 }
