@@ -3,23 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDash : AbilityBase {
+public class AbilityBlink : AbilityBase {
 
-    private bool _targeting;
-    private bool _moving;
-    private Camera _camera;
     [SerializeField]
-    private ParticleSystem _particleSystem;
+    private ParticleSystem _particle;
+
+    private ParticleSystem _startParticle;
+    private ParticleSystem _endParticle;
     private MeshRenderer[] _renderers;
     private Vector3 _targetPosition;
     private Player _player;
 
 	// Use this for initialization
 	void Awake () {
-        _camera = FindObjectOfType<Camera>();
 
-        _particleSystem = Instantiate(_particleSystem, transform.position, Quaternion.identity);
-        _particleSystem.Stop();
+        _startParticle = Instantiate(_particle, transform.position, Quaternion.identity);
+        _endParticle = Instantiate(_particle, transform.position, Quaternion.identity);
+        _startParticle.Stop();
+        _endParticle.Stop();
         _renderers = GetComponentsInChildren<MeshRenderer>();
         _player = GetComponent<Player>();
 	}
@@ -34,14 +35,14 @@ public class PlayerDash : AbilityBase {
         if (_targetPosition != Vector3.zero)
         {
             _targetPosition.y = 1;
-            _particleSystem.transform.position = transform.position;
+            _startParticle.transform.position = transform.position;
 
             foreach (MeshRenderer rend in _renderers)
             {
                 rend.enabled = false;
             }
             transform.position = _targetPosition;
-            _particleSystem.Play();
+            _startParticle.Play();
             StartCoroutine(BlinkDelay());
         }               
     }
@@ -53,8 +54,8 @@ public class PlayerDash : AbilityBase {
     private IEnumerator BlinkDelay()
     {        
         yield return new WaitForSeconds(0.5f);        
-        _particleSystem.transform.position = _targetPosition;
-        _particleSystem.Play();
+        _endParticle.transform.position = _targetPosition;
+        _endParticle.Play();
         foreach (MeshRenderer rend in _renderers)
         {
             rend.enabled = true;

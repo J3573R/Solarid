@@ -5,7 +5,7 @@ using UnityEngine;
 public class AbilityController : MonoBehaviour {
 
     private Player _player;
-    private PlayerDash _dash;
+    private AbilityBlink _blink;
     private AbilityBase _currentAbility;
 
 
@@ -13,14 +13,13 @@ public class AbilityController : MonoBehaviour {
     void Start()
     {
         _player = GetComponent<Player>();
-        _dash = GetComponent<PlayerDash>();
-        _currentAbility = _dash;
+        _blink = GetComponent<AbilityBlink>();
+        _currentAbility = _blink;
     }
 
 
     public void Execute()
     {
-        Debug.Log("HAJAAH");
         _currentAbility.Execute();
     }
 }
