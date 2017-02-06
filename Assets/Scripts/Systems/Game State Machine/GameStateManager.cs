@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
@@ -46,7 +47,8 @@ public class GameStateManager : MonoBehaviour
         Destroy(_gameStateObj);
         if (scene != null)
         {
-            SetState(state);
+            _gameState = state;
+            SceneManager.sceneLoaded += sceneLoaded;
             SceneManager.LoadScene(scene);
         }
         else
@@ -95,5 +97,11 @@ public class GameStateManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(_gameStateObj);
+    }
+
+    private void sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        SetState(_gameState);
+        SceneManager.sceneLoaded -= sceneLoaded;
     }
 }

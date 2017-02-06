@@ -8,9 +8,10 @@ public class StateSplashScreen : GameStateBase {
 
     private float _switchTimer = 0;
 
-    void Awake()
+    protected override void Awake()
     {
-        LevelName = "SplashScreen";
+        base.Awake();
+        LevelName = "SplashScreen";        
     }
 
     protected override void Update()

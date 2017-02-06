@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class StateOptions : GameStateBase {
 
-    void Awake()
+    protected override void Awake()
     {
-        LevelName = "Options";
+        base.Awake();
+        LevelName = "Options";        
     }
 }

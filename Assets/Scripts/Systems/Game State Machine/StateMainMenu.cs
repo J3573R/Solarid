@@ -9,8 +9,9 @@ public class StateMainMenu : GameStateBase {
     private Button _buttonOptions;
     private Button _buttonExit;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         LevelName = "MainMenu";
         _buttonPlay = GameObject.Find("ButtonPlay").GetComponent<Button>();        
         _buttonOptions = GameObject.Find("ButtonOptions").GetComponent<Button>();

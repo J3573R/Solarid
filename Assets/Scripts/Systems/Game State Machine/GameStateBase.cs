@@ -7,6 +7,16 @@ public class GameStateBase : MonoBehaviour
 
     public string LevelName = "BaseClass";
 
+    protected virtual void Awake()
+    {
+        #if UNITY_EDITOR
+        if (UnityEditor.Lightmapping.giWorkflowMode == UnityEditor.Lightmapping.GIWorkflowMode.Iterative)
+                {
+                    DynamicGI.UpdateEnvironment();
+                }
+        #endif
+    }
+
     protected virtual void OnEnable()
     {
         Debug.Log("State Enabled: " + LevelName);
@@ -21,4 +31,6 @@ public class GameStateBase : MonoBehaviour
     {
         Debug.Log("State Disabled: " + LevelName);
     }
+
+    
 }
