@@ -5,6 +5,10 @@ using UnityEngine;
 public class GrenadeScript : MonoBehaviour {
 
     private MeshRenderer _renderer;
+    public Vector3 startPosition;
+    public float minDistance;
+    public float maxDistance;
+    private Vector3 offsetPos;
     public  Vector3 targetPosition;
     private Rigidbody _rigidBody;
 
@@ -38,9 +42,48 @@ public class GrenadeScript : MonoBehaviour {
 
         _renderer.enabled = true;
         _rigidBody.useGravity = true;
-
+        startPosition = transform.position;
+        CalculatePositions();
 
         _rigidBody.velocity = BallisticVelocity(targetPosition, angle);
+    }
+
+    private void Move()
+    {
+        
+    }
+
+    private void CalculatePositions()
+    {
+        
+        
+        Vector3 heading = targetPosition - startPosition;
+        float distance = Vector3.Distance(startPosition, targetPosition);
+
+        Debug.Log("DISTANCE = " + distance);
+        Vector3 direction = heading.normalized;
+
+        Debug.Log(targetPosition);
+        
+
+        if (distance < minDistance)
+        {
+            Debug.Log("small");
+            distance = minDistance;
+            targetPosition = startPosition + (direction * distance);
+        } else if (distance > maxDistance)
+        {
+            Debug.Log("big");
+            distance = maxDistance;
+            targetPosition = startPosition + (direction * distance);
+        }
+
+        
+
+        Debug.Log(targetPosition);
+
+
+
     }
 
     Vector3 BallisticVelocity(Vector3 target, float angle)
@@ -57,18 +100,11 @@ public class GrenadeScript : MonoBehaviour {
         
 
         float tmp = dist * Physics.gravity.magnitude / Mathf.Sin(2 * a);
-        Debug.Log(tmp);
-        if (tmp < 0)
-        {
-            tmp  = tmp = 10;
-        }
 
-        Debug.Log(tmp);
         // Calculate the velocity magnitude
-        float velocity = Mathf.Sqrt(tmp);
-
+        float velocity = Mathf.Sqrt(tmp);      
         
-        Debug.Log(velocity);
+
         return velocity * dir.normalized; // Return a normalized vector.
         
     }

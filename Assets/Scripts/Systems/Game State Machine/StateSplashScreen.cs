@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateSplashScreen : MonoBehaviour {
+public class StateSplashScreen : GameStateBase {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public float TimeToSwitch = 3f;
+
+    private float _switchTimer = 0;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        LevelName = "SplashScreen";        
+    }
+
+
+    protected override void Update()
+    {
+        _switchTimer += Time.deltaTime;
+
+        // Change scene to main menu when time is up or any key is pressed
+        if(_switchTimer > TimeToSwitch || Input.anyKey)
+        {
+            GameStateManager.Instance.ChangeState(GameStateManager.GameState.MainMenu, "MainMenu");
+        }
+
+    }
 }

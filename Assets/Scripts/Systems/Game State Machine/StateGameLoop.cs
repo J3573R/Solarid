@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateGameLoop : GameStateBase
 {
-    void Awake()
+    protected override void Awake()
     {
-        LevelName = "Default";
+        base.Awake();
+        LevelName = SceneManager.GetActiveScene().name;   
     }
 
     protected override void Update()
     {
-        //Debug.Log("Running GameLoop Code");
+        Debug.Log("Running GameLoop Code at:" + LevelName);
     }
 }

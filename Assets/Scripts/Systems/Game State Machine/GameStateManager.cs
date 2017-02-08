@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class GameStateManager : MonoBehaviour
     {
         SplashScreen,
         MainMenu,
+        Options,
         GameLoop
     }
 
@@ -45,7 +47,8 @@ public class GameStateManager : MonoBehaviour
         Destroy(_gameStateObj);
         if (scene != null)
         {
-            SetState(state);
+            _gameState = state;
+            SceneManager.sceneLoaded += sceneLoaded;
             SceneManager.LoadScene(scene);
         }
         else
@@ -83,6 +86,10 @@ public class GameStateManager : MonoBehaviour
                 _gameStateObj.AddComponent<StateMainMenu>();
                 _gameStateObj.name = "Game State: MainMenu";
                 break;
+            case GameState.Options:
+                _gameStateObj.AddComponent<StateOptions>();
+                _gameStateObj.name = "Game State: Options";
+                break;
             case GameState.GameLoop:
                 _gameStateObj.AddComponent<StateGameLoop>();
                 _gameStateObj.name = "Game State: GameLoop";
@@ -90,5 +97,14 @@ public class GameStateManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(_gameStateObj);
+    }
+
+    /// <summary>
+    /// Creates and initialize correct state AFTER scene is loaded.
+    /// </summary>
+    private void sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        SetState(_gameState);
+        SceneManager.sceneLoaded -= sceneLoaded;
     }
 }
