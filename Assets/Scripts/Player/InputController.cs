@@ -13,6 +13,7 @@ public class InputController : MonoBehaviour
     private Vector2 _vMousePos;
     private Vector2 _fPlayerPosInScreen;
     private Vector2 _fDiff;
+    private Vector3 _moveDirectionRay;
     private float _fSign;
     private float _fAngle;
     private float _fHDir;
@@ -62,9 +63,40 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        _fHDir = Input.GetAxis("Horizontal");
-        _fVDir = Input.GetAxis("Vertical");
-        _rigidbody.velocity = new Vector3(_fHDir * Speed, 0f, _fVDir * Speed);
+        _fHDir = Input.GetAxisRaw("Horizontal");
+        _fVDir = Input.GetAxisRaw("Vertical");
+        if (CanMoveDirection(_fHDir, _fVDir))
+        {
+            _rigidbody.velocity = new Vector3(_fHDir*Speed, 0f, _fVDir*Speed);
+        }
+        else
+        {
+            _rigidbody.velocity = Vector3.zero;
+        }
+        
+    }
+
+    /// <summary>
+    /// Checks if next step of movement goes over platform.
+    /// </summary>
+    /// <param name="horizontal">Horizontal movement direction</param>
+    /// <param name="vertical">Vertical movement direction</param>
+    /// <returns></returns>
+    private bool CanMoveDirection(float horizontal, float vertical)
+    {
+        _moveDirectionRay = _player.transform.position;
+        _moveDirectionRay.x += horizontal;
+        _moveDirectionRay.z += vertical;
+
+        Ray ray = new Ray(_moveDirectionRay, Vector3.down);
+        //Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
+
+        if (Physics.Raycast(ray, 2f))
+        {
+            return true;
+        }
+        
+        return false;
     }
 
     /// <summary>
@@ -90,6 +122,7 @@ public class InputController : MonoBehaviour
              
         return Vector3.zero;
     }
+    
 }
 
 
