@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
@@ -35,6 +36,25 @@ public class InputController : MonoBehaviour
         }
 
         ListenMouse();
+        GetInput();
+    }
+
+    /// <summary>
+    /// Gets input for various keys and calls methods accordingly
+    /// </summary>
+    private void GetInput()
+    {
+        if (Input.GetButtonDown("Ability"))        
+            _player.abilityController.Target();        
+        if (Input.GetButtonUp("Ability"))        
+            _player.abilityController.Execute();      
+        if (Input.GetButtonUp("SetBlink"))        
+            _player.abilityController.SetAbility(AbilityController.Ability.Blink);
+        if (Input.GetButtonUp("SetGrenade"))
+            _player.abilityController.SetAbility(AbilityController.Ability.Grenade);
+        if (Input.GetButtonUp("SetThirdAbility"))
+            _player.abilityController.SetAbility(AbilityController.Ability.SomeRandomAbility);
+
     }
 
     /// <summary>
@@ -51,15 +71,7 @@ public class InputController : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, _fAngle, 0);
 
-        if (Input.GetButtonDown("Ability"))
-        {            
-            _player.abilityController.Target();
-        }
-
-        if (Input.GetButtonUp("Ability"))
-        {
-            _player.abilityController.Execute();
-        }           
+               
     }
 
     /// <summary>

@@ -8,6 +8,7 @@ public class AbilityController : MonoBehaviour {
     private AbilityBlink _blink;
     private AbilityGrenade _grenade;
     private AbilityBase _currentAbility;
+    private float _abilityIndex;
 
 
     // Use this for initialization
@@ -19,14 +20,44 @@ public class AbilityController : MonoBehaviour {
         _currentAbility = _grenade;
     }
 
-
-    public void Target()
+    /// <summary>
+    /// Enum for determing abilities. Index number used in scrolling ability selection
+    /// </summary>
+    public enum Ability
     {
-        
+        Blink = 0,
+        Grenade = 1,
+        SomeRandomAbility = 2
     }
 
+    /// <summary>
+    /// Draws the targeting icon
+    /// </summary>
+    public void Target()
+    {
+        //TODO: Draw the targeting icon somehow
+    }
+
+    /// <summary>
+    /// Executes the current ability
+    /// </summary>
     public void Execute()
     {
         _currentAbility.Execute();
     }
+
+    /// <summary>
+    /// Sets the current ability in use
+    /// </summary>
+    /// <param name="tmp">Ability to set</param>
+    public void SetAbility(Ability tmp)
+    {
+        if (tmp == Ability.Blink)
+            _currentAbility = _blink;
+        if (tmp == Ability.Grenade)
+            _currentAbility = _grenade;
+    }
+
+    //TODO: Weapon selection via "next/last weapon"
+
 }

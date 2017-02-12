@@ -11,6 +11,9 @@ public class AbilityGrenade : AbilityBase {
     public float angle;
     private GrenadeScript _grenadeScript;
 
+    /// <summary>
+    /// Gets the mouseposition and throws the grenade to it
+    /// </summary>
     public override void Execute()
     {
         Vector3 target = _player.input.GetMousePosition();
@@ -21,6 +24,8 @@ public class AbilityGrenade : AbilityBase {
             _grenadeScript.ResetPosition(transform);
             _grenadeScript.Throw();
         }
+
+        //TODO: Cooldown/mana stuff needed, for all abilities
     }
 
     // Use this for initialization
