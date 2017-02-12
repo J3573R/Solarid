@@ -53,6 +53,11 @@ public class InputController : MonoBehaviour
 
         if (Input.GetButtonDown("Ability"))
         {            
+            _player.abilityController.Target();
+        }
+
+        if (Input.GetButtonUp("Ability"))
+        {
             _player.abilityController.Execute();
         }           
     }

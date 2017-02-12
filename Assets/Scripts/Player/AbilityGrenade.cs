@@ -30,6 +30,5 @@ public class AbilityGrenade : AbilityBase {
         _player = GetComponent<Player>();
         _grenadeScript.angle = angle;
 	}
-
-    
+        
 }

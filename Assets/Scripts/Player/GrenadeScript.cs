@@ -40,48 +40,56 @@ public class GrenadeScript : MonoBehaviour {
 
     public void Throw()
     {
-
-        //_renderer.enabled = true;
-        //_rigidBody.useGravity = true;
+        _renderer.enabled = true;
+        _rigidBody.useGravity = true;
         startPosition = transform.position;
         CalculatePositions();
-
-        //_rigidBody.velocity = BallisticVelocity(targetPosition, angle);
+        _explosionParticle.transform.position = targetPosition;
+        _rigidBody.velocity = BallisticVelocity(targetPosition, angle);
     }
 
-    private void Move()
-    {
-        
-    }
 
     private void CalculatePositions()
     {
-        
+        float originalY = targetPosition.y;
+        targetPosition.y = 1;
         
         Vector3 heading = targetPosition - startPosition;
-        float distance = Vector3.Distance(startPosition, targetPosition);
-
-        Debug.Log("DISTANCE = " + distance);
-        Debug.Log("MINDISTANCE = " + minDistance);
-        Vector3 direction = heading.normalized;
         
+        float distance = Vector3.Distance(startPosition, targetPosition);
+        Vector3 direction = heading.normalized;
+        //Debug.Log("DISTANCE = " + distance);
+        //Debug.Log("MINDISTANCE = " + minDistance);
 
+        Debug.Log("TARGETPOSITION = " + targetPosition);
+        targetPosition = startPosition + (direction * distance);
+        
         if (distance < minDistance)
         {
             Debug.Log("small");
             distance = minDistance;
+            //float tmpY = targetPosition.y;
+
             targetPosition = startPosition + (direction * distance);
+            //targetPosition.y = 0.3f;
+            Debug.Log(targetPosition);
         } else if (distance > maxDistance)
         {
             Debug.Log("big");
             distance = maxDistance;
+            float tmpY = targetPosition.y;
+
             targetPosition = startPosition + (direction * distance);
+            //targetPosition.y = 0.3f;
         }
 
-        Debug.Log("NEWDISTANCE = " + distance);
+        Debug.Log("NEWTARGETPOSITION = " + targetPosition);
+        //Debug.Log("NEWDISTANCE = " + distance);
+        targetPosition.y = originalY;
 
-        _explosionParticle.transform.position = targetPosition;
-        _explosionParticle.Play();
+        
+        
+        
     }
 
     Vector3 BallisticVelocity(Vector3 target, float angle)

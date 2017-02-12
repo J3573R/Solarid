@@ -20,6 +20,11 @@ public class AbilityController : MonoBehaviour {
     }
 
 
+    public void Target()
+    {
+        
+    }
+
     public void Execute()
     {
         _currentAbility.Execute();
