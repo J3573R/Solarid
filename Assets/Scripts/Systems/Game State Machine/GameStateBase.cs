@@ -27,7 +27,7 @@ public class GameStateBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        Debug.Log("State running: " + LevelName);
+        //Debug.Log("State running: " + LevelName);
     }
 
     protected virtual void OnDisable()
