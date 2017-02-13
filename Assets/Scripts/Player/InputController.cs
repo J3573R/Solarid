@@ -8,6 +8,7 @@ public class InputController : MonoBehaviour
     // Rotation speed of the player
     public float RotationSpeed = 8f;
 
+    private bool _targeting;
     private Player _player;
     private Camera _camera;
     private Rigidbody _rigidbody;
@@ -15,6 +16,7 @@ public class InputController : MonoBehaviour
     private Vector2 _fPlayerPosInScreen;
     private Vector2 _fDiff;
     private Vector3 _moveDirectionRay;
+    private float _moveSpeed = 5;
     private float _fSign;
     private float _fAngle;
     private float _fHDir;
@@ -30,20 +32,36 @@ public class InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            Move();
+        }        
     }
 
     void Update()
-    {        
-        
+    {
+
 
         if (Input.GetButton("Fire1"))
         {
-            _player.Shoot();
+            _player.Shoot();            
         }
-
-        ListenMouse();
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _targeting = true;
+            _moveSpeed = 3;
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            _targeting = false;
+            _moveSpeed = 5;
+        }
+        Debug.Log(_moveSpeed);
+        
         GetInput();
+
+        if (_targeting)
+            ListenMouse();
     }
 
     /// <summary>
@@ -51,10 +69,20 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void GetInput()
     {
-        if (Input.GetButtonDown("Ability"))        
-            _player.abilityController.Target();        
-        if (Input.GetButtonUp("Ability"))        
-            _player.abilityController.Execute();      
+        if (Input.GetButtonDown("Ability"))
+        {
+            _player.abilityController.Target();
+            _targeting = true;
+            _moveSpeed = 3;
+        }
+        if (Input.GetButtonUp("Ability"))
+        {
+            _player.abilityController.Execute();
+            _targeting = false;
+            _moveSpeed = 5;
+        }
+        
+              
         if (Input.GetButtonUp("SetBlink"))        
             _player.abilityController.SetAbility(AbilityController.Ability.Blink);
         if (Input.GetButtonUp("SetGrenade"))
@@ -79,7 +107,7 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void ListenMouse()
     {
-        /*
+        
         _vMousePos = Input.mousePosition;
         
         _fPlayerPosInScreen = Camera.main.WorldToScreenPoint(_player.transform.position);
@@ -88,7 +116,7 @@ public class InputController : MonoBehaviour
         _fAngle = (Vector3.Angle(Vector3.right, _fDiff) * _fSign) - 90;
 
         transform.rotation = Quaternion.Euler(0, _fAngle, 0);
-        */
+        
                
     }
 
@@ -97,7 +125,7 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        float moveSpeed = 5;
+        
         float rotationSpeed = 7;
 
         Vector3 moveDirection = Vector3.zero;
@@ -120,8 +148,15 @@ public class InputController : MonoBehaviour
             moveDirection.x = 1;
         }
 
-        transform.position = Vector3.Lerp(transform.position, transform.position + moveDirection.normalized, Time.fixedDeltaTime * moveSpeed);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(transform.position - previousLocation), Time.fixedDeltaTime * rotationSpeed);
+        if (CanMoveDirection(moveDirection.x, moveDirection.z))
+        {
+            transform.position = Vector3.Lerp(transform.position, transform.position + moveDirection.normalized, Time.fixedDeltaTime * _moveSpeed);
+
+            if (!_targeting)
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(transform.position - previousLocation), Time.fixedDeltaTime * rotationSpeed);
+        }
+
+        
 
         /*
         _fHDir = Input.GetAxis("Horizontal");
@@ -129,12 +164,9 @@ public class InputController : MonoBehaviour
         _rigidbody.velocity = new Vector3(_fHDir * Speed, 0f, _fVDir * Speed);
         */
     }
-        else
-        {
-            _rigidbody.velocity = Vector3.zero;
-        }
+        
 
-    }
+    
 
     /// <summary>
     /// Checks if next step of movement goes over platform.
