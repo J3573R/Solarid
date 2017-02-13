@@ -18,7 +18,7 @@ public class ChargerIdle : EnemyStateBase {
 
         if (Physics.Linecast(transform.position, Globals.Player.transform.position, out hit))
         {
-            if (hit.distance < 10)
+            if (hit.distance < 8)
             {
                 Parent.SetState(EnemyBase.State.Alert);
             }
