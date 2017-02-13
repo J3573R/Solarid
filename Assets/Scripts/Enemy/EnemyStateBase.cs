@@ -2,33 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateBase
+public class EnemyStateBase : MonoBehaviour
 {
 
-    protected EnemyBase.State eState;
-    protected GameObject Parent;
-
-    public EnemyStateBase(GameObject parent)
-    {
-        Parent = parent;
-    }
+    public EnemyBase.State eState;
+    protected EnemyBase Parent;
 
     public EnemyBase.State State
     {
         get { return eState; }
     }
 
-    public virtual void Update()
+    protected virtual void Update()
     {
         
     }
 
-    protected virtual void Activate()
+    protected virtual void Awake()
     {
-        
+        Parent = GetComponent<EnemyBase>();
     }
 
-    protected virtual void Disable()
+    protected virtual void OnEnable()
+    {
+
+    }
+
+    protected virtual void OnDisable()
     {
         
     }

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(Health))]
 public class EnemyBase : MonoBehaviour
 {
-    [SerializeField] protected float Health = 50;
-    [SerializeField] protected float Damage = 5;
+    [SerializeField] protected float Damage = 5;     
 
     public enum State
     {
@@ -15,43 +16,31 @@ public class EnemyBase : MonoBehaviour
         Attack,
         Die
     }
-    
-    protected EnemyStateBase CurrentState;
 
-    protected virtual void Update()
-    {
-        if (CurrentState != null)
-        {
-            CurrentState.Update();
-        }
-    }
+    protected EnemyBase.State CurrentState;
+    protected EnemyStateBase CurrentStateObject;
 
-    /// <summary>
-    /// Reduces health by amount of damage if alive.
-    /// </summary>
-    /// <param name="damage">Amount of damage to reduce from health</param>
-    /// <returns>True if dead, false if not</returns>
-    public bool TakeDamage(float damage)
+    public void SetState(EnemyBase.State state)
     {
-        if (!IsDead())
+        if (CurrentStateObject != null)
         {
-            Health -= damage;
+            Destroy(CurrentStateObject);
         }
 
-        return IsDead();
-    }
-
-    /// <summary>
-    /// Checks if dead.
-    /// </summary>
-    /// <returns>True if dead, false if not</returns>
-    public bool IsDead()
-    {
-        if (Health <= 0)
-        {
-            return true;
+        switch (state)
+        {            
+            case State.Idle:
+                CurrentStateObject = gameObject.AddComponent<ChargerIdle>();
+                CurrentState = state;
+                break;
+            case State.Alert:
+                CurrentStateObject = gameObject.AddComponent<ChargerAlert>();
+                CurrentState = state;
+                break;
+            case State.Move:
+                CurrentStateObject = gameObject.AddComponent<ChargerMove>();
+                CurrentState = state;
+                break;
         }
-
-        return false;
     }
 }

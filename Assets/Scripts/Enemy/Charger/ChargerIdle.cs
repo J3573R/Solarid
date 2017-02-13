@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class ChargerIdle : EnemyStateBase {
 
-    public ChargerIdle(GameObject parent) : base(parent)
+    protected override void Awake()
     {
-        Parent = parent;
+        base.Awake();
         eState = EnemyBase.State.Idle;
     }
 
-    public override void Update()
+    protected override void Update()
     {
         Parent.transform.Rotate(0, 1, 0);
-        Debug.Log("Idling");
+
+        RaycastHit hit;
+
+        if (Physics.Linecast(transform.position, Globals.Player.transform.position, out hit))
+        {
+            if (hit.distance < 10)
+            {
+                Parent.SetState(EnemyBase.State.Alert);
+            }
+        }
     }
 }
