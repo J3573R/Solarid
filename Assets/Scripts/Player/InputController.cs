@@ -54,6 +54,16 @@ public class InputController : MonoBehaviour
             _player.abilityController.SetAbility(AbilityController.Ability.Grenade);
         if (Input.GetButtonUp("SetThirdAbility"))
             _player.abilityController.SetAbility(AbilityController.Ability.SomeRandomAbility);
+        
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {            
+            float tmp = Input.GetAxis("Mouse ScrollWheel");
+
+            if (tmp < 0)
+                _player.abilityController.ScrollWeapon(-1);
+            else if (tmp > 0)
+                _player.abilityController.ScrollWeapon(1);
+        }
 
     }
 
@@ -62,6 +72,7 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void ListenMouse()
     {
+        /*
         _vMousePos = Input.mousePosition;
         
         _fPlayerPosInScreen = Camera.main.WorldToScreenPoint(_player.transform.position);
@@ -70,7 +81,7 @@ public class InputController : MonoBehaviour
         _fAngle = (Vector3.Angle(Vector3.right, _fDiff) * _fSign) - 90;
 
         transform.rotation = Quaternion.Euler(0, _fAngle, 0);
-
+        */
                
     }
 
@@ -79,9 +90,37 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        float moveSpeed = 5;
+        float rotationSpeed = 7;
+
+        Vector3 moveDirection = Vector3.zero;
+        Vector3 previousLocation = transform.position;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            moveDirection.z = 1;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            moveDirection.z = -1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            moveDirection.x = -1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveDirection.x = 1;
+        }
+
+        transform.position = Vector3.Lerp(transform.position, transform.position + moveDirection.normalized, Time.fixedDeltaTime * moveSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(transform.position - previousLocation), Time.fixedDeltaTime * rotationSpeed);
+
+        /*
         _fHDir = Input.GetAxis("Horizontal");
         _fVDir = Input.GetAxis("Vertical");
         _rigidbody.velocity = new Vector3(_fHDir * Speed, 0f, _fVDir * Speed);
+        */
     }
 
     /// <summary>

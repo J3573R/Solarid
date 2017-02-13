@@ -53,11 +53,34 @@ public class AbilityController : MonoBehaviour {
     public void SetAbility(Ability tmp)
     {
         if (tmp == Ability.Blink)
+        {
             _currentAbility = _blink;
+            _abilityIndex = 0;
+        }            
         if (tmp == Ability.Grenade)
+        {
             _currentAbility = _grenade;
+            _abilityIndex = 1;
+        }            
     }
 
-    //TODO: Weapon selection via "next/last weapon"
+
+    public void ScrollWeapon(int tmp)
+    {
+        Debug.Log(_abilityIndex);
+        _abilityIndex += tmp;
+        Debug.Log(_abilityIndex);
+
+        if (_abilityIndex < 0)
+            _abilityIndex = 1;
+        else if (_abilityIndex > 1)
+            _abilityIndex = 0;
+
+        if (_abilityIndex == 0)
+            SetAbility(Ability.Blink);
+        if (_abilityIndex == 1)
+            SetAbility(Ability.Grenade);
+        Debug.Log("TRUEINDEX = " + _abilityIndex);
+    }
 
 }
