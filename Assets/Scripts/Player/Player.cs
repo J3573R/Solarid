@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        Globals.Player = gameObject;
         _gun = GetComponentInChildren<Gun>();
         input = GetComponent<InputController>();
         abilityController = GetComponent<AbilityController>();
