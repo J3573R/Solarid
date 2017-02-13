@@ -97,6 +97,7 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void Move()
     {
+<<<<<<< HEAD
         float moveSpeed = 5;
         float rotationSpeed = 7;
 
@@ -128,12 +129,18 @@ public class InputController : MonoBehaviour
         _fVDir = Input.GetAxis("Vertical");
         _rigidbody.velocity = new Vector3(_fHDir * Speed, 0f, _fVDir * Speed);
         */
-    }
+=======
+        _fHDir = Input.GetAxisRaw("Horizontal");
+        _fVDir = Input.GetAxisRaw("Vertical");
+        if (CanMoveDirection(_fHDir, _fVDir))
+        {
+            _rigidbody.velocity = new Vector3(_fHDir*Speed, 0f, _fVDir*Speed);
+        }
         else
         {
             _rigidbody.velocity = Vector3.zero;
         }
-
+        
     }
 
     /// <summary>
@@ -157,6 +164,7 @@ public class InputController : MonoBehaviour
         }
         
         return false;
+>>>>>>> Tommin_devi
     }
 
     /// <summary>

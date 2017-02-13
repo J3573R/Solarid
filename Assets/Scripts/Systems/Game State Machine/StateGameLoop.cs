@@ -13,6 +13,6 @@ public class StateGameLoop : GameStateBase
 
     protected override void Update()
     {
-        Debug.Log("Running GameLoop Code at:" + LevelName);
+        //Debug.Log("Running GameLoop Code at:" + LevelName);
     }
 }
