@@ -67,9 +67,9 @@ public class AbilityController : MonoBehaviour {
 
     public void ScrollWeapon(int tmp)
     {
-        Debug.Log(_abilityIndex);
+        //Debug.Log(_abilityIndex);
         _abilityIndex += tmp;
-        Debug.Log(_abilityIndex);
+        //Debug.Log(_abilityIndex);
 
         if (_abilityIndex < 0)
             _abilityIndex = 1;
@@ -80,7 +80,7 @@ public class AbilityController : MonoBehaviour {
             SetAbility(Ability.Blink);
         if (_abilityIndex == 1)
             SetAbility(Ability.Grenade);
-        Debug.Log("TRUEINDEX = " + _abilityIndex);
+        //Debug.Log("TRUEINDEX = " + _abilityIndex);
     }
 
 }

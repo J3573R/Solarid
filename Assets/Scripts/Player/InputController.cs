@@ -16,11 +16,12 @@ public class InputController : MonoBehaviour
     private Vector2 _fPlayerPosInScreen;
     private Vector2 _fDiff;
     private Vector3 _moveDirectionRay;
+    private Vector3 _moveDirection;
     private float _moveSpeed = 5;
     private float _fSign;
     private float _fAngle;
-    private float _fHDir;
-    private float _fVDir;
+    private float _horizontalDirection;
+    private float _verticalDirection;
 
     void Awake()
     {
@@ -35,6 +36,9 @@ public class InputController : MonoBehaviour
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {
             Move();
+        } else
+        {
+            _rigidbody.velocity = Vector3.zero;
         }        
     }
 
@@ -56,7 +60,6 @@ public class InputController : MonoBehaviour
             _targeting = false;
             _moveSpeed = 5;
         }
-        Debug.Log(_moveSpeed);
         
         GetInput();
 
@@ -128,45 +131,20 @@ public class InputController : MonoBehaviour
         
         float rotationSpeed = 7;
 
-        Vector3 moveDirection = Vector3.zero;
+        _moveDirection = Vector3.zero;
         Vector3 previousLocation = transform.position;
 
-        if (Input.GetKey(KeyCode.W))
+        _moveDirection.x = Input.GetAxisRaw("Horizontal");
+        _moveDirection.z = Input.GetAxisRaw("Vertical");
+        
+        if (CanMoveDirection(_moveDirection.x, _moveDirection.z))
         {
-            moveDirection.z = 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveDirection.z = -1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveDirection.x = -1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveDirection.x = 1;
-        }
-
-        if (CanMoveDirection(moveDirection.x, moveDirection.z))
-        {
-            transform.position = Vector3.Lerp(transform.position, transform.position + moveDirection.normalized, Time.fixedDeltaTime * _moveSpeed);
-
+            _rigidbody.velocity = _moveDirection * Speed;
+            
             if (!_targeting)
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(transform.position - previousLocation), Time.fixedDeltaTime * rotationSpeed);
+                _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection), Time.fixedDeltaTime * rotationSpeed);
         }
-
-        
-
-        /*
-        _fHDir = Input.GetAxis("Horizontal");
-        _fVDir = Input.GetAxis("Vertical");
-        _rigidbody.velocity = new Vector3(_fHDir * Speed, 0f, _fVDir * Speed);
-        */
     }
-        
-
-    
 
     /// <summary>
     /// Checks if next step of movement goes over platform.
@@ -176,15 +154,17 @@ public class InputController : MonoBehaviour
     /// <returns></returns>
     private bool CanMoveDirection(float horizontal, float vertical)
     {
-        _moveDirectionRay = _player.transform.position;
+        _moveDirectionRay = _rigidbody.transform.position;
         _moveDirectionRay.x += horizontal;
         _moveDirectionRay.z += vertical;
 
         Ray ray = new Ray(_moveDirectionRay, Vector3.down);
-        //Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
+        Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
 
         if (Physics.Raycast(ray, 2f))
         {
+            Debug.Log(Physics.Raycast(ray, 2f));
+            Debug.Log("MOVE");
             return true;
         }
         

@@ -8,11 +8,11 @@ public class Charger : EnemyBase {
     void Awake()
     {
         SetState(EnemyBase.State.Idle);
-        Debug.Log("STATE SET");
     }    
 
     protected void Update()
     {
+
     }
 
 }

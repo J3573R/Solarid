@@ -22,7 +22,7 @@ public class GameStateBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        Debug.Log("State Enabled: " + LevelName);
+        //Debug.Log("State Enabled: " + LevelName);
     }
 
     protected virtual void Update()
@@ -32,7 +32,7 @@ public class GameStateBase : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        Debug.Log("State Disabled: " + LevelName);
+        //Debug.Log("State Disabled: " + LevelName);
     }
 
     
