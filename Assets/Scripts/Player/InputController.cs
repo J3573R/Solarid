@@ -26,9 +26,15 @@ public class InputController : MonoBehaviour
         _camera = FindObjectOfType<Camera>();
     }
 
+
+    private void FixedUpdate()
+    {
+        Move();
+    }
+
     void Update()
     {        
-        Move();
+        
 
         if (Input.GetButton("Fire1"))
         {
