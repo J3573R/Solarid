@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyStateBase : MonoBehaviour
 {
-
+    public NavMeshAgent Agent;
     public EnemyBase.State eState;
     protected EnemyBase Parent;
 
@@ -21,6 +22,7 @@ public class EnemyStateBase : MonoBehaviour
     protected virtual void Awake()
     {
         Parent = GetComponent<EnemyBase>();
+        Agent = GetComponent<NavMeshAgent>();
     }
 
     protected virtual void OnEnable()

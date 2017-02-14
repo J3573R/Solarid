@@ -5,14 +5,13 @@ using UnityEngine.AI;
 public class ChargerMove : EnemyStateBase
 {
 
-    public NavMeshAgent Agent;
+    
     private Charger _parent;
 
     protected override void Awake()
     {
         base.Awake();
         eState = EnemyBase.State.Move;
-        Agent = GetComponent<NavMeshAgent>();
 
         try
         {

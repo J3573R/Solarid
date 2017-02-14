@@ -5,7 +5,6 @@ using UnityEngine.AI;
 public class ChargerIdle : EnemyStateBase
 {
 
-    public NavMeshAgent Agent;
     private Charger _parent;
     private float _timeToWalk;
 

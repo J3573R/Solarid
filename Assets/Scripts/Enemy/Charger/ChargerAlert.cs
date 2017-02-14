@@ -5,6 +5,10 @@ using UnityEngine;
 public class ChargerAlert : EnemyStateBase {
 
     float _timer = 0;
+    private float _rotationSpeed = 2;
+    private float _step;
+    private Vector3 _targetDirection;
+    private Vector3 _newDirection;
 
     protected override void Awake()
     {
@@ -14,9 +18,15 @@ public class ChargerAlert : EnemyStateBase {
 
     protected override void Update()
     {
-        transform.LookAt(Globals.Player.transform);
+        _targetDirection = Globals.Player.transform.position - transform.position;
+        _step = _rotationSpeed * Time.deltaTime;
+        _newDirection = Vector3.RotateTowards(transform.forward, _targetDirection, _step, 0.0F);
+        transform.rotation = Quaternion.LookRotation(_newDirection);
 
-        if(_timer >= 1)
+        _targetDirection = Globals.Player.transform.position - transform.position;
+
+
+        if (_timer >= 1)
         {
             Parent.SetState(EnemyBase.State.Move);
         }
