@@ -5,4 +5,5 @@ using UnityEngine;
 public static class Globals
 {
     public static GameObject Player;
+    public static int PlayerDamage = 5;
 }

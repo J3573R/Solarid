@@ -136,13 +136,18 @@ public class InputController : MonoBehaviour
 
         _moveDirection.x = Input.GetAxisRaw("Horizontal");
         _moveDirection.z = Input.GetAxisRaw("Vertical");
-        
+
         if (CanMoveDirection(_moveDirection.x, _moveDirection.z))
         {
-            _rigidbody.velocity = _moveDirection * Speed;
-            
+            _rigidbody.velocity = _moveDirection*Speed;
+
             if (!_targeting)
-                _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection), Time.fixedDeltaTime * rotationSpeed);
+                _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
+                    Time.fixedDeltaTime*rotationSpeed);
+        }
+        else
+        {
+            _rigidbody.velocity = Vector3.zero;
         }
     }
 

@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Charger : EnemyBase {
+public class Charger : EnemyBase
+{
 
-    void Awake()
+    public int AlertDistance = 5;
+    public int DisengageDistance = 7;
+
+    protected override void Awake()
     {
+        base.Awake();
         SetState(EnemyBase.State.Idle);
     }    
 
