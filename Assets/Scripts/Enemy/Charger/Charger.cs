@@ -15,9 +15,9 @@ public class Charger : EnemyBase
         SetState(EnemyBase.State.Idle);
     }    
 
-    protected void Update()
+    protected override void Update()
     {
-
+        base.Update();
     }
 
 }

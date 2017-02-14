@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
 public class EnemyBase : MonoBehaviour
 {
 
     public GameObject DeathEffect;
+    public Slider HealthBar;
+
+    [SerializeField] private Vector3 _healthBarOffset;
 
     public enum State
     {
@@ -25,6 +29,12 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Awake()
     {
         Health = GetComponent<Health>();
+        HealthBar.maxValue = Health.CurrentHealth;
+    }
+
+    protected virtual void Update()
+    {
+        HealthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position);
     }
 
     public void SetState(EnemyBase.State state)
@@ -55,7 +65,6 @@ public class EnemyBase : MonoBehaviour
     {
         if (other.tag == "PlayerBullet")
         {
-
             if (Health.TakeDamage(Globals.PlayerDamage))
             {
                 Die();
@@ -63,6 +72,8 @@ public class EnemyBase : MonoBehaviour
             {
                 SetState(EnemyBase.State.Alert);
             }
+
+            HealthBar.value = Health.CurrentHealth;
 
             Destroy(other.gameObject);
         }
@@ -75,6 +86,7 @@ public class EnemyBase : MonoBehaviour
             Instantiate(DeathEffect, transform.position, Quaternion.identity);
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
+        HealthBar.gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
