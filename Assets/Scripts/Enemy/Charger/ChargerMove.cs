@@ -27,7 +27,7 @@ public class ChargerMove : EnemyStateBase
         // Follow player
         Agent.destination = Globals.Player.transform.position;
 
-        // Based on distance, ether attack the player or change to idle state.
+        // Based on distance, ether attack the player or change to idle state
         _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
 
         if (_distance <= 2)

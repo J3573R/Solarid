@@ -5,8 +5,10 @@ using UnityEngine.UI;
 public class EnemyBase : MonoBehaviour
 {
     public int Damage;
-    public GameObject DeathEffect;    
-    public Slider HealthBar;
+    public GameObject DeathEffect;
+    public GameObject HealthBar;
+
+    private Slider _healthBar;
 
     public enum State
     {
@@ -26,12 +28,15 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Awake()
     {
         Health = GetComponent<Health>();
-        HealthBar.maxValue = Health.CurrentHealth;
+        GameObject bar = Instantiate(HealthBar);
+        bar.transform.parent = GameObject.Find("Canvas").transform;
+        _healthBar = bar.GetComponent<Slider>();
+        _healthBar.maxValue = Health.CurrentHealth;
     }
 
     protected virtual void Update()
     {
-        HealthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
+        _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
     }
 
     /// <summary>
@@ -76,12 +81,12 @@ public class EnemyBase : MonoBehaviour
         if (Health.TakeDamage(damage))
         {
             Die();
-            HealthBar.value = Health.CurrentHealth;
+            _healthBar.value = Health.CurrentHealth;
             return true;
         }
         else
         {
-            HealthBar.value = Health.CurrentHealth;
+            _healthBar.value = Health.CurrentHealth;
             return false;
         }
 
@@ -112,7 +117,7 @@ public class EnemyBase : MonoBehaviour
             Instantiate(DeathEffect, transform.position, Quaternion.identity);
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
-        HealthBar.gameObject.SetActive(false);
+        _healthBar.gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
