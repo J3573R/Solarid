@@ -6,7 +6,7 @@ public class InputController : MonoBehaviour
     // Rotation speed of the player
     public float RotationSpeed = 8f;
     public float AimingRotationSpeed = 20f;
-    public Animator Animator;
+    public PlayerAnimation PlayerAnimation;
 
     private bool _targeting;
     private Player _player;
@@ -28,7 +28,7 @@ public class InputController : MonoBehaviour
         _player = GetComponent<Player>();
         _rigidbody = GetComponent<Rigidbody>();
         _camera = FindObjectOfType<Camera>();
-        Animator = GetComponentInChildren<Animator>();
+        PlayerAnimation = FindObjectOfType<PlayerAnimation>(); 
     }
 
 
@@ -36,11 +36,15 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {
-            Animator.SetInteger("animState", 1);
+            if (!_targeting)
+            {
+                PlayerAnimation.SetAnimation(PlayerAnimation.AnimationState.Run);
+            }
+            
             Move();
         } else
         {
-            Animator.SetInteger("animState", 0);
+            PlayerAnimation.SetAnimation(PlayerAnimation.AnimationState.Idle);
             _rigidbody.velocity = Vector3.zero;
         }        
     }
@@ -49,8 +53,10 @@ public class InputController : MonoBehaviour
     {
         GetInput();               
 
-        if (_targeting)
+        if (_targeting) {            
             ListenMouse();
+        }
+            
     }
 
     /// <summary>
@@ -60,6 +66,7 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Ability"))
         {
+            PlayerAnimation.SetAnimation(PlayerAnimation.AnimationState.RunForward);
             _targeting = true;
             _moveSpeed = 3;
         }
@@ -68,7 +75,7 @@ public class InputController : MonoBehaviour
         {
             _targeting = false;
             _moveSpeed = 5;
-        }
+        }        
 
         if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
         {
@@ -77,10 +84,15 @@ public class InputController : MonoBehaviour
             _moveSpeed = 5;
         }
 
+        if (Input.GetButton("Fire1"))
+        {
+            _player.Shoot();
+        }
+
         if (Input.GetKey(KeyCode.P))
         {
             Debug.Log("PRAISE THE SUN");
-            Animator.SetInteger("animState", 30);
+            PlayerAnimation.SetAnimation(PlayerAnimation.AnimationState.Praise);
         }
         
               
@@ -103,10 +115,7 @@ public class InputController : MonoBehaviour
 
 
 
-        if (Input.GetButton("Fire1"))
-        {
-            _player.Shoot();
-        }
+        
 
     }
 
