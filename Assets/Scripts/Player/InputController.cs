@@ -147,7 +147,7 @@ public class InputController : MonoBehaviour
 
         if (CanMoveDirection(_moveDirection.x, _moveDirection.z))
         {            
-            _rigidbody.velocity = _moveDirection* _moveSpeed;
+            _rigidbody.velocity = _moveDirection.normalized * _moveSpeed;
 
             if (!_targeting)
                 _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),

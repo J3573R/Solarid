@@ -138,6 +138,7 @@ ModelImporter:
     400128: //RootNode
     400130: root_spine
     7400000: Hero_RunGun_Back
+    7400002: Hero_Run_Forward
     9500000: //RootNode
   materials:
     importMaterials: 1

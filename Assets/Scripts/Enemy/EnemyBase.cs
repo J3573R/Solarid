@@ -61,6 +61,22 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    public virtual bool TakeDamage(int damage)
+    {
+        if (Health.TakeDamage(damage))
+        {
+            Die();
+            HealthBar.value = Health.CurrentHealth;
+            return true;
+        }
+        else
+        {
+            HealthBar.value = Health.CurrentHealth;
+            return false;
+        }
+
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "PlayerBullet")
@@ -85,20 +101,7 @@ public class EnemyBase : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public virtual bool TakeDamage(int damage)
-    {
-        if (Health.TakeDamage(damage))
-        {
-            Die();
-            HealthBar.value = Health.CurrentHealth;
-            return true;
-        } else
-        {
-            HealthBar.value = Health.CurrentHealth;
-            return false;
-        }
-        
-    }
+    
 
 
 }

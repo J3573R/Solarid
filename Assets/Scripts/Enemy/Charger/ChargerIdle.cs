@@ -14,7 +14,6 @@ public class ChargerIdle : EnemyStateBase
     {
         base.Awake();
         eState = EnemyBase.State.Idle;
-        Agent = GetComponent<NavMeshAgent>();
         _timeToWalk = 2;
         _transitionToAlert = 0;
 

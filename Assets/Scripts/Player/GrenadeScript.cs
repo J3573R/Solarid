@@ -28,6 +28,7 @@ public class GrenadeScript : MonoBehaviour {
         _renderer.enabled = false;
         _explosionParticle = Instantiate(_explosionParticle, transform.position, Quaternion.identity);
         _explosionParticle.Stop();
+        gameObject.SetActive(false);
 	}	
 
     /// <summary>
@@ -44,6 +45,7 @@ public class GrenadeScript : MonoBehaviour {
     /// </summary>
     public void Throw()
     {
+        gameObject.SetActive(true);
         _renderer.enabled = true;
         _rigidBody.useGravity = true;
         startPosition = transform.position;
