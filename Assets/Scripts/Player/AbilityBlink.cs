@@ -34,7 +34,7 @@ public class AbilityBlink : AbilityBase {
 
         if (_targetPosition != Vector3.zero)
         {
-            _targetPosition.y = 1;
+            _targetPosition.y = 0;
             _startParticle.transform.position = transform.position;
 
             foreach (MeshRenderer rend in _renderers)

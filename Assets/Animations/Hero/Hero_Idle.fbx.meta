@@ -195,7 +195,167 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Hero_Idle
+      takeName: Hero_Idle
+      firstFrame: 0
+      lastFrame: 200
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: root_spine
+        weight: 1
+      - path: root_spine/bone_hip_l
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_loinCloth
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_loinCloth/end_loinCloth
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_l
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_l/bone_calf_l
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_l/bone_calf_l/bone_ankle_l
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_l/bone_calf_l/bone_ankle_l/bone_foot_l
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_l/bone_calf_l/bone_ankle_l/bone_foot_l/end_foot_l
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_r
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_r/bone_calf_r
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_r/bone_calf_r/bone_ankle_r
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_r/bone_calf_r/bone_ankle_r/bone_foot_r
+        weight: 1
+      - path: root_spine/bone_hip_l/bone_thigh_r/bone_calf_r/bone_ankle_r/bone_foot_r/end_foot_r
+        weight: 1
+      - path: root_spine/bone_hip_l/end_hip_l
+        weight: 1
+      - path: root_spine/bone_spine
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_index1_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_index1_l/bone_index2_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_index1_l/bone_index2_l/end_index_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_middle1_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_middle1_l/bone_middle2_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_middle1_l/bone_middle2_l/end_middle_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_pinky1_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_pinky1_l/bone_pinky2_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_pinky1_l/bone_pinky2_l/end_pinky_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_ring1_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_ring1_l/bone_ring2_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_ring1_l/bone_ring2_l/end_ring_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_thumb1_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_thumb1_l/bone_thumb2_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/bone_thumb1_l/bone_thumb2_l/end_thumb_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/end_hand_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/bone_bicep_l/bone_arm_l/bone_hand_l/grapplePoint_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_l/end_clavicle_l
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_index1_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_index1_r/bone_index2_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_index1_r/bone_index2_r/end_index_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_middle1_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_middle1_r/bone_middle2_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_middle1_r/bone_middle2_r/end_middle_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_pinky1_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_pinky1_r/bone_pinky2_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_pinky1_r/bone_pinky2_r/end_pinky_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_ring1_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_ring1_r/bone_ring2_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_ring1_r/bone_ring2_r/end_ring_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_thumb1_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_thumb1_r/bone_thumb2_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/bone_thumb1_r/bone_thumb2_r/end_thumb_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/end_hand_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/bone_bicep_r/bone_arm_r/bone_hand_r/grapplePoint_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_clavicle_r/end_clavicle_r
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_neck
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_neck/bone_head
+        weight: 1
+      - path: root_spine/bone_spine/bone_chestLow/bone_chestHigh/bone_neck/bone_head/end_head
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

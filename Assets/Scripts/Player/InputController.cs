@@ -6,6 +6,7 @@ public class InputController : MonoBehaviour
     // Rotation speed of the player
     public float RotationSpeed = 8f;
     public float AimingRotationSpeed = 20f;
+    public Animator Animator;
 
     private bool _targeting;
     private Player _player;
@@ -27,6 +28,7 @@ public class InputController : MonoBehaviour
         _player = GetComponent<Player>();
         _rigidbody = GetComponent<Rigidbody>();
         _camera = FindObjectOfType<Camera>();
+        Animator = GetComponentInChildren<Animator>();
     }
 
 
@@ -34,9 +36,11 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {
+            Animator.SetInteger("animState", 1);
             Move();
         } else
         {
+            Animator.SetInteger("animState", 0);
             _rigidbody.velocity = Vector3.zero;
         }        
     }
@@ -71,6 +75,12 @@ public class InputController : MonoBehaviour
             _player.abilityController.Execute();
             _targeting = false;
             _moveSpeed = 5;
+        }
+
+        if (Input.GetKey(KeyCode.P))
+        {
+            Debug.Log("PRAISE THE SUN");
+            Animator.SetInteger("animState", 30);
         }
         
               
@@ -131,7 +141,7 @@ public class InputController : MonoBehaviour
         _moveDirection.z = Input.GetAxisRaw("Vertical");
 
         if (CanMoveDirection(_moveDirection.x, _moveDirection.z))
-        {
+        {            
             _rigidbody.velocity = _moveDirection* _moveSpeed;
 
             if (!_targeting)
