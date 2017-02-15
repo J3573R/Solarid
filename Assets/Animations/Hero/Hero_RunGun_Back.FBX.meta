@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1a0a5019c6d7c67498df2e2f6db2ccff
-timeCreated: 1486720064
+guid: 5e04484e68e7c604b88d630a194ea9f2
+timeCreated: 1486986469
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -71,17 +71,6 @@ ModelImporter:
     100126: grapplePoint_r
     100128: //RootNode
     100130: root_spine
-    100132: Barrel3
-    100134: FootPointL
-    100136: FootPointR
-    100138: Humanoid
-    100140: Pistol
-    100142: Ref Front
-    100144: Ref Side
-    100146: ToePointL
-    100148: ToePointR
-    100150: TPhotometricLight001
-    100152: TPhotometricLight001.Target
     400000: bone_ankle_l
     400002: bone_ankle_r
     400004: bone_arm_l
@@ -148,35 +137,8 @@ ModelImporter:
     400126: grapplePoint_r
     400128: //RootNode
     400130: root_spine
-    400132: Barrel3
-    400134: FootPointL
-    400136: FootPointR
-    400138: Humanoid
-    400140: Pistol
-    400142: Ref Front
-    400144: Ref Side
-    400146: ToePointL
-    400148: ToePointR
-    400150: TPhotometricLight001
-    400152: TPhotometricLight001.Target
-    2300000: Barrel3
-    2300002: Pistol
-    2300004: Ref Front
-    2300006: Ref Side
-    3300000: Barrel3
-    3300002: Pistol
-    3300004: Ref Front
-    3300006: Ref Side
-    4300000: Ref Front
-    4300002: Humanoid
-    4300004: Ref Side
-    4300006: Pistol
-    4300008: Barrel3
-    7400000: Take 001
-    7400002: Hero Animated Run Forward
-    7400004: Hero_Run_Forward
+    7400000: Hero_RunGun_Back
     9500000: //RootNode
-    13700000: Humanoid
   materials:
     importMaterials: 1
     materialName: 0
