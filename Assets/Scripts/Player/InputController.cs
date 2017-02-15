@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    // Speed of the player
-    public float Speed = 5f;
     // Rotation speed of the player
     public float RotationSpeed = 8f;
+    public float AimingRotationSpeed = 20f;
 
     private bool _targeting;
     private Player _player;
@@ -44,24 +43,7 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-
-
-        if (Input.GetButton("Fire1"))
-        {
-            _player.Shoot();            
-        }
-        if (Input.GetButtonDown("Fire1"))
-        {
-            _targeting = true;
-            _moveSpeed = 3;
-        }
-        if (Input.GetButtonUp("Fire1"))
-        {
-            _targeting = false;
-            _moveSpeed = 5;
-        }
-        
-        GetInput();
+        GetInput();               
 
         if (_targeting)
             ListenMouse();
@@ -72,13 +54,19 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void GetInput()
     {
-        if (Input.GetButtonDown("Ability"))
+        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Ability"))
         {
-            _player.abilityController.Target();
             _targeting = true;
             _moveSpeed = 3;
         }
-        if (Input.GetButtonUp("Ability"))
+
+        if (Input.GetButtonUp("Fire1") && !Input.GetButton("Ability"))
+        {
+            _targeting = false;
+            _moveSpeed = 5;
+        }
+
+        if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
         {
             _player.abilityController.Execute();
             _targeting = false;
@@ -103,6 +91,13 @@ public class InputController : MonoBehaviour
                 _player.abilityController.ScrollWeapon(1);
         }
 
+
+
+        if (Input.GetButton("Fire1"))
+        {
+            _player.Shoot();
+        }
+
     }
 
     /// <summary>
@@ -118,9 +113,7 @@ public class InputController : MonoBehaviour
         _fSign = (_fPlayerPosInScreen.y < _vMousePos.y) ? 1.0f : -1.0f;
         _fAngle = (Vector3.Angle(Vector3.right, _fDiff) * _fSign) - 90;
 
-        transform.rotation = Quaternion.Euler(0, _fAngle, 0);
-        
-               
+        transform.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.Euler(0, _fAngle, 0), Time.fixedDeltaTime * AimingRotationSpeed);    
     }
 
     /// <summary>
@@ -139,7 +132,7 @@ public class InputController : MonoBehaviour
 
         if (CanMoveDirection(_moveDirection.x, _moveDirection.z))
         {
-            _rigidbody.velocity = _moveDirection*Speed;
+            _rigidbody.velocity = _moveDirection* _moveSpeed;
 
             if (!_targeting)
                 _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
@@ -168,8 +161,7 @@ public class InputController : MonoBehaviour
 
         if (Physics.Raycast(ray, 2f))
         {
-            Debug.Log(Physics.Raycast(ray, 2f));
-            Debug.Log("MOVE");
+            //Debug.Log(Physics.Raycast(ray, 2f));
             return true;
         }
         

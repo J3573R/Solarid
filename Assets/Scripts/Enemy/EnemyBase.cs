@@ -34,7 +34,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        HealthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        HealthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
     }
 
     public void SetState(EnemyBase.State state)

@@ -7,6 +7,7 @@ public class ChargerMove : EnemyStateBase
 
     
     private Charger _parent;
+    private float _distance;
 
     protected override void Awake()
     {
@@ -27,14 +28,11 @@ public class ChargerMove : EnemyStateBase
     {
         Agent.destination = Globals.Player.transform.position;
 
-        RaycastHit hit;
+        _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
 
-        if (Physics.Linecast(transform.position, Globals.Player.transform.position, out hit))
+        if(_distance >= _parent.DisengageDistance)
         {
-            if (hit.distance > _parent.DisengageDistance)
-            {
-                Parent.SetState(EnemyBase.State.Idle);
-            }
+            Parent.SetState(EnemyBase.State.Idle);
         }
     }
 }
