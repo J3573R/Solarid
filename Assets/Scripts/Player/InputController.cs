@@ -31,7 +31,6 @@ public class InputController : MonoBehaviour
         PlayerAnimation = FindObjectOfType<PlayerAnimation>(); 
     }
 
-
     private void FixedUpdate()
     {
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
@@ -60,7 +59,7 @@ public class InputController : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets input for various keys and calls methods accordingly
+    /// Gets Input for various keys and calls methods accordingly
     /// </summary>
     private void GetInput()
     {
@@ -79,7 +78,7 @@ public class InputController : MonoBehaviour
 
         if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
         {
-            _player.abilityController.Execute();
+            _player.AbilityController.Execute();
             _targeting = false;
             _moveSpeed = 5;
         }
@@ -97,20 +96,20 @@ public class InputController : MonoBehaviour
         
               
         if (Input.GetButtonUp("SetBlink"))        
-            _player.abilityController.SetAbility(AbilityController.Ability.Blink);
+            _player.AbilityController.SetAbility(AbilityController.Ability.Blink);
         if (Input.GetButtonUp("SetGrenade"))
-            _player.abilityController.SetAbility(AbilityController.Ability.Grenade);
+            _player.AbilityController.SetAbility(AbilityController.Ability.Grenade);
         if (Input.GetButtonUp("SetThirdAbility"))
-            _player.abilityController.SetAbility(AbilityController.Ability.SomeRandomAbility);
+            _player.AbilityController.SetAbility(AbilityController.Ability.SomeRandomAbility);
         
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {            
             float tmp = Input.GetAxis("Mouse ScrollWheel");
 
             if (tmp < 0)
-                _player.abilityController.ScrollWeapon(-1);
+                _player.AbilityController.ScrollWeapon(-1);
             else if (tmp > 0)
-                _player.abilityController.ScrollWeapon(1);
+                _player.AbilityController.ScrollWeapon(1);
         }
         
     }
@@ -132,7 +131,7 @@ public class InputController : MonoBehaviour
     }
 
     /// <summary>
-    /// Listens keyboard input and increases horizontal & vertical velocity of player times Speed.
+    /// Listens keyboard Input and increases horizontal & vertical velocity of player times Speed.
     /// </summary>
     private void Move()
     {

@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
 public class EnemyBase : MonoBehaviour
 {
-
+    public int Damage;
     public GameObject DeathEffect;    
     public Slider HealthBar;
-
-    [SerializeField] private Vector3 _healthBarOffset;
 
     public enum State
     {
@@ -21,10 +16,12 @@ public class EnemyBase : MonoBehaviour
         Attack
     }
 
-    [SerializeField] protected float Damage = 5;
     protected EnemyBase.State CurrentState;
     protected EnemyStateBase CurrentStateObject;
     protected Health Health;
+
+    [SerializeField]
+    private Vector3 _healthBarOffset = Vector3.zero;
 
     protected virtual void Awake()
     {
@@ -37,6 +34,10 @@ public class EnemyBase : MonoBehaviour
         HealthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
     }
 
+    /// <summary>
+    /// Creates and changes state for enemy.
+    /// </summary>
+    /// <param name="state">State to change</param>
     public void SetState(EnemyBase.State state)
     {
         if (CurrentStateObject != null)
@@ -58,9 +59,18 @@ public class EnemyBase : MonoBehaviour
                 CurrentStateObject = gameObject.AddComponent<ChargerMove>();
                 CurrentState = state;
                 break;
+            case State.Attack:
+                CurrentStateObject = gameObject.AddComponent<ChargerAttack>();
+                CurrentState = state;
+                break;
         }
     }
 
+    /// <summary>
+    /// Reduces the damage from enemys health.
+    /// </summary>
+    /// <param name="damage">Amount of damage caused to enemy.</param>
+    /// <returns>If dead true, otherwise false</returns>
     public virtual bool TakeDamage(int damage)
     {
         if (Health.TakeDamage(damage))
@@ -79,6 +89,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+
         if (other.tag == "PlayerBullet")
         {
             if (!TakeDamage(Globals.PlayerDamage) && CurrentState != State.Alert && CurrentState != State.Move && CurrentState != State.Attack)
@@ -90,6 +101,10 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Kills player.
+    /// TODO: Death animation, level restart, disable controls.
+    /// </summary>
     protected virtual void Die()
     {
         if (DeathEffect != null)

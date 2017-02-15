@@ -1,23 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour
 {
+    [HideInInspector] public InputController Input;
+    [HideInInspector] public AbilityController AbilityController;
+    [HideInInspector] public Health Health;
     public bool ShootingEnabled = true;
+    public Slider HealthBar;
     
     private Gun _gun;
-    public InputController input;
-    [HideInInspector]
-    public AbilityController abilityController;
+    
 
     void Awake()
     {
         Globals.Player = gameObject;
         _gun = GetComponentInChildren<Gun>();
-        input = GetComponent<InputController>();
-        abilityController = GetComponent<AbilityController>();
+        Input = GetComponent<InputController>();
+        AbilityController = GetComponent<AbilityController>();
+        Health = GetComponent<Health>();
+        HealthBar.maxValue = Health.CurrentHealth;
     }
 
     public void Shoot()
@@ -28,9 +33,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool TakeDamage(int damage)
+    {
+        if (Health.TakeDamage(damage))
+        {
+            Die();
+            HealthBar.value = Health.CurrentHealth;
+            return true;
+        }
+
+        HealthBar.value = Health.CurrentHealth;
+        return false;
+    }
+
+    private void Die()
+    {
+        Debug.Log("DIE BITCH");
+    }
+
     private void Update()
     {
-        if (abilityController == null)
+        if (AbilityController == null)
         {
             Debug.Log("NULL");
         }

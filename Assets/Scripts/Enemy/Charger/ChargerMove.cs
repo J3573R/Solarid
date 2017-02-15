@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 public class ChargerMove : EnemyStateBase
 {
-
-    
     private Charger _parent;
     private float _distance;
 
@@ -26,11 +24,17 @@ public class ChargerMove : EnemyStateBase
 
     protected override void Update()
     {
+        // Follow player
         Agent.destination = Globals.Player.transform.position;
 
+        // Based on distance, ether attack the player or change to idle state.
         _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
 
-        if(_distance >= _parent.DisengageDistance)
+        if (_distance <= 2)
+        {
+            Parent.SetState(EnemyBase.State.Attack);
+        }
+        else if(_distance >= _parent.DisengageDistance)
         {
             Parent.SetState(EnemyBase.State.Idle);
         }

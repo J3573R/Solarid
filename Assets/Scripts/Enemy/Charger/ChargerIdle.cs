@@ -30,26 +30,42 @@ public class ChargerIdle : EnemyStateBase
 
     protected override void Update()
     {
+        Patrol();
+        ChangeToAlert();
+    }
+
+    /// <summary>
+    /// Gets random position from range, 
+    /// finds closest navmesh position and orders navmesh agent to move there after random period of time.
+    /// </summary>
+    private void Patrol()
+    {
         if (_timeToWalk <= 0)
         {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 5;
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 4;
             randomDirection += transform.position;
 
             NavMeshHit navHit;
             if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
             {
                 Agent.destination = navHit.position;
-                _timeToWalk = UnityEngine.Random.Range(2, 4);
+                _timeToWalk = UnityEngine.Random.Range(1, 3);
             }
         }
         else
         {
             _timeToWalk -= Time.deltaTime;
         }
+    }
 
-        _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);        
+    /// <summary>
+    /// Changes enemys state to alert if distance is small enough.
+    /// </summary>
+    private void ChangeToAlert()
+    {
+        _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
 
-        if(_distance < _parent.AlertDistance)
+        if (_distance < _parent.AlertDistance)
         {
             _transitionToAlert += Time.deltaTime;
             if (_transitionToAlert >= 0.5f)
@@ -61,6 +77,5 @@ public class ChargerIdle : EnemyStateBase
         {
             _transitionToAlert = 0;
         }
-
     }
 }

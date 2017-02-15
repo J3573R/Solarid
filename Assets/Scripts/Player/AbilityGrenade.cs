@@ -16,7 +16,7 @@ public class AbilityGrenade : AbilityBase {
     /// </summary>
     public override void Execute()
     {
-        Vector3 target = _player.input.GetMousePosition();
+        Vector3 target = _player.Input.GetMousePosition();
 
         if (target != Vector3.zero)
         {

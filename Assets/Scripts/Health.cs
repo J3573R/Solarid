@@ -9,13 +9,14 @@ public class Health : MonoBehaviour {
     public int CurrentHealth
     {
         get { return _health; }
+        private set { _health = (int)Mathf.Clamp(value, 0, Mathf.Infinity); }
     }
     
     public bool TakeDamage(int damage)
     {
         if (!IsDead())
         {
-            _health -= damage;
+            CurrentHealth -= damage;
         }
 
         return IsDead();        
@@ -23,7 +24,7 @@ public class Health : MonoBehaviour {
 
     public bool IsDead()
     {
-        if(_health <= 0)
+        if(CurrentHealth <= 0)
         {
             return true;
         }
