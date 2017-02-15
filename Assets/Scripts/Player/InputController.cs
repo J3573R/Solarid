@@ -112,11 +112,7 @@ public class InputController : MonoBehaviour
             else if (tmp > 0)
                 _player.abilityController.ScrollWeapon(1);
         }
-
-
-
         
-
     }
 
     /// <summary>

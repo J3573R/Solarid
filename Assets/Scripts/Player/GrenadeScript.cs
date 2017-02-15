@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class GrenadeScript : MonoBehaviour {
 
-    private MeshRenderer _renderer;
+    public int Damage = 30;
+    public int DamageRadius = 1;
+    public Vector3 targetPosition;
     public Vector3 startPosition;
     public float minDistance;
     public float maxDistance;
-    private Vector3 offsetPos;
-    public  Vector3 targetPosition;
+
+    private MeshRenderer _renderer;    
+    private Vector3 offsetPos;    
     private Rigidbody _rigidBody;
 
     [SerializeField] private ParticleSystem _explosionParticle;
@@ -108,13 +111,28 @@ public class GrenadeScript : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.transform.tag.Equals("Ground"))
+        if (other.transform.tag.Equals("Ground") || other.transform.tag.Equals("Enemy"))
         {
             _explosionParticle.transform.position = transform.position;
             _explosionParticle.Play();
             _renderer.enabled = false;
             _rigidBody.useGravity = false;
             _rigidBody.velocity = Vector3.zero;
+            OnExplode();
+        }
+    }
+
+    private void OnExplode()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, DamageRadius);
+        foreach(Collider c in colliders)
+        {
+            if(c.tag.Equals("Enemy"))
+            {
+                EnemyBase e = c.gameObject.GetComponent<EnemyBase>();
+                e.TakeDamage(Damage);
+            }
+            
         }
     }
 }

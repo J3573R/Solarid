@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class EnemyBase : MonoBehaviour
 {
 
-    public GameObject DeathEffect;
+    public GameObject DeathEffect;    
     public Slider HealthBar;
 
     [SerializeField] private Vector3 _healthBarOffset;
@@ -65,15 +65,10 @@ public class EnemyBase : MonoBehaviour
     {
         if (other.tag == "PlayerBullet")
         {
-            if (Health.TakeDamage(Globals.PlayerDamage))
-            {
-                Die();
-            } else if (CurrentState != State.Alert && CurrentState != State.Move && CurrentState != State.Attack)
+            if (!TakeDamage(Globals.PlayerDamage) && CurrentState != State.Alert && CurrentState != State.Move && CurrentState != State.Attack)
             {
                 SetState(EnemyBase.State.Alert);
-            }
-
-            HealthBar.value = Health.CurrentHealth;
+            }            
 
             Destroy(other.gameObject);
         }
@@ -88,6 +83,21 @@ public class EnemyBase : MonoBehaviour
         }
         HealthBar.gameObject.SetActive(false);
         Destroy(gameObject);
+    }
+
+    public virtual bool TakeDamage(int damage)
+    {
+        if (Health.TakeDamage(damage))
+        {
+            Die();
+            HealthBar.value = Health.CurrentHealth;
+            return true;
+        } else
+        {
+            HealthBar.value = Health.CurrentHealth;
+            return false;
+        }
+        
     }
 
 
