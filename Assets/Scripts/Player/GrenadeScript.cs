@@ -19,6 +19,11 @@ public class GrenadeScript : MonoBehaviour {
 
     public  float angle;
 
+    void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
 	// Use this for initialization
 	void Start () {
         _renderer = GetComponent<MeshRenderer>();
@@ -28,7 +33,7 @@ public class GrenadeScript : MonoBehaviour {
         _renderer.enabled = false;
         _explosionParticle = Instantiate(_explosionParticle, transform.position, Quaternion.identity);
         _explosionParticle.Stop();
-        gameObject.SetActive(false);
+        
 	}	
 
     /// <summary>
@@ -37,7 +42,7 @@ public class GrenadeScript : MonoBehaviour {
     /// <param name="playerTransform"></param>
     public void ResetPosition(Transform playerTransform)
     {
-        transform.position = playerTransform.position;
+        transform.position = playerTransform.position + new Vector3(0, 1, 0);
     }
 
     /// <summary>

@@ -30,7 +30,7 @@ public class AbilityGrenade : AbilityBase {
 
     // Use this for initialization
     void Start () {
-        _grenade = Instantiate(_grenade, transform.position, Quaternion.identity);
+        _grenade = Instantiate(_grenade, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         _grenadeScript = _grenade.GetComponent<GrenadeScript>();
         _player = GetComponent<Player>();
         _grenadeScript.angle = angle;

@@ -166,20 +166,22 @@ public class InputController : MonoBehaviour
     /// <returns></returns>
     private bool CanMoveDirection(float horizontal, float vertical)
     {
-        _moveDirectionRay = _rigidbody.transform.position;
+        _moveDirectionRay = Globals.Player.transform.position;
         _moveDirectionRay.x += horizontal;
         _moveDirectionRay.z += vertical;
 
         Ray ray = new Ray(_moveDirectionRay, Vector3.down);
         Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
 
-        if (Physics.Raycast(ray, 2f))
+        Debug.Log("Move");
+        /*if (Physics.Raycast(ray, 1f))
         {
+            Debug.Log("OK");
             //Debug.Log(Physics.Raycast(ray, 2f));
             return true;
-        }
+        }*/
         
-        return false;
+        return true;
     }
 
     /// <summary>

@@ -29,7 +29,7 @@ public class EnemyBase : MonoBehaviour
     {
         Health = GetComponent<Health>();
         GameObject bar = Instantiate(HealthBar);
-        bar.transform.parent = GameObject.Find("Canvas").transform;
+        bar.transform.parent = GameObject.Find("UI").transform;
         _healthBar = bar.GetComponent<Slider>();
         _healthBar.maxValue = Health.CurrentHealth;
     }
