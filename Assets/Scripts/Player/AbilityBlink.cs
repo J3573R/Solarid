@@ -11,6 +11,7 @@ public class AbilityBlink : AbilityBase {
     private ParticleSystem _startParticle;
     private ParticleSystem _endParticle;
     private MeshRenderer[] _renderers;
+    private SkinnedMeshRenderer _playerRender;
     private Vector3 _targetPosition;
     private Player _player;
 
@@ -22,6 +23,7 @@ public class AbilityBlink : AbilityBase {
         _startParticle.Stop();
         _endParticle.Stop();
         _renderers = GetComponentsInChildren<MeshRenderer>();
+        _playerRender = GetComponentInChildren<SkinnedMeshRenderer>();
         _player = GetComponent<Player>();
 	}
 
@@ -41,6 +43,7 @@ public class AbilityBlink : AbilityBase {
             {
                 rend.enabled = false;
             }
+            _playerRender.enabled = false;
             transform.position = _targetPosition;
             _startParticle.Play();
             StartCoroutine(BlinkDelay());
@@ -62,5 +65,6 @@ public class AbilityBlink : AbilityBase {
         }
         
         _player.ShootingEnabled = true;
+        _playerRender.enabled = true;
     }
 }
