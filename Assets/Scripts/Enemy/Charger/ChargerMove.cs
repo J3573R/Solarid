@@ -6,11 +6,13 @@ public class ChargerMove : EnemyStateBase
 {
     private Charger _parent;
     private float _distance;
+    private float _followTime;
 
     protected override void Awake()
     {
         base.Awake();
         eState = EnemyBase.State.Move;
+        Agent.speed = 5;
 
         try
         {
@@ -24,6 +26,8 @@ public class ChargerMove : EnemyStateBase
 
     protected override void Update()
     {
+        _followTime += Time.deltaTime;
+
         // Follow player
         Agent.destination = Globals.Player.transform.position;
 
@@ -34,7 +38,7 @@ public class ChargerMove : EnemyStateBase
         {
             Parent.SetState(EnemyBase.State.Attack);
         }
-        else if(_distance >= _parent.DisengageDistance)
+        else if(_distance >= _parent.DisengageDistance && _followTime >= 3)
         {
             Parent.SetState(EnemyBase.State.Idle);
         }

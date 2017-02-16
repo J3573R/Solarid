@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChargerAlert : EnemyStateBase {
 
-    private float _timer = 1;
+    private float _timer = 0.5f;
     private float _rotationSpeed = 2;
     private float _step;
     private Vector3 _targetDirection;

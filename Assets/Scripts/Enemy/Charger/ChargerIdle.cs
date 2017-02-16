@@ -16,6 +16,7 @@ public class ChargerIdle : EnemyStateBase
         eState = EnemyBase.State.Idle;
         _timeToWalk = 2;
         _transitionToAlert = 0;
+        Agent.speed = 3.5f;
 
         try
         {
@@ -36,14 +37,14 @@ public class ChargerIdle : EnemyStateBase
 
     /// <summary>
     /// Gets random position from range, 
-    /// finds closest navmesh position and orders navmesh agent to move there after random period of time.
+    /// finds closest navmesh position from start position and orders navmesh agent to move there after random period of time.
     /// </summary>
     private void Patrol()
     {
         if (_timeToWalk <= 0)
         {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 4;
-            randomDirection += transform.position;
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 3;
+            randomDirection += Parent.StartPosition;
 
             NavMeshHit navHit;
             if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))

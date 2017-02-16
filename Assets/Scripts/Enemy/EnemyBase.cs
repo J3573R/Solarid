@@ -7,6 +7,7 @@ public class EnemyBase : MonoBehaviour
     public int Damage;
     public GameObject DeathEffect;
     public GameObject HealthBar;
+    public Vector3 StartPosition;
 
     private Slider _healthBar;
 
@@ -86,7 +87,7 @@ public class EnemyBase : MonoBehaviour
             return true;
         } else
         {
-            SetState(EnemyBase.State.Alert);
+            SetState(EnemyBase.State.Move);
             _healthBar.value = Health.CurrentHealth;
             return false;
         }
