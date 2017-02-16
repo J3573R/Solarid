@@ -29,7 +29,7 @@ public class EnemyBase : MonoBehaviour
     {
         Health = GetComponent<Health>();
         GameObject bar = Instantiate(HealthBar);
-        bar.transform.parent = GameObject.Find("UI").transform;
+        bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
         _healthBar.maxValue = Health.CurrentHealth;
     }
@@ -78,14 +78,15 @@ public class EnemyBase : MonoBehaviour
     /// <returns>If dead true, otherwise false</returns>
     public virtual bool TakeDamage(int damage)
     {
+
         if (Health.TakeDamage(damage))
         {
             Die();
             _healthBar.value = Health.CurrentHealth;
             return true;
-        }
-        else
+        } else
         {
+            SetState(EnemyBase.State.Alert);
             _healthBar.value = Health.CurrentHealth;
             return false;
         }
@@ -97,10 +98,7 @@ public class EnemyBase : MonoBehaviour
 
         if (other.tag == "PlayerBullet")
         {
-            if (!TakeDamage(Globals.PlayerDamage) && CurrentState != State.Alert && CurrentState != State.Move && CurrentState != State.Attack)
-            {
-                SetState(EnemyBase.State.Alert);
-            }            
+            TakeDamage(Globals.PlayerDamage);        
 
             Destroy(other.gameObject);
         }

@@ -169,19 +169,18 @@ public class InputController : MonoBehaviour
         _moveDirectionRay = Globals.Player.transform.position;
         _moveDirectionRay.x += horizontal;
         _moveDirectionRay.z += vertical;
+        _moveDirectionRay.y = 1;
 
         Ray ray = new Ray(_moveDirectionRay, Vector3.down);
         Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
 
-        Debug.Log("Move");
-        /*if (Physics.Raycast(ray, 1f))
+        if (Physics.Raycast(ray, 2f))
         {
-            Debug.Log("OK");
-            //Debug.Log(Physics.Raycast(ray, 2f));
+            Debug.Log(Physics.Raycast(ray, 2f));
             return true;
-        }*/
+        }
         
-        return true;
+        return false;
     }
 
     /// <summary>

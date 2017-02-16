@@ -19,11 +19,6 @@ public class GrenadeScript : MonoBehaviour {
 
     public  float angle;
 
-    void Awake()
-    {
-        gameObject.SetActive(false);
-    }
-
 	// Use this for initialization
 	void Start () {
         _renderer = GetComponent<MeshRenderer>();
@@ -141,5 +136,7 @@ public class GrenadeScript : MonoBehaviour {
             }
             
         }
+
+        gameObject.SetActive(false);
     }
 }
