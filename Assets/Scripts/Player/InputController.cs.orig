@@ -4,42 +4,33 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     // Rotation speed of the player
-    public float RotationSpeed = 8f;
-
+    public float RotationSpeed = 8f;    
     public PlayerAnimation PlayerAnimation;
-
 
     
     private Player _player;
     private Camera _camera;
-
-    private float _verticalDirection;
-
+    
     
 
     void Awake()
     {
         _player = GetComponent<Player>();
-
         
         _camera = FindObjectOfType<Camera>();
         PlayerAnimation = FindObjectOfType<PlayerAnimation>(); 
     }
 
     private void FixedUpdate()
-    {
-            }
+    {                     
         _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            
-            _rigidbody.velocity = Vector3.zero;
-        }        
-
+                
+    }
 
     void Update()
     {
         GetInput();               
-
-        }
+                
             
     }
 
@@ -49,21 +40,18 @@ public class InputController : MonoBehaviour
     private void GetInput()
     {
         if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Ability"))
-        {
-            _moveSpeed = 3;
+        {            
             _player.Movement.SetTargeting(true);            
         }
 
         if (Input.GetButtonUp("Fire1") && !Input.GetButton("Ability"))
         {
-            _moveSpeed = 5;
             _player.Movement.SetTargeting(false);
         }        
 
         if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
         {
             _player.AbilityController.Execute();
-            _moveSpeed = 5;
             _player.Movement.SetTargeting(false);            
         }
 
@@ -98,6 +86,80 @@ public class InputController : MonoBehaviour
         
     }
 
+<<<<<<< HEAD
+    /// <summary>
+    /// Defines mouse position from screen size and rotates the players Y axis by the angle.
+    /// </summary>
+    private void ListenMouse()
+    {
+        
+        _vMousePos = Input.mousePosition;
+        
+        _fPlayerPosInScreen = Camera.main.WorldToScreenPoint(_player.transform.position);
+        _fDiff = _fPlayerPosInScreen - _vMousePos;
+        _fSign = (_fPlayerPosInScreen.y < _vMousePos.y) ? 1.0f : -1.0f;
+        _fAngle = (Vector3.Angle(Vector3.right, _fDiff) * _fSign) - 90;
+
+        transform.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.Euler(0, _fAngle, 0), Time.fixedDeltaTime * AimingRotationSpeed);    
+    }
+
+    /// <summary>
+    /// Listens keyboard Input and increases horizontal & vertical velocity of player times Speed.
+    /// </summary>
+    private void Move()
+    {
+        
+        float rotationSpeed = 7;
+
+        _moveDirection = Vector3.zero;
+        Vector3 previousLocation = transform.position;
+
+        _moveDirection.x = Input.GetAxisRaw("Horizontal");
+        _moveDirection.z = Input.GetAxisRaw("Vertical");
+
+        if (CanMoveDirection(_moveDirection.x, _moveDirection.z))
+        {            
+            _rigidbody.velocity = _moveDirection.normalized * _moveSpeed;
+
+            if (!_targeting)
+                _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
+                    Time.fixedDeltaTime*rotationSpeed);
+        }
+        else
+        {
+            _rigidbody.velocity = Vector3.zero;
+        }
+    }
+
+    /// <summary>
+    /// Checks if next step of movement goes over platform.
+    /// </summary>
+    /// <param name="horizontal">Horizontal movement direction</param>
+    /// <param name="vertical">Vertical movement direction</param>
+    /// <returns></returns>
+    private bool CanMoveDirection(float horizontal, float vertical)
+    {
+        _moveDirectionRay = Globals.Player.transform.position;
+        _moveDirectionRay.x += horizontal;
+        _moveDirectionRay.z += vertical;
+        _moveDirectionRay.y = 1;
+
+        Ray ray = new Ray(_moveDirectionRay, Vector3.down);
+        Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
+
+        if (Physics.Raycast(ray, 2f))
+        {
+            Debug.Log(Physics.Raycast(ray, 2f));
+            return true;
+        }
+        
+        return false;
+    }
+=======
+    
+>>>>>>> 114b849c6efeff3eadfa2cfec73ac787a327327e
+
+    /// <summary>
     /// uses raycast to determine mouseposition and returns it.
     /// </summary>
     /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>

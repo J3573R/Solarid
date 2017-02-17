@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public InputController Input;
     [HideInInspector] public AbilityController AbilityController;
     [HideInInspector] public Health Health;
+    [HideInInspector] public PlayerMovement Movement;
+    [HideInInspector] public PlayerAnimation Animation;
     public bool ShootingEnabled = true;
     public Slider HealthBar;
     
@@ -21,6 +23,8 @@ public class Player : MonoBehaviour
         _gun = GetComponentInChildren<Gun>();
         Input = GetComponent<InputController>();
         AbilityController = GetComponent<AbilityController>();
+        Movement = GetComponent<PlayerMovement>();
+        Animation = GetComponent<PlayerAnimation>();        
         Health = GetComponent<Health>();
         HealthBar.maxValue = Health.CurrentHealth;
     }

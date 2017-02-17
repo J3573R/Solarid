@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour {
 
     public Animator Animator;
+    public bool Targeting;
+    public bool Moving;
+    public AnimationState MoveDirection;
 
     private AnimationState _currentState;
 
@@ -26,12 +29,33 @@ public class PlayerAnimation : MonoBehaviour {
 	void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
+
+        
+    }
+
+    private void Update()
+    {
+        CheckAnimation();
+    }
+
+    private void CheckAnimation()
+    {
+        if (Moving && !Targeting)
+            SetAnimation(AnimationState.Run);
+        else if (Moving && Targeting && MoveDirection == AnimationState.RunForward)
+            SetAnimation(AnimationState.RunForward);
+        else if (Moving && Targeting && MoveDirection == AnimationState.RunBack)
+            SetAnimation(AnimationState.RunBack);
+        else
+            SetAnimation(AnimationState.Idle);
+        
     }
 
     public void SetAnimation(AnimationState animation)
     {
         if(animation != _currentState)
         {
+            Debug.Log("SetAnimation");
             _currentState = animation;
             Animator.SetInteger("animState", (int)animation);
         }        
