@@ -125,9 +125,11 @@ public class PlayerMovement : MonoBehaviour {
     /// <returns></returns>
     private bool CanMoveDirection(float horizontal, float vertical)
     {
+
         _moveDirectionRay = _rigidbody.transform.position;
         _moveDirectionRay.x += horizontal;
         _moveDirectionRay.z += vertical;
+        _moveDirectionRay.y = 1;
 
         Ray ray = new Ray(_moveDirectionRay, Vector3.down);
         Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
