@@ -7,40 +7,31 @@ public class InputController : MonoBehaviour
     public float RotationSpeed = 8f;
 
     public PlayerAnimation PlayerAnimation;
-
-
     
     private Player _player;
     private Camera _camera;
-
-    private float _verticalDirection;
 
     
 
     void Awake()
     {
         _player = GetComponent<Player>();
-
         
         _camera = FindObjectOfType<Camera>();
         PlayerAnimation = FindObjectOfType<PlayerAnimation>(); 
     }
 
     private void FixedUpdate()
-    {
-            }
+    {            
         _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             
-            _rigidbody.velocity = Vector3.zero;
-        }        
-
+    }        
 
     void Update()
     {
         GetInput();               
 
-        }
-            
+                    
     }
 
     /// <summary>
@@ -50,20 +41,17 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Ability"))
         {
-            _moveSpeed = 3;
             _player.Movement.SetTargeting(true);            
         }
 
         if (Input.GetButtonUp("Fire1") && !Input.GetButton("Ability"))
         {
-            _moveSpeed = 5;
             _player.Movement.SetTargeting(false);
         }        
 
         if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
         {
             _player.AbilityController.Execute();
-            _moveSpeed = 5;
             _player.Movement.SetTargeting(false);            
         }
 
@@ -98,6 +86,7 @@ public class InputController : MonoBehaviour
         
     }
 
+    /// <summary>
     /// uses raycast to determine mouseposition and returns it.
     /// </summary>
     /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>

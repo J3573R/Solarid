@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (inputX != 0 || inputZ != 0)
         {
-            
+                        
             float rotationSpeed = 7;
             _player.Animation.Moving = true;
             _moveDirection = Vector3.zero;
@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour {
         
         float tmp = Vector3.Angle(forward, direction);
 
-        Debug.Log(Vector3.Angle(forward, direction));
+        //Debug.Log(Vector3.Angle(forward, direction));
         if (tmp < 15)
             _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForward;
         if (tmp > 165)
@@ -135,9 +135,10 @@ public class PlayerMovement : MonoBehaviour {
         if (Physics.Raycast(ray, 2f))
         {
             //Debug.Log(Physics.Raycast(ray, 2f));
+            
             return true;
         }
-
+        Debug.Log("TOIMII");
         return false;
     }
 
