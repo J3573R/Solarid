@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AbilityController : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class AbilityController : MonoBehaviour {
     private AbilityGrenade _grenade;
     private AbilityBase _currentAbility;
     private float _abilityIndex;
+    private Text _cooldownDisplay;
 
 
     // Use this for initialization
@@ -17,7 +19,9 @@ public class AbilityController : MonoBehaviour {
         _player = GetComponent<Player>();
         _blink = GetComponent<AbilityBlink>();
         _grenade = GetComponent<AbilityGrenade>();
-        _currentAbility = _grenade;
+        _currentAbility = _blink;
+        GameObject tmp = GameObject.Find("Cooldown");
+        _cooldownDisplay = tmp.GetComponent<Text>();
     }
 
     /// <summary>
@@ -46,6 +50,11 @@ public class AbilityController : MonoBehaviour {
         _currentAbility.Execute();
     }
 
+    public float GetCurrentCooldown()
+    {
+        return _currentAbility.GetRemainingCooldown();
+    }
+
     /// <summary>
     /// Sets the current ability in use
     /// </summary>
@@ -64,7 +73,10 @@ public class AbilityController : MonoBehaviour {
         }            
     }
 
-
+    /// <summary>
+    /// Scrolls current weapon index
+    /// </summary>
+    /// <param name="tmp"></param>
     public void ScrollWeapon(int tmp)
     {
         //Debug.Log(_abilityIndex);
@@ -83,4 +95,26 @@ public class AbilityController : MonoBehaviour {
         //Debug.Log("TRUEINDEX = " + _abilityIndex);
     }
 
+
+    private void Update()
+    {
+        DisplayCooldown();
+    }
+
+    /// <summary>
+    /// Gets current abilitys cooldown and displays it. "Ready" if no cooldown remaining
+    /// </summary>
+    private void DisplayCooldown()
+    {
+        int tmp = (int)_currentAbility.GetRemainingCooldown();
+
+        if (tmp <= 0)
+        {
+            _cooldownDisplay.text = "Ready";
+        }
+        else
+        {
+            _cooldownDisplay.text = "Cooldown: " + tmp.ToString();
+        }
+    }
 }

@@ -55,13 +55,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         Debug.Log("DIE BITCH");
+        //TODO: Implement dieing
     }
 
-    private void Update()
-    {
-        if (AbilityController == null)
-        {
-            Debug.Log("NULL");
-        }
-    }
 }

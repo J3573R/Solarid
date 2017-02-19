@@ -16,17 +16,23 @@ public class AbilityGrenade : AbilityBase {
     /// </summary>
     public override void Execute()
     {
-        Vector3 target = _player.Input.GetMousePosition();
-
-        if (target != Vector3.zero)
+        if (CoolDownRemaining <= 0)
         {
-            _grenadeScript.targetPosition = target;
-            _grenadeScript.ResetPosition(transform);
-            _grenadeScript.Throw();
+            Vector3 target = _player.Input.GetMousePosition();
+
+            if (target != Vector3.zero)
+            {
+                _grenadeScript.targetPosition = target;
+                _grenadeScript.ResetPosition(transform);
+                _grenadeScript.Throw();
+                CoolDownRemaining = CoolDown;
+            }
         }
 
         //TODO: Cooldown/mana stuff needed, for all abilities
     }
+
+    
 
     // Use this for initialization
     void Start () {
@@ -34,6 +40,6 @@ public class AbilityGrenade : AbilityBase {
         _grenadeScript = _grenade.GetComponent<GrenadeScript>();
         _player = GetComponent<Player>();
         _grenadeScript.angle = angle;
-	}
-        
+	}    
+
 }

@@ -32,22 +32,26 @@ public class AbilityBlink : AbilityBase {
     /// </summary>
     public override void Execute()
     {
-        _targetPosition = _player.Input.GetMousePosition();
-
-        if (_targetPosition != Vector3.zero)
+        if (CoolDownRemaining <= 0)
         {
-            _targetPosition.y = 0;
-            _startParticle.transform.position = transform.position;
+            _targetPosition = _player.Input.GetMousePosition();
 
-            foreach (MeshRenderer rend in _renderers)
+            if (_targetPosition != Vector3.zero)
             {
-                rend.enabled = false;
+                _targetPosition.y = 0;
+                _startParticle.transform.position = transform.position;
+                CoolDownRemaining = CoolDown;
+
+                foreach (MeshRenderer rend in _renderers)
+                {
+                    rend.enabled = false;
+                }
+                _playerRender.enabled = false;
+                transform.position = _targetPosition;
+                _startParticle.Play();
+                StartCoroutine(BlinkDelay());
             }
-            _playerRender.enabled = false;
-            transform.position = _targetPosition;
-            _startParticle.Play();
-            StartCoroutine(BlinkDelay());
-        }               
+        }          
     }
 
     /// <summary>

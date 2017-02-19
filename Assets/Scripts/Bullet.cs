@@ -14,21 +14,44 @@ public class Bullet : MonoBehaviour
     // Lifetime of the bullet
     private float _time;
 
+    public Player _player;
+    private bool _active;
+
     void Awake()
     {
         _fMaxDist = Range / Speed;
+        _player = FindObjectOfType<Player>();
         _time = 0;
+
+    }
+
+    private void OnDisable()
+    {
+        transform.position = _player.transform.position;
+    }
+
+    private void OnEnable()
+    {
+        _active = true;
+
     }
 
     void Update()
     {
-        if (_time > _fMaxDist)
+        if (_active)
         {
-            Destroy(gameObject);
+            if (_time > _fMaxDist)
+            {
+                gameObject.SetActive(false);
+                _time = 0;
+            }
+            else
+            {
+                transform.Translate(Vector3.up * Speed * Time.deltaTime);
+                _time += Time.deltaTime;
+            }
         }
-
-        transform.Translate(Vector3.up * Speed * Time.deltaTime);
-        _time += Time.deltaTime;
+        
     }
 
 }
