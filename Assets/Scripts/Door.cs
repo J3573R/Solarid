@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public Vector3 OpenDirection = new Vector3(0, -8, 0);
+    // Direction which door starts to open
+    public Vector3 OpenDirection = new Vector3(0, -7.8f, 0);
 
     private float _speed = 2;
     private Vector3 _startPosition;
     private Vector3 _endPosition;
     private float _state = 0;
+    // Is door currently moving
     private bool _moving = false;
+    // State of the door
     private bool _open = false;
 
     public bool Open { get { return _open; } }
     public bool Moving { get { return _moving; } }
 
+
+    /// <summary>
+    /// Sets door current position and target position & starts enables moving.
+    /// </summary>
+    /// <returns>True if successfully started moving door, otherwise false</returns>
     public bool ToggleDoor()
     {
         if (!_moving)
@@ -41,7 +49,6 @@ public class Door : MonoBehaviour
     
     void Update()
     {
-
         if (_moving && _state < 1)
         {
             _state += Time.deltaTime / _speed;

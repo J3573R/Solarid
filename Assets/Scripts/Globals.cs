@@ -4,7 +4,11 @@ using UnityEngine;
 
 public static class Globals
 {
+    // The one and only player
     public static GameObject Player;
+    // Player damage
+    // TODO: Transfer this to player or gun or something
     public static int PlayerDamage = 5;
+    // Interact button is or is not pressed
     public static bool Interact;
 }
