@@ -10,7 +10,6 @@ public class InputController : MonoBehaviour
     
     private Player _player;
     private Camera _camera;
-
     
 
     void Awake()
@@ -29,9 +28,7 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        GetInput();               
-
-                    
+        GetInput();
     }
 
     /// <summary>
@@ -60,12 +57,21 @@ public class InputController : MonoBehaviour
             _player.Shoot();
         }
 
+        if (Input.GetButtonDown("Interact"))
+        {
+            Globals.Interact = true;
+        }
+
+        if (Input.GetButtonUp("Interact"))
+        {
+            Globals.Interact = false;
+        }
+
         if (Input.GetKey(KeyCode.P))
         {
             Debug.Log("PRAISE THE SUN");
             PlayerAnimation.SetAnimation(PlayerAnimation.AnimationState.Praise);
         }
-        
               
         if (Input.GetButtonUp("SetBlink"))        
             _player.AbilityController.SetAbility(AbilityController.Ability.Blink);

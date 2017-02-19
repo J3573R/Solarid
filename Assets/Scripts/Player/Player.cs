@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
 
     public bool TakeDamage(int damage)
     {
+
+        Globals.Interact = false;
         if (Health.TakeDamage(damage))
         {
             Die();

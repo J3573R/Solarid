@@ -6,4 +6,5 @@ public static class Globals
 {
     public static GameObject Player;
     public static int PlayerDamage = 5;
+    public static bool Interact;
 }

@@ -140,7 +140,6 @@ public class PlayerMovement : MonoBehaviour {
             
             return true;
         }
-        Debug.Log("TOIMII");
         return false;
     }
 
