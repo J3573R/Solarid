@@ -22,7 +22,7 @@ public class AbilityController : MonoBehaviour {
         _blink = GetComponent<AbilityBlink>();
         _grenade = GetComponent<AbilityGrenade>();
         _currentAbility = _blink;
-        GameObject tmp = GameObject.Find("Cooldown");
+        GameObject tmp = GameObject.Find("CoolDown");
         _cooldownDisplay = tmp.GetComponent<Text>();
     }
 

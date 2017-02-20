@@ -10,6 +10,7 @@ public class PlayerAnimation : MonoBehaviour {
     public bool Moving;
     public bool CastOnce;
     public AnimationState MoveDirection;
+    public float CastTime;
 
     private AnimationState _currentState;
     private AnimationStance _currentStance;
@@ -18,7 +19,6 @@ public class PlayerAnimation : MonoBehaviour {
     {
         Idle = 0,
         Run = 1,
-        CastingCharge = 2,
         RunForward = 2,
         RunForwardRight = 3,
         RunRight = 4,
@@ -54,26 +54,37 @@ public class PlayerAnimation : MonoBehaviour {
     {
         if (_currentStance == AnimationStance.Aiming)
         {
-
+            if (!Moving)
+                SetAnimation(AnimationState.Idle);
+            else if (Moving && MoveDirection == AnimationState.RunForward)
+                SetAnimation(AnimationState.RunForward);
+            else if (Moving && MoveDirection == AnimationState.RunForwardRight)
+                SetAnimation(AnimationState.RunForwardRight);
+            else if (Moving && MoveDirection == AnimationState.RunRight)
+                SetAnimation(AnimationState.RunRight);
+            else if (Moving && MoveDirection == AnimationState.RunBackRight)
+                SetAnimation(AnimationState.RunBackRight);
+            else if (Moving && MoveDirection == AnimationState.RunBack)
+                SetAnimation(AnimationState.RunBack);
+            else if (Moving && MoveDirection == AnimationState.RunBackLeft)
+                SetAnimation(AnimationState.RunBackLeft);
+            else if (Moving && MoveDirection == AnimationState.RunLeft)
+                SetAnimation(AnimationState.RunLeft);
+            else if (Moving && MoveDirection == AnimationState.RunForwardLeft)
+                SetAnimation(AnimationState.RunForwardLeft);
+            
         }
-        /*
-        if (Moving && !_player.Movement.Casting && !_player.Movement.Shooting)
-            SetAnimation(AnimationState.Run);
-        else if (!_player.Movement.Casting)
-            SetAnimation(AnimationState.RunForward);
-        else if (Moving && Targeting && MoveDirection == AnimationState.RunForward)
-            SetAnimation(AnimationState.RunForward);
-        else if (Moving && Targeting && MoveDirection == AnimationState.RunBack)
-            SetAnimation(AnimationState.RunBack);
-        else
+        
+        
                  
-    */
+    
         if (_currentStance == AnimationStance.Casting)
         {
             if (CastOnce)
             {
                 SetAnimation(AnimationState.Cast);
                 CastOnce = false;
+                StartCoroutine(ResetCastIdle());
             }
 
 
@@ -95,14 +106,21 @@ public class PlayerAnimation : MonoBehaviour {
             SetAnimationStance(AnimationStance.Aiming);
         else
             SetAnimationStance(AnimationStance.Idle);
+    }
 
+    private IEnumerator ResetCastIdle()
+    {
+        yield return new WaitForSeconds(CastTime);
+        SetAnimation(AnimationState.Idle);
 
+        
     }
 
     private void SetAnimationStance(AnimationStance stance)
     {
         if (stance != _currentStance)
         {
+            StopAllCoroutines();
             Debug.Log("SetStance: " + stance);
             _currentStance = stance;
             Animator.SetInteger("stance", (int)stance);

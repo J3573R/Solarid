@@ -122,11 +122,63 @@ public class PlayerMovement : MonoBehaviour {
         
         float tmp = Vector3.Angle(forward, direction);
 
-        //Debug.Log(Vector3.Angle(forward, direction));
         if (tmp < 15)
             _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForward;
-        if (tmp > 165)
+        if (tmp >= 165)
             _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBack;
+
+        if (forward.z >= 0)
+        {
+            //Debug.Log("Ylös");
+
+            if (direction.x >= 0)
+            {
+                //Debug.Log("oikea");
+                if (tmp >= 15 && tmp < 60)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
+                else if (tmp >= 60 && tmp < 120)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunRight; 
+                else if (tmp >= 120 && tmp < 165)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackRight;
+            } else
+            {
+                if (tmp >= 15 && tmp < 60)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardLeft;
+                else if (tmp >= 60 && tmp < 120)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
+                else if (tmp >= 120 && tmp < 165)
+                {
+                    Debug.Log("RunBackLeft");
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
+                }
+                    
+
+            }
+        }
+        else
+        {
+            if (direction.x >= 0)
+            {
+                if (tmp >= 15 && tmp < 60)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardLeft;
+                else if (tmp >= 60 && tmp < 120)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
+                else if (tmp >= 120 && tmp < 165)
+                {
+                    Debug.Log("RunBackLeft");
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
+                }
+            }
+            else
+            {
+                if (tmp >= 15 && tmp < 60)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
+                else if (tmp >= 60 && tmp < 120)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunRight;
+                else if (tmp >= 120 && tmp < 165)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackRight;
+            }
+        }
         
         //if (tmp >= )
         
