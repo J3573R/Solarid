@@ -40,19 +40,36 @@ public class InputController : MonoBehaviour
         {
             _player.Movement.SetCasting(true);            
         }         
-        else if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
+        else if (Input.GetButtonUp("Ability"))
         {
-            _player.Movement.Shooting(false);
             _player.Movement.SetCasting(false);
-            _player.AbilityController.Execute();
+        }
+        
+        if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
+        {
+            _player.Movement.SetShooting(false);
+            _player.Movement.SetCasting(false);
         }
 
         if (Input.GetButton("Fire1"))
-        {                    
-            _player.Shoot();
+        {                                           
+            if (!_player.Movement.Casting)
+            {
+                _player.Movement.SetShooting(true);
+                _player.Shoot();
+            } else
+            {
+                _player.AbilityController.Execute();
+            }
+            
+        } else
+        {
+            _player.Movement.SetShooting(false);
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
             _player.AbilityController.Execute();
-            _player.Movement.Shooting(true);
-            _player.Movement.SetCasting(false);
         }
 
         if (Input.GetButtonDown("Interact"))

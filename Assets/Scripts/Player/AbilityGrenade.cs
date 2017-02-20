@@ -16,8 +16,6 @@ public class AbilityGrenade : AbilityBase {
     /// </summary>
     public override void Execute()
     {
-        if (CoolDownRemaining <= 0)
-        {
             Vector3 target = _player.Input.GetMousePosition();
 
             if (target != Vector3.zero)
@@ -27,7 +25,7 @@ public class AbilityGrenade : AbilityBase {
                 _grenadeScript.Throw();
                 CoolDownRemaining = CoolDown;
             }
-        }
+        
 
         //TODO: Cooldown/mana stuff needed, for all abilities
     }

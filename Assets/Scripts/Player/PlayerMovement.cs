@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private Player _player;
     private Rigidbody _rigidbody;
-    public bool Aiming;
+    public bool Shooting;
     public bool Casting;
     public float AimingRotationSpeed = 20f;
     private Vector2 _vMousePos;
@@ -31,25 +31,25 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Aiming || Casting)
+        if (Shooting || Casting)
         {
             ListenMouse();
         }
     }
 
-    public void Shooting(bool state)
+    public void SetShooting(bool state)
     {
         if (state)
         {
-            Aiming = state;
-            _player.Animation.Targeting = state;
+            Shooting = state;
+            _player.Animation.Casting = state;
             _moveSpeed = 3;
 
         }
         else
         {
-            Aiming = false;
-            _player.Animation.Targeting = state;
+            Shooting = false;
+            _player.Animation.Casting = state;
             _moveSpeed = 5;
         }
     }
@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour {
             {
                 _rigidbody.velocity = _moveDirection.normalized * _moveSpeed;
 
-                if (!Aiming)
+                if (!Shooting)
                     _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
                         Time.fixedDeltaTime * rotationSpeed);
             }

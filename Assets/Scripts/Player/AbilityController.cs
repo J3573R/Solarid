@@ -12,6 +12,8 @@ public class AbilityController : MonoBehaviour {
     private float _abilityIndex;
     private Text _cooldownDisplay;
 
+    public float CastDelayInSeconds;
+
 
     // Use this for initialization
     void Start()
@@ -47,13 +49,23 @@ public class AbilityController : MonoBehaviour {
     /// </summary>
     public void Execute()
     {
-        if (_player.Movement.Casting)
-            _currentAbility.Execute();
+        if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
+        {
+            StartCoroutine(CastDelay());
+            _player.Animation.CastOnce = true;
+        }
+            
     }
 
     public float GetCurrentCooldown()
     {
         return _currentAbility.GetRemainingCooldown();
+    }
+
+    private IEnumerator CastDelay()
+    {
+        yield return new WaitForSeconds(CastDelayInSeconds);
+        _currentAbility.Execute();
     }
 
     /// <summary>
