@@ -8,15 +8,24 @@ public class EnemyBase : MonoBehaviour
     public GameObject DeathEffect;
     public GameObject HealthBar;
     public Vector3 StartPosition;
+    public Animator Animator;
 
     private Slider _healthBar;
-
+    
     public enum State
     {
         Idle,
         Alert,
         Move,
         Attack
+    }
+
+    public enum AnimationState
+    {
+        Idle = 0,
+        Walk = 1,
+        Attack = 2,
+        Death = 3
     }
 
     protected EnemyBase.State CurrentState;
@@ -29,6 +38,7 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Awake()
     {
         Health = GetComponent<Health>();
+        Animator = GetComponentInChildren<Animator>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
@@ -55,7 +65,7 @@ public class EnemyBase : MonoBehaviour
         {            
             case State.Idle:
                 CurrentStateObject = gameObject.AddComponent<ChargerIdle>();
-                CurrentState = state;
+                CurrentState = state;                
                 break;
             case State.Alert:
                 CurrentStateObject = gameObject.AddComponent<ChargerAlert>();

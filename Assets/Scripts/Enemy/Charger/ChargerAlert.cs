@@ -14,6 +14,7 @@ public class ChargerAlert : EnemyStateBase {
     {
         base.Awake();
         eState = EnemyBase.State.Alert;
+        Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
     }
 
     protected override void Update()
