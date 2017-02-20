@@ -9,6 +9,7 @@ public class ChargerIdle : EnemyStateBase
     private float _timeToWalk;
     private float _distance;
     private float _transitionToAlert;
+    private bool Idling;
 
     protected override void Awake()
     {
@@ -33,6 +34,27 @@ public class ChargerIdle : EnemyStateBase
     {
         Patrol();
         ChangeToAlert();
+        if(IsNavMeshMoving() && !Idling)
+        {
+            Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
+            Idling = true;
+        }
+    }
+
+    private bool IsNavMeshMoving()
+    {
+        if (!Agent.pathPending)
+        {
+            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            {
+                if (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -43,7 +65,7 @@ public class ChargerIdle : EnemyStateBase
     {
         if (_timeToWalk <= 0)
         {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 3;
+            Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * 3) + Vector3.one;
             randomDirection += Parent.StartPosition;
 
             NavMeshHit navHit;
@@ -51,6 +73,8 @@ public class ChargerIdle : EnemyStateBase
             {
                 Agent.destination = navHit.position;
                 _timeToWalk = UnityEngine.Random.Range(1, 3);
+                Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+                Idling = false;
             }
         }
         else
