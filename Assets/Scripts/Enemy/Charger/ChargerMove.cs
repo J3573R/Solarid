@@ -12,6 +12,7 @@ public class ChargerMove : EnemyStateBase
     {
         base.Awake();
         eState = EnemyBase.State.Move;
+        Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
         Agent.speed = 5;
 
         try

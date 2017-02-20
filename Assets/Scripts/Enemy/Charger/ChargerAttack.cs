@@ -10,6 +10,8 @@ public class ChargerAttack : EnemyStateBase
     private float _attackTimer;
     private float _distance;
 
+    bool attack = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,6 +33,14 @@ public class ChargerAttack : EnemyStateBase
             _attackTimer += Time.deltaTime;
             if (_attackTimer >= TimeBetweenAttacks)
             {
+                //Debug.Log("ATTACK");
+                if (attack)
+                {
+
+                    Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
+                    attack = false;
+                }
+
                 Globals.Player.GetComponent<Player>().TakeDamage(Parent.Damage);
                 _attackTimer = 0;
             }
