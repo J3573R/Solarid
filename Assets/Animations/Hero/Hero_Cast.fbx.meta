@@ -71,6 +71,8 @@ ModelImporter:
     100126: grapplePoint_r
     100128: //RootNode
     100130: root_spine
+    100132: IK Chain001
+    100134: IK Chain002
     400000: bone_ankle_l
     400002: bone_ankle_r
     400004: bone_arm_l
@@ -137,6 +139,8 @@ ModelImporter:
     400126: grapplePoint_r
     400128: //RootNode
     400130: root_spine
+    400132: IK Chain001
+    400134: IK Chain002
     7400000: Hero_Cast
     9500000: //RootNode
   materials:
