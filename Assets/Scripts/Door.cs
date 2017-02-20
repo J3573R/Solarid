@@ -40,6 +40,7 @@ public class Door : MonoBehaviour
             _startPosition = transform.position;
             _open = !_open;
             _state = 0;
+            Globals.CameraScript.Harlem(0.2f, 2f);
             _moving = true;
             return true;
         }
@@ -52,7 +53,7 @@ public class Door : MonoBehaviour
         if (_moving && _state < 1)
         {
             _state += Time.deltaTime / _speed;
-            transform.position = Vector3.Lerp(_startPosition, _endPosition, Easing.EaseInOut(_state, EasingType.Cubic, EasingType.Quartic));
+            transform.position = Vector3.Lerp(_startPosition, _endPosition, Easing.EaseInOut(_state, EasingType.Quartic, EasingType.Quartic));
             if (_state >= 1)
             {
                 _moving = false;
