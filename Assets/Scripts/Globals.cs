@@ -11,4 +11,6 @@ public static class Globals
     public static int PlayerDamage = 5;
     // Interact button is or is not pressed
     public static bool Interact;
+
+    public static CameraFollow CameraScript;
 }
