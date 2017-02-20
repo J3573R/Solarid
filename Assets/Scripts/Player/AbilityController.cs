@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AbilityController : MonoBehaviour {
 
-    private Player _player;
+    private Player _player;    
     private AbilityBlink _blink;
     private AbilityGrenade _grenade;
     private AbilityBase _currentAbility;
@@ -47,7 +47,8 @@ public class AbilityController : MonoBehaviour {
     /// </summary>
     public void Execute()
     {
-        _currentAbility.Execute();
+        if (_player.Movement.Casting)
+            _currentAbility.Execute();
     }
 
     public float GetCurrentCooldown()
