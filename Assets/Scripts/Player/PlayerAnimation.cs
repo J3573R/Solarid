@@ -29,7 +29,6 @@ public class PlayerAnimation : MonoBehaviour {
 	void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
-
         
     }
 
