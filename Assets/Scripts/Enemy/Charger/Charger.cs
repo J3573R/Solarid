@@ -18,4 +18,36 @@ public class Charger : EnemyBase
         SetState(EnemyBase.State.Idle);
         StartPosition = transform.position;
     }
+
+    /// <summary>
+    /// Creates and changes state for enemy.
+    /// </summary>
+    /// <param name="state">State to change</param>
+    public override void SetState(EnemyBase.State state)
+    {
+        if (CurrentStateObject != null)
+        {
+            Destroy(CurrentStateObject);
+        }
+
+        switch (state)
+        {
+            case State.Idle:
+                CurrentStateObject = gameObject.AddComponent<ChargerIdle>();
+                CurrentState = state;
+                break;
+            case State.Alert:
+                CurrentStateObject = gameObject.AddComponent<ChargerAlert>();
+                CurrentState = state;
+                break;
+            case State.Move:
+                CurrentStateObject = gameObject.AddComponent<ChargerMove>();
+                CurrentState = state;
+                break;
+            case State.Attack:
+                CurrentStateObject = gameObject.AddComponent<ChargerAttack>();
+                CurrentState = state;
+                break;
+        }
+    }
 }

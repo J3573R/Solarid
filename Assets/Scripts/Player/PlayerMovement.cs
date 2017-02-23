@@ -129,11 +129,9 @@ public class PlayerMovement : MonoBehaviour {
 
         if (forward.z >= 0)
         {
-            //Debug.Log("Ylös");
 
             if (direction.x >= 0)
             {
-                //Debug.Log("oikea");
                 if (tmp >= 15 && tmp < 60)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
                 else if (tmp >= 60 && tmp < 120)
@@ -148,7 +146,6 @@ public class PlayerMovement : MonoBehaviour {
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
                 else if (tmp >= 120 && tmp < 165)
                 {
-                    Debug.Log("RunBackLeft");
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
                 }
                     
@@ -165,7 +162,6 @@ public class PlayerMovement : MonoBehaviour {
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
                 else if (tmp >= 120 && tmp < 165)
                 {
-                    Debug.Log("RunBackLeft");
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
                 }
             }
