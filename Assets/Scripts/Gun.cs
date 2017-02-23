@@ -14,6 +14,12 @@ public class Gun : MonoBehaviour
     // pool of bullets
     public List<GameObject> _bullets;
 
+    public float TargetDistance;
+
+    private Player _player;
+    private Vector3 _target;
+    private Vector3 _aimRotation;
+
     // Guns collider location
     private Collider _collider;
     // Current status of reload
@@ -22,6 +28,7 @@ public class Gun : MonoBehaviour
     void Awake()
     {
         _collider = GetComponent<Collider>();
+        _player = FindObjectOfType<Player>();
         SetupBulletPool();
     }
 
@@ -57,13 +64,23 @@ public class Gun : MonoBehaviour
             {
                 if (!_bullets[i].activeInHierarchy)
                 {
+                    _target = GetTargetPosition();
                     _bullets[i].transform.position = _collider.transform.position;
-                    _bullets[i].transform.rotation = _collider.transform.rotation;
+                    _target.y = _bullets[i].transform.position.y;
+                    //Debug.Log(_target);
+                    _bullets[i].transform.LookAt(_target);
                     _bullets[i].SetActive(true);
                     break;
                 }
             }
             _reload = Reload;
         }
+    }
+
+    private Vector3 GetTargetPosition()
+    {
+        Vector3 direction = _player.transform.TransformDirection(transform.forward);
+        Debug.Log(direction);
+        return direction * TargetDistance;
     }
 }

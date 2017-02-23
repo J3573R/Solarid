@@ -122,35 +122,33 @@ public class PlayerMovement : MonoBehaviour {
         
         float tmp = Vector3.Angle(forward, direction);
 
-        if (tmp < 15)
+        if (tmp < 22.5f)
             _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForward;
-        if (tmp >= 165)
+        if (tmp >= 157.5f)
             _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBack;
 
         if (forward.z >= 0)
         {
-            //Debug.Log("Ylös");
+            //Debug.Log(tmp);
 
             if (direction.x >= 0)
             {
-                //Debug.Log("oikea");
-                if (tmp >= 15 && tmp < 60)
+                Debug.Log(direction.x);
+                if (tmp >= 22.5f && tmp < 67.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
-                else if (tmp >= 60 && tmp < 120)
+                else if (tmp >= 67.5f && tmp < 112.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunRight; 
-                else if (tmp >= 120 && tmp < 165)
+                else if (tmp >= 112.5f && tmp < 157.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackRight;
             } else
             {
-                if (tmp >= 15 && tmp < 60)
+                if (tmp >= 22.5f && tmp < 67.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardLeft;
-                else if (tmp >= 60 && tmp < 120)
+                else if (tmp >= 67.5f && tmp < 112.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
-                else if (tmp >= 120 && tmp < 165)
-                {
-                    Debug.Log("RunBackLeft");
+                else if (tmp >= 112.5f && tmp < 157.5f)                
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
-                }
+                
                     
 
             }
@@ -159,23 +157,20 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (direction.x >= 0)
             {
-                if (tmp >= 15 && tmp < 60)
+                if (tmp >= 22.5f && tmp < 67.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardLeft;
-                else if (tmp >= 60 && tmp < 120)
+                else if (tmp >= 67.5f && tmp < 112.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
-                else if (tmp >= 120 && tmp < 165)
-                {
-                    Debug.Log("RunBackLeft");
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
-                }
+                else if (tmp >= 112.5f && tmp < 157.5f)
+                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;                
             }
             else
             {
-                if (tmp >= 15 && tmp < 60)
+                if (tmp >= 22.5f && tmp < 67.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
-                else if (tmp >= 60 && tmp < 120)
+                else if (tmp >= 67.5f && tmp < 112.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunRight;
-                else if (tmp >= 120 && tmp < 165)
+                else if (tmp >= 112.5f && tmp < 157.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackRight;
             }
         }
@@ -216,6 +211,11 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     private void ListenMouse()
     {
+        Vector3 tmp = _player.Input.GetMousePosition();
+        tmp.y = transform.position.y;
+
+        transform.LookAt(tmp);
+        /*
         _vMousePos = Input.mousePosition;
 
         _fPlayerPosInScreen = Camera.main.WorldToScreenPoint(_player.transform.position);
@@ -224,5 +224,7 @@ public class PlayerMovement : MonoBehaviour {
         _fAngle = (Vector3.Angle(Vector3.right, _fDiff) * _fSign) - 90;
 
         transform.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.Euler(0, _fAngle, 0), Time.fixedDeltaTime * AimingRotationSpeed);
+
+    */
     }
 }

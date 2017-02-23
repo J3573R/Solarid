@@ -33,7 +33,7 @@ public class AbilityBlink : AbilityBase {
     public override void Execute()
     {
 
-            _targetPosition = _player.Input.GetMousePosition();
+            _targetPosition = _player.Input.GetMouseGroundPosition();
 
             if (_targetPosition != Vector3.zero)
             {

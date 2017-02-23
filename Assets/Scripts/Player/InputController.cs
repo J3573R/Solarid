@@ -108,10 +108,10 @@ public class InputController : MonoBehaviour
     }
 
     /// <summary>
-    /// uses raycast to determine mouseposition and returns it.
+    /// uses raycast to determine mouseposition and returns it. Works in default layer
     /// </summary>
     /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>
-    public Vector3 GetMousePosition()
+    public Vector3 GetMouseGroundPosition()
     {
         //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = _camera.transform.position;
@@ -129,6 +129,26 @@ public class InputController : MonoBehaviour
             return hit.point;
         }
              
+        return Vector3.zero;
+    }
+
+    public Vector3 GetMousePosition()
+    {
+        var layerMask = 1 << 8;
+        Vector3 pos = _camera.transform.position;
+        var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)) - _camera.transform.position;
+
+        var distance = heading.magnitude;
+        var direction = heading / distance;
+
+        Ray ray = new Ray(pos, direction);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            return hit.point;
+        }
+
         return Vector3.zero;
     }
     

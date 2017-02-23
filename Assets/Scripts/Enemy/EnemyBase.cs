@@ -109,9 +109,9 @@ public class EnemyBase : MonoBehaviour
 
         if (other.tag == "PlayerBullet")
         {
-            TakeDamage(Globals.PlayerDamage);        
+            TakeDamage(Globals.PlayerDamage);
 
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 
