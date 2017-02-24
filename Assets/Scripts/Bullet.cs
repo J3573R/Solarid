@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                transform.Translate(Vector3.up * Speed * Time.deltaTime);
+                transform.Translate(Vector3.forward * Speed * Time.deltaTime);
                 _time += Time.deltaTime;
             }
         }
