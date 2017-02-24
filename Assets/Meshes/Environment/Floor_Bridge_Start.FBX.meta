@@ -6,10 +6,54 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Bridge
+    100004: Bridge_Pillar
+    100006: Floor
+    100008: Floor_Bridge_Start
+    100010: Floor_Corner
+    100012: Floor_Edge
+    100014: Vase
+    100016: Wall
+    100018: Wall_Corner
     400000: //RootNode
+    400002: Bridge
+    400004: Bridge_Pillar
+    400006: Floor
+    400008: Floor_Bridge_Start
+    400010: Floor_Corner
+    400012: Floor_Edge
+    400014: Vase
+    400016: Wall
+    400018: Wall_Corner
     2300000: //RootNode
+    2300002: Bridge
+    2300004: Bridge_Pillar
+    2300006: Floor
+    2300008: Floor_Bridge_Start
+    2300010: Floor_Corner
+    2300012: Floor_Edge
+    2300014: Vase
+    2300016: Wall
+    2300018: Wall_Corner
     3300000: //RootNode
+    3300002: Bridge
+    3300004: Bridge_Pillar
+    3300006: Floor
+    3300008: Floor_Bridge_Start
+    3300010: Floor_Corner
+    3300012: Floor_Edge
+    3300014: Vase
+    3300016: Wall
+    3300018: Wall_Corner
     4300000: Floor_Bridge_Start
+    4300002: Floor_Corner
+    4300004: Floor_Edge
+    4300006: Wall_Corner
+    4300008: Wall
+    4300010: Bridge
+    4300012: Bridge_Pillar
+    4300014: Vase
+    4300016: Floor
     9500000: //RootNode
   materials:
     importMaterials: 1
