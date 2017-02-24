@@ -23,7 +23,7 @@ public class RangerMove : EnemyStateBase {
 
         if(_distance > _maxDistance)
         {
-            Agent.stoppingDistance = 8f;
+            Agent.stoppingDistance = _maxDistance;
             Agent.destination = Globals.Player.transform.position;
             
         } else if(_distance < _minDistance)

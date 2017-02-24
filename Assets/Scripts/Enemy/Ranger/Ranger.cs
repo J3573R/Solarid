@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ranger : EnemyBase {
+public class Ranger : EnemyBase
+{
 
+    public float ReadyToShoot;
 
     protected override void Awake()
     {

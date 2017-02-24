@@ -80,7 +80,6 @@ public class Gun : MonoBehaviour
     private Vector3 GetTargetPosition()
     {
         Vector3 direction = _player.transform.TransformDirection(transform.forward);
-        Debug.Log(direction);
         return direction * TargetDistance;
     }
 }
