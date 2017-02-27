@@ -7,14 +7,22 @@ public class RangerMove : EnemyStateBase {
 
     private float _distance;
     private Vector3 _direction;
+    private Vector3 _lookAtTarget;
     private float _minDistance = 8;
     private float _maxDistance = 10;
+    
     
 
     protected override void Awake()
     {
         base.Awake();
         eState = EnemyBase.State.Move;
+        Agent.updateRotation = false;
+    }
+
+    protected override void OnDisable()
+    {
+        Agent.updateRotation = true;
     }
 
     protected override void Update()
@@ -31,7 +39,11 @@ public class RangerMove : EnemyStateBase {
             _direction = (Globals.Player.transform.position - transform.position).normalized;
             Agent.stoppingDistance = 0f;
             Agent.destination = transform.position + -_direction;
+            
         }
+
+        _lookAtTarget.Set(Globals.Player.transform.position.x, transform.position.y, Globals.Player.transform.position.z);
+        transform.LookAt(_lookAtTarget);
     }
 
 
