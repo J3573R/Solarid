@@ -10,13 +10,13 @@ public class RangerMove : EnemyStateBase {
     private Vector3 _lookAtTarget;
     private float _minDistance = 8;
     private float _maxDistance = 10;
-    
-    
+    private Ranger _parent;
 
     protected override void Awake()
     {
         base.Awake();
         eState = EnemyBase.State.Move;
+        _parent = (Ranger) Parent;
         Agent.updateRotation = false;
     }
 
@@ -34,12 +34,15 @@ public class RangerMove : EnemyStateBase {
             Agent.stoppingDistance = _maxDistance;
             Agent.destination = Globals.Player.transform.position;
             
+        } else if (_parent.ReadyToShoot <= 0)
+        {
+            Parent.SetState(EnemyBase.State.Attack);
+
         } else if(_distance < _minDistance)
         {            
             _direction = (Globals.Player.transform.position - transform.position).normalized;
             Agent.stoppingDistance = 0f;
-            Agent.destination = transform.position + -_direction;
-            
+            Agent.destination = transform.position + -_direction;   
         }
 
         _lookAtTarget.Set(Globals.Player.transform.position.x, transform.position.y, Globals.Player.transform.position.z);

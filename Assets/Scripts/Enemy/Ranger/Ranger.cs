@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(RangerBulletPool))]
 public class Ranger : EnemyBase
 {
 
     public float ReadyToShoot;
+    public RangerBulletPool RangerBulletPool;
 
     protected override void Awake()
     {
         base.Awake();
         SetState(EnemyBase.State.Idle);
+        RangerBulletPool = GetComponent<RangerBulletPool>();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        if (ReadyToShoot > 0)
+        {
+            ReadyToShoot = Mathf.Clamp(ReadyToShoot - Time.deltaTime, 0, Mathf.Infinity);
+        }
+    }
 
     public override void SetState(EnemyBase.State state)
     {
