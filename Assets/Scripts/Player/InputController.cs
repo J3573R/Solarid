@@ -9,22 +9,19 @@ public class InputController : MonoBehaviour
     public PlayerAnimation PlayerAnimation;
     
     private Player _player;
-    private Camera _camera;
-    
+    private Camera _camera;   
 
     void Awake()
     {
-        _player = GetComponent<Player>();
-        
+        _player = GetComponent<Player>();        
         _camera = FindObjectOfType<Camera>();
         PlayerAnimation = FindObjectOfType<PlayerAnimation>(); 
     }
 
     private void FixedUpdate()
-    {            
-        _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            
-    }        
+    {
+        _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));            
+    }
 
     void Update()
     {
@@ -38,7 +35,7 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetButtonDown("Ability"))
         {
-            _player.Movement.SetCasting(true);            
+            _player.Movement.SetCasting(true);
         }         
         else if (Input.GetButtonUp("Ability"))
         {
@@ -55,21 +52,22 @@ public class InputController : MonoBehaviour
         {                                           
             if (!_player.Movement.Casting)
             {
-                _player.Movement.SetShooting(true);
+                _player.Movement.SetShooting(true);                
                 _player.Shoot();
             } else
             {
                 _player.AbilityController.Execute();
-            }
-            
+            }            
         } else
         {
             _player.Movement.SetShooting(false);
+            _player.Gun.SetShooting(false);
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
             _player.AbilityController.Execute();
+            _player.Gun.SetShooting(true);
         }
 
         if (Input.GetButtonDown("Interact"))
@@ -103,8 +101,7 @@ public class InputController : MonoBehaviour
                 _player.AbilityController.ScrollWeapon(-1);
             else if (tmp > 0)
                 _player.AbilityController.ScrollWeapon(1);
-        }
-        
+        }        
     }
 
     /// <summary>
@@ -150,9 +147,5 @@ public class InputController : MonoBehaviour
         }
 
         return Vector3.zero;
-    }
-    
+    }    
 }
-
-
-

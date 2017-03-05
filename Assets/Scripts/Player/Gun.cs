@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Gun : MonoBehaviour
 {
     // Bullet prefab
@@ -14,8 +15,13 @@ public class Gun : MonoBehaviour
     // pool of bullets
     public List<GameObject> _bullets;
 
-    public float TargetDistance;
+    public float TargetDistance;    
+    public float RecoilBuildUp;
+    public float MaxRecoil;
+    public bool Shooting;
 
+    private float ShootingTime;
+    private float _recoil;
     private Player _player;
     private Vector3 _target;
     private Vector3 _aimRotation;
@@ -45,12 +51,36 @@ public class Gun : MonoBehaviour
         }
     }
 
+    public void SetShooting(bool state)
+    {
+        if (state)
+        {
+            Shooting = state;
+            ShootingTime = 0;
+        }
+        else
+        {
+            Shooting = false;
+            _recoil = 0;
+        }
+    }
+
     void Update()
     {
         if (_reload > 0)
         {
             _reload -= Time.deltaTime * 1;
         }
+
+        if (Shooting)
+        {
+            ShootingTime += Time.deltaTime;
+           if (_recoil < MaxRecoil)
+            {
+                _recoil += RecoilBuildUp;
+            }
+        }
+        Debug.Log(_recoil);
     }
 
     /// <summary>
@@ -79,8 +109,12 @@ public class Gun : MonoBehaviour
 
     private Vector3 GetTargetPosition()
     {
-        Vector3 direction = _player.transform.TransformDirection(transform.forward);
+        Vector3 direction = _player.transform.forward;
         Debug.Log(direction);
-        return direction * TargetDistance;
+
+        float tmp = UnityEngine.Random.Range(-_recoil, _recoil);
+        Vector3 vec = Quaternion.AngleAxis(tmp, Vector3.forward) * direction;
+
+        return transform.position + direction * TargetDistance;
     }
 }
