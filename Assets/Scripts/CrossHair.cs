@@ -22,13 +22,10 @@ public class CrossHair : MonoBehaviour {
 
     void OnGUI()
     {
-
-            GUI.DrawTexture(new Rect(Event.current.mousePosition.x + cursorAdjustX, Event.current.mousePosition.y + cursorAdjustY, W, H), crosshairTexture, ScaleMode.ScaleToFit);
-        
+        GUI.DrawTexture(new Rect(Event.current.mousePosition.x + cursorAdjustX, Event.current.mousePosition.y + cursorAdjustY, W, H), crosshairTexture, ScaleMode.ScaleToFit);
     }
 
-    // Update is called once per frame, this will hide your      //original mouse, but still keep its functions. On low fps
-    //this will cause mouse flicker.
+
     void Update()
     {
         Cursor.visible = false;        
