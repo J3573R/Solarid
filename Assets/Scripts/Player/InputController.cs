@@ -54,10 +54,7 @@ public class InputController : MonoBehaviour
             {
                 _player.Movement.SetShooting(true);                
                 _player.Shoot();
-            } else
-            {
-                _player.AbilityController.Execute();
-            }            
+            }           
         } else
         {
             _player.Movement.SetShooting(false);
