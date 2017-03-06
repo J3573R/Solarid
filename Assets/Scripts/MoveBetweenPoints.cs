@@ -26,7 +26,7 @@ public class MoveBetweenPoints : MonoBehaviour
 
         Vector3 vPos = Vector3.Lerp(m_vStartPos, m_vEndPos, fRatio); // Easing.EaseInOut(fRatio, EasingType.Sine, EasingType.Sine));
         vPos.z = m_gcTransform.position.z;
-        m_gcTransform.position = vPos;
+        m_gcTransform.localPosition = vPos;
 
         if (fRatio >= 1.0f)
         {
