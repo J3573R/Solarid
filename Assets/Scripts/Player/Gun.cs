@@ -80,7 +80,7 @@ public class Gun : MonoBehaviour
                 _recoil += RecoilBuildUp;
             }
         }
-        Debug.Log(_recoil);
+        //Debug.Log(_recoil);
     }
 
     /// <summary>
@@ -110,7 +110,6 @@ public class Gun : MonoBehaviour
     private Vector3 GetTargetPosition()
     {
         Vector3 direction = _player.transform.forward;
-        Debug.Log(direction);
 
         float tmp = UnityEngine.Random.Range(-_recoil, _recoil);
         Vector3 vec = Quaternion.AngleAxis(tmp, Vector3.forward) * direction;

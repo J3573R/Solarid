@@ -19,7 +19,8 @@ public class RangerIdle : EnemyStateBase
         _timeToWalk = 2;
         _transitionToAlert = 0;
         Agent.speed = 3.5f;
-        
+        Agent.updatePosition = true;
+        Agent.updateRotation = true;
     }
 
     protected override void Update()

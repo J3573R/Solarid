@@ -53,7 +53,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (MyPool != null)
         {
-            Debug.Log("HIT");
+            //Debug.Log("HIT");
             if (other.tag == "Player")
             {
                 Player p = Globals.Player.GetComponent<Player>();
