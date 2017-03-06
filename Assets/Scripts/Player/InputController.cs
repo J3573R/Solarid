@@ -33,17 +33,25 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void GetInput()
     {
-        if (Input.GetButtonDown("Ability"))
+        if (Input.GetButton("Ability"))
         {
+            Globals.CameraScript.AddMouseOffset(GetMousePosition());
+        } else
+        {
+            Globals.CameraScript.MouseOffset = Vector3.zero;
+        }
+
+        if (Input.GetButtonDown("Ability"))
+        {            
             _player.Movement.SetCasting(true);
         }         
         else if (Input.GetButtonUp("Ability"))
-        {
+        {            
             _player.Movement.SetCasting(false);
         }
         
         if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
-        {
+        {            
             _player.Movement.SetShooting(false);
             _player.Movement.SetCasting(false);
         }
@@ -52,6 +60,7 @@ public class InputController : MonoBehaviour
         {                                           
             if (!_player.Movement.Casting)
             {
+                Globals.CameraScript.AddMouseOffset(GetMousePosition());
                 _player.Movement.SetShooting(true);                
                 _player.Shoot();
             }           
@@ -145,4 +154,5 @@ public class InputController : MonoBehaviour
 
         return Vector3.zero;
     }    
+
 }
