@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour {
 
             if (direction.x >= 0)
             {
-                Debug.Log(direction.x);
+                //Debug.Log(direction.x);
                 if (tmp >= 22.5f && tmp < 67.5f)
                     _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
                 else if (tmp >= 67.5f && tmp < 112.5f)

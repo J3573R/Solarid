@@ -67,6 +67,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(transform.position.y);
         if (_reload > 0)
         {
             _reload -= Time.deltaTime * 1;
@@ -95,8 +96,8 @@ public class Gun : MonoBehaviour
                 if (!_bullets[i].activeInHierarchy)
                 {
                     _target = GetTargetPosition();
-                    _bullets[i].transform.position = _collider.transform.position;
-                    _target.y = _bullets[i].transform.position.y;
+                    _bullets[i].transform.position = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);                    
+                    _target.y = 1.5f;
                     //Debug.Log(_target);
                     _bullets[i].transform.LookAt(_target);
                     _bullets[i].SetActive(true);
