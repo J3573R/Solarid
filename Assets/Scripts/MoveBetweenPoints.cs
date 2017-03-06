@@ -17,7 +17,6 @@ public class MoveBetweenPoints : MonoBehaviour
     {
         m_gcTransform = GetComponent<Transform>();
         m_fEventTime = Time.time;
-        m_gcTransform.localPosition = transform.position + m_vStartPos;
     }
 
     // Update is called once per frame
@@ -27,7 +26,7 @@ public class MoveBetweenPoints : MonoBehaviour
 
         Vector3 vPos = Vector3.Lerp(m_vStartPos, m_vEndPos, fRatio); // Easing.EaseInOut(fRatio, EasingType.Sine, EasingType.Sine));
         vPos.z = m_gcTransform.position.z;
-        m_gcTransform.localPosition = vPos;
+        m_gcTransform.position = vPos;
 
         if (fRatio >= 1.0f)
         {
