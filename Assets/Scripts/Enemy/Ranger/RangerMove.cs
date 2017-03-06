@@ -28,15 +28,14 @@ public class RangerMove : EnemyStateBase {
     }
 
     protected override void Update()
-    {
-        if(_chaseTime > 3)
-        {
-            Parent.SetState(EnemyBase.State.Idle);
-        }
-
+    {     
         _distance = Vector3.Distance(Globals.Player.transform.position, transform.position);
 
-        if(_distance > _maxDistance)
+        if (_chaseTime > 3)
+        {
+            Agent.stoppingDistance = 0f;
+            Parent.SetState(EnemyBase.State.Idle);
+        } else if (_distance > _maxDistance)
         {
             Agent.stoppingDistance = _maxDistance;
             Agent.destination = Globals.Player.transform.position;

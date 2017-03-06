@@ -14,6 +14,7 @@ public class Ranger : EnemyBase
         base.Awake();
         SetState(EnemyBase.State.Idle);
         RangerBulletPool = GetComponent<RangerBulletPool>();
+        StartPosition = transform.position;
     }
 
     protected override void Update()

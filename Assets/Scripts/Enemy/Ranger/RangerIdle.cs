@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class RangerIdle : EnemyStateBase
 {
-    private Vector3 _startingPosition;
     private float _timeToWalk;
     private float _distance;
     private float _alertDistance = 8f;
@@ -14,13 +13,13 @@ public class RangerIdle : EnemyStateBase
     protected override void Awake()
     {
         base.Awake();
-        _startingPosition = transform.position;
         eState = EnemyBase.State.Idle;
         _timeToWalk = 2;
         _transitionToAlert = 0;
         Agent.speed = 3.5f;
         Agent.updatePosition = true;
         Agent.updateRotation = true;
+        Agent.stoppingDistance = 0f;
     }
 
     protected override void Update()
@@ -58,7 +57,7 @@ public class RangerIdle : EnemyStateBase
         if (_timeToWalk <= 0)
         {
             Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * 3) + Vector3.one;
-            randomDirection += _startingPosition;
+            randomDirection += Parent.StartPosition;
 
             NavMeshHit navHit;
             if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
