@@ -11,12 +11,27 @@ public class Charger : EnemyBase
 
     // Changes enemy state to idle when distance is bigger than this
     public int DisengageDistance = 7;
-    
+
+    // Attack speed of the enemy
+    public float TimeBetweenAttacks = 1f;
+
+    // Time after last attack
+    public float AttackTimer = 0;
+
     protected override void Awake()
     {
         base.Awake();
         SetState(EnemyBase.State.Idle);
         StartPosition = transform.position;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if(AttackTimer < TimeBetweenAttacks)
+        {
+            AttackTimer += Time.deltaTime;
+        }        
     }
 
     /// <summary>

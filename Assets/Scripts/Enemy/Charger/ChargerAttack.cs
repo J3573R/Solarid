@@ -5,17 +5,16 @@ using UnityEngine;
 public class ChargerAttack : EnemyStateBase
 {
     // Time between damage ticks to player
-    public float TimeBetweenAttacks = 1f;
-
-    private float _attackTimer;
+    
     private float _distance;
+    private Charger _charger;
     private bool _ready = false;
 
     protected override void Awake()
     {
         base.Awake();
         eState = EnemyBase.State.Idle;
-        _attackTimer = TimeBetweenAttacks;
+        _charger = (Charger)Parent;
     }
 
     protected override void Update()
@@ -29,14 +28,11 @@ public class ChargerAttack : EnemyStateBase
         }
         else
         {
-            _attackTimer += Time.deltaTime;
-
-
-            if (_attackTimer >= TimeBetweenAttacks)
+            if (_charger.AttackTimer >= _charger.TimeBetweenAttacks)
             {
                 Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
                 Globals.Player.GetComponent<Player>().TakeDamage(Parent.Damage);
-                _attackTimer = 0;
+                _charger.AttackTimer = 0;
             }
         }
     }
