@@ -82,6 +82,14 @@ public class Gun : MonoBehaviour
             }
         }
         //Debug.Log(_recoil);
+
+        Vector3 tmp = GetTargetPosition();
+        tmp.y = 1.5f;
+        Vector3 tmp2 = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);
+
+
+        //Debug.DrawLine(tmp2, tmp, Color.red, 1f, true);
+        
     }
 
     /// <summary>
@@ -89,6 +97,8 @@ public class Gun : MonoBehaviour
     /// </summary>
     public void Shoot()
     {
+
+        
         if (_reload <= 0)
         {
             for (int i = 0; i < _bullets.Count; i++)
@@ -106,16 +116,24 @@ public class Gun : MonoBehaviour
             }
             _reload = Reload;
         }
+        
     }
 
     private Vector3 GetTargetPosition()
     {
-        Vector3 direction = _player.transform.forward;
+
+        //TODO: Fix the aim offset in shooting
+        Vector3 tmpVec = _player.Input.GetMousePosition();
+        
+        Vector3 PlayerPos = _player.transform.position;
+        PlayerPos.y = 1.5f;
+
+        Vector3 direction = (tmpVec - PlayerPos).normalized;
         //Debug.Log(direction);
 
-        float tmp = UnityEngine.Random.Range(-_recoil, _recoil);
+        //float tmp = UnityEngine.Random.Range(-_recoil, _recoil);
         //Debug.Log(tmp);
-        Vector3 vec = Quaternion.AngleAxis(tmp, Vector3.forward) * direction;
+        //Vector3 vec = Quaternion.AngleAxis(tmp, Vector3.forward) * direction;
 
         return transform.position + direction * TargetDistance;
     }

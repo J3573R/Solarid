@@ -49,11 +49,9 @@ public class AbilityController : MonoBehaviour {
     /// </summary>
     public void Execute()
     {
-        //Debug.Log("trytoshoot");
         if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
         {
-            StartCoroutine(CastDelay());
-            _player.Animation.CastOnce = true;
+            _currentAbility.Execute();         
         }
             
     }
@@ -63,11 +61,7 @@ public class AbilityController : MonoBehaviour {
         return _currentAbility.GetRemainingCooldown();
     }
 
-    private IEnumerator CastDelay()
-    {
-        yield return new WaitForSeconds(CastDelayInSeconds);
-        _currentAbility.Execute();
-    }
+    
 
     /// <summary>
     /// Sets the current ability in use
@@ -75,6 +69,7 @@ public class AbilityController : MonoBehaviour {
     /// <param name="tmp">Ability to set</param>
     public void SetAbility(Ability tmp)
     {
+        /*
         if (tmp == Ability.Blink)
         {
             _currentAbility = _blink;
@@ -84,7 +79,8 @@ public class AbilityController : MonoBehaviour {
         {
             _currentAbility = _grenade;
             _abilityIndex = 1;
-        }            
+        }    
+        */        
     }
 
     /// <summary>

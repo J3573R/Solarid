@@ -20,19 +20,30 @@ public class Switch : MonoBehaviour
     private float _distance;
     // Value of slider bar
     private float _switchValue;
+
+    private RotateConstantly _obeliskRotation;
     
 
     public void Awake()
     {
+        _obeliskRotation = GetComponentInChildren<RotateConstantly>();
         _sliderBar = Instantiate(SliderPrefab);
         _sliderBar.transform.SetParent(GameObject.Find("UI").transform);
         _slider = _sliderBar.GetComponent<Slider>();
         _switchValue = 0;
-        _sliderBar.SetActive(false);
+        _sliderBar.SetActive(false);        
     }
 
     void Update()
     {
+        if (TargetDoor.Moving && _obeliskRotation != null)
+        {
+            _obeliskRotation.ChangeRotationSpeed = new Vector3(0, 0, 500);
+        } else if(_obeliskRotation != null)
+        {
+            _obeliskRotation.ChangeRotationSpeed = new Vector3(0, 0, 30);
+        }
+
         _distance = Vector3.Distance(Globals.Player.transform.position, transform.position);
 
         // If player is close enought and door is not moving, show meter and response to interaction
@@ -53,7 +64,7 @@ public class Switch : MonoBehaviour
 
                 // Slider is on top
                 if (_switchValue >= _slider.maxValue)
-                {
+                {                    
                     TargetDoor.ToggleDoor();
                 }
             }
@@ -64,13 +75,13 @@ public class Switch : MonoBehaviour
             }
         }
         else
-        {
+        {                  
             // Reset slider bar
             if (_sliderBar.activeInHierarchy)
             {
                 _switchValue = 0;
                 _slider.value = 0;
-                _sliderBar.SetActive(false);
+                _sliderBar.SetActive(false);                
             }
         }
         

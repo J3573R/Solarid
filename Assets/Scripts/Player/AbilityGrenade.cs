@@ -38,6 +38,7 @@ public class AbilityGrenade : AbilityBase {
         _grenadeScript = _grenade.GetComponent<GrenadeScript>();
         _player = GetComponent<Player>();
         _grenadeScript.angle = angle;
+        _grenade.SetActive(false);
 	}    
 
 }
