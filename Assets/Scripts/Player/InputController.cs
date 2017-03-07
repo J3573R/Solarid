@@ -61,6 +61,7 @@ public class InputController : MonoBehaviour
             if (!_player.Movement.Casting)
             {
                 Globals.CameraScript.AddMouseOffset(GetMousePosition());
+                Globals.CameraScript.Harlem(0.02f, 0.05f);
                 _player.Movement.SetShooting(true);                
                 _player.Shoot();
             }           
