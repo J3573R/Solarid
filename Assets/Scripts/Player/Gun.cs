@@ -84,12 +84,11 @@ public class Gun : MonoBehaviour
         //Debug.Log(_recoil);
 
         Vector3 tmp = GetTargetPosition();
-        Debug.Log(GetTargetPosition());
         tmp.y = 1.5f;
         Vector3 tmp2 = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);
 
 
-        Debug.DrawLine(tmp2, tmp, Color.red, 1f, true);
+        //Debug.DrawLine(tmp2, tmp, Color.red, 1f, true);
         
     }
 
@@ -99,7 +98,7 @@ public class Gun : MonoBehaviour
     public void Shoot()
     {
 
-        /*
+        
         if (_reload <= 0)
         {
             for (int i = 0; i < _bullets.Count; i++)
@@ -117,19 +116,19 @@ public class Gun : MonoBehaviour
             }
             _reload = Reload;
         }
-        */
+        
     }
 
     private Vector3 GetTargetPosition()
     {
 
+        //TODO: Fix the aim offset in shooting
         Vector3 tmpVec = _player.Input.GetMousePosition();
         
         Vector3 PlayerPos = _player.transform.position;
         PlayerPos.y = 1.5f;
 
         Vector3 direction = (tmpVec - PlayerPos).normalized;
-        Debug.Log("kaikkee" + transform.position);
         //Debug.Log(direction);
 
         //float tmp = UnityEngine.Random.Range(-_recoil, _recoil);

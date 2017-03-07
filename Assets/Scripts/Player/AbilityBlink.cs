@@ -7,6 +7,8 @@ public class AbilityBlink : AbilityBase {
 
     [SerializeField]
     private ParticleSystem _particle;
+    [SerializeField]
+    private float _castDelayInSeconds;
 
     private ParticleSystem _startParticle;
     private ParticleSystem _endParticle;
@@ -33,24 +35,29 @@ public class AbilityBlink : AbilityBase {
     public override void Execute()
     {
 
-            _targetPosition = _player.Input.GetMouseGroundPosition();
+        _targetPosition = _player.Input.GetMouseGroundPosition();
+        //Debug.Log(_targetPosition);
+        if (_targetPosition != Vector3.zero)
+        {
+            _player.Animation.CastOnce = true;
+            StartCoroutine(CastDelay());
+            _targetPosition.y = 0;
+            _startParticle.transform.position = transform.position;
+            CoolDownRemaining = CoolDown;            
+        }                  
+    }
 
-            if (_targetPosition != Vector3.zero)
-            {
-                _targetPosition.y = 0;
-                _startParticle.transform.position = transform.position;
-                CoolDownRemaining = CoolDown;
-
-                foreach (MeshRenderer rend in _renderers)
-                {
-                    rend.enabled = false;
-                }
-                _playerRender.enabled = false;
-                transform.position = _targetPosition;
-                _startParticle.Play();
-                StartCoroutine(BlinkDelay());
-            }
-                  
+    private IEnumerator CastDelay()
+    {
+        yield return new WaitForSeconds(_castDelayInSeconds);
+        foreach (MeshRenderer rend in _renderers)
+        {
+            rend.enabled = false;
+        }
+        _playerRender.enabled = false;
+        transform.position = _targetPosition;
+        _startParticle.Play();
+        StartCoroutine(BlinkDelay());
     }
 
     /// <summary>
