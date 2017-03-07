@@ -7,6 +7,8 @@ public class InputController : MonoBehaviour
     public float RotationSpeed = 8f;
 
     public PlayerAnimation PlayerAnimation;
+
+    public bool ListenInput = true;
     
     private Player _player;
     private Camera _camera;   
@@ -15,17 +17,28 @@ public class InputController : MonoBehaviour
     {
         _player = GetComponent<Player>();        
         _camera = FindObjectOfType<Camera>();
-        PlayerAnimation = FindObjectOfType<PlayerAnimation>(); 
+        PlayerAnimation = FindObjectOfType<PlayerAnimation>();
+        Globals.InputController = this;
     }
 
     private void FixedUpdate()
     {
-        _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));            
+        if (ListenInput)
+        {
+            _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        } else
+        {
+            _player.Movement.Move(0, 0);
+        }
+        
     }
 
     void Update()
     {
-        GetInput();
+        if (ListenInput)
+        {
+            GetInput();
+        }        
     }
 
     /// <summary>

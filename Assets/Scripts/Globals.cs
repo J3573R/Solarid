@@ -6,6 +6,7 @@ public static class Globals
 {
     // The one and only player
     public static GameObject Player;
+    public static InputController InputController;
     // Player damage
     // TODO: Transfer this to player or gun or something
     public static int PlayerDamage = 5;

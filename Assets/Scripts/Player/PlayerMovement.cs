@@ -69,11 +69,6 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     /// <summary>
     /// takes keyboard Input and increases horizontal & vertical velocity of player times Speed. Called from InputController
     /// </summary>

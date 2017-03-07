@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public bool ShootingEnabled = true;
     public Slider HealthBar;
     
+    public bool Dead {get; private set; }
+    
 
     void Awake()
     {
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
         Animation = GetComponent<PlayerAnimation>();        
         Health = GetComponent<Health>();
         HealthBar.maxValue = Health.CurrentHealth;
+        Dead = false;
     }
 
     public void Shoot()
@@ -54,7 +57,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("DIE BITCH");
+        Dead = true;        
         //TODO: Implement dieing
     }
 }
