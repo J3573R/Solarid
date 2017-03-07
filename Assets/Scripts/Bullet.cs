@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
 
     private void OnDisable()
     {
-        transform.position = _player.transform.position;
+        //transform.position = _player.transform.position;
     }
 
     private void OnEnable()
@@ -47,9 +47,14 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                transform.Translate(Vector3.up * Speed * Time.deltaTime);
+                transform.Translate(Vector3.forward * Speed * Time.deltaTime);
                 _time += Time.deltaTime;
             }
+        }
+
+        if (transform.position.y > 1.55f || transform.position.y < 1.45f)
+        {
+            Debug.Log("yli tai ali");
         }
         
     }

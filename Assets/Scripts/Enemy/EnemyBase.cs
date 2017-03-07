@@ -54,32 +54,9 @@ public class EnemyBase : MonoBehaviour
     /// Creates and changes state for enemy.
     /// </summary>
     /// <param name="state">State to change</param>
-    public void SetState(EnemyBase.State state)
+    public virtual void SetState(EnemyBase.State state)
     {
-        if (CurrentStateObject != null)
-        {
-            Destroy(CurrentStateObject);
-        }
-
-        switch (state)
-        {            
-            case State.Idle:
-                CurrentStateObject = gameObject.AddComponent<ChargerIdle>();
-                CurrentState = state;                
-                break;
-            case State.Alert:
-                CurrentStateObject = gameObject.AddComponent<ChargerAlert>();
-                CurrentState = state;
-                break;
-            case State.Move:
-                CurrentStateObject = gameObject.AddComponent<ChargerMove>();
-                CurrentState = state;
-                break;
-            case State.Attack:
-                CurrentStateObject = gameObject.AddComponent<ChargerAttack>();
-                CurrentState = state;
-                break;
-        }
+        Debug.LogWarning("SetState not implemented.");
     }
 
     /// <summary>
@@ -109,9 +86,9 @@ public class EnemyBase : MonoBehaviour
 
         if (other.tag == "PlayerBullet")
         {
-            TakeDamage(Globals.PlayerDamage);        
+            TakeDamage(Globals.PlayerDamage);
 
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 

@@ -49,6 +49,7 @@ public class AbilityController : MonoBehaviour {
     /// </summary>
     public void Execute()
     {
+        //Debug.Log("trytoshoot");
         if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
         {
             StartCoroutine(CastDelay());

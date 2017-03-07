@@ -9,22 +9,19 @@ public class InputController : MonoBehaviour
     public PlayerAnimation PlayerAnimation;
     
     private Player _player;
-    private Camera _camera;
-    
+    private Camera _camera;   
 
     void Awake()
     {
-        _player = GetComponent<Player>();
-        
+        _player = GetComponent<Player>();        
         _camera = FindObjectOfType<Camera>();
         PlayerAnimation = FindObjectOfType<PlayerAnimation>(); 
     }
 
     private void FixedUpdate()
-    {            
-        _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            
-    }        
+    {
+        _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));            
+    }
 
     void Update()
     {
@@ -36,17 +33,25 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void GetInput()
     {
-        if (Input.GetButtonDown("Ability"))
+        if (Input.GetButton("Ability"))
         {
-            _player.Movement.SetCasting(true);            
+            Globals.CameraScript.AddMouseOffset(GetMousePosition());
+        } else
+        {
+            Globals.CameraScript.MouseOffset = Vector3.zero;
+        }
+
+        if (Input.GetButtonDown("Ability"))
+        {            
+            _player.Movement.SetCasting(true);
         }         
         else if (Input.GetButtonUp("Ability"))
-        {
+        {            
             _player.Movement.SetCasting(false);
         }
         
         if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
-        {
+        {            
             _player.Movement.SetShooting(false);
             _player.Movement.SetCasting(false);
         }
@@ -55,21 +60,20 @@ public class InputController : MonoBehaviour
         {                                           
             if (!_player.Movement.Casting)
             {
-                _player.Movement.SetShooting(true);
+                Globals.CameraScript.AddMouseOffset(GetMousePosition());
+                _player.Movement.SetShooting(true);                
                 _player.Shoot();
-            } else
-            {
-                _player.AbilityController.Execute();
-            }
-            
+            }           
         } else
         {
             _player.Movement.SetShooting(false);
+            _player.Gun.SetShooting(false);
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
             _player.AbilityController.Execute();
+            _player.Gun.SetShooting(true);
         }
 
         if (Input.GetButtonDown("Interact"))
@@ -103,15 +107,14 @@ public class InputController : MonoBehaviour
                 _player.AbilityController.ScrollWeapon(-1);
             else if (tmp > 0)
                 _player.AbilityController.ScrollWeapon(1);
-        }
-        
+        }        
     }
 
     /// <summary>
-    /// uses raycast to determine mouseposition and returns it.
+    /// uses raycast to determine mouseposition and returns it. Works in default layer
     /// </summary>
     /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>
-    public Vector3 GetMousePosition()
+    public Vector3 GetMouseGroundPosition()
     {
         //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = _camera.transform.position;
@@ -131,8 +134,25 @@ public class InputController : MonoBehaviour
              
         return Vector3.zero;
     }
-    
+
+    public Vector3 GetMousePosition()
+    {
+        var layerMask = 1 << 8;
+        Vector3 pos = _camera.transform.position;
+        var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)) - _camera.transform.position;
+
+        var distance = heading.magnitude;
+        var direction = heading / distance;
+
+        Ray ray = new Ray(pos, direction);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            return hit.point;
+        }
+
+        return Vector3.zero;
+    }    
+
 }
-
-
-

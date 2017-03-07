@@ -7,6 +7,8 @@ public class CameraFollow : MonoBehaviour
     // Camera offset from player
     public Vector3 CameraOffset = new Vector3(0, 10, -5);
 
+    public Vector3 MouseOffset = Vector3.zero;
+
     // Players gameobject
     private GameObject _player;
     // Cameras current position
@@ -42,7 +44,7 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        _vCurPos = _player.transform.position + CameraOffset;
+        _vCurPos = _player.transform.position + CameraOffset + MouseOffset;
         transform.position = Vector3.Lerp(transform.position, _vCurPos, Time.smoothDeltaTime * CameraDelay);
         //transform.position = new Vector3(_player.transform.position.x, 10f, _player.transform.position.z - 5);
         //Vector3 tmp = new Vector3(_player.transform.position.x, 10f, _player.transform.position.z - 5);
@@ -56,5 +58,12 @@ public class CameraFollow : MonoBehaviour
         shakeDuration = duration;
         originalShakeDuration = duration;
         shake = true;
+    }
+
+    public void AddMouseOffset(Vector3 offset)
+    {
+        Vector3 direction = (offset - _player.transform.position).normalized;        
+        direction.y = 0;
+        MouseOffset = direction * 3;
     }
 }

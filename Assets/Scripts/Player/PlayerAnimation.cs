@@ -121,7 +121,6 @@ public class PlayerAnimation : MonoBehaviour {
         if (stance != _currentStance)
         {
             StopAllCoroutines();
-            Debug.Log("SetStance: " + stance);
             _currentStance = stance;
             Animator.SetInteger("stance", (int)stance);
         }
@@ -131,7 +130,7 @@ public class PlayerAnimation : MonoBehaviour {
     {
         if(animation != _currentState)
         {
-            Debug.Log("SetAnimation" + animation);
+            //Debug.Log("ANIMATION : " + animation);
             _currentState = animation;
             Animator.SetInteger("animState", (int)animation);
         }        

@@ -11,16 +11,15 @@ public class Player : MonoBehaviour
     [HideInInspector] public Health Health;
     [HideInInspector] public PlayerMovement Movement;
     [HideInInspector] public PlayerAnimation Animation;
+    [HideInInspector] public Gun Gun;
     public bool ShootingEnabled = true;
     public Slider HealthBar;
-    
-    private Gun _gun;
     
 
     void Awake()
     {
         Globals.Player = gameObject;
-        _gun = GetComponentInChildren<Gun>();
+        Gun = GetComponentInChildren<Gun>();
         Input = GetComponent<InputController>();
         AbilityController = GetComponent<AbilityController>();
         Movement = GetComponent<PlayerMovement>();
@@ -31,9 +30,10 @@ public class Player : MonoBehaviour
 
     public void Shoot()
     {
+        
         if (ShootingEnabled && !Movement.Casting)
         {
-            _gun.Shoot();
+            Gun.Shoot();
         }
     }
 
