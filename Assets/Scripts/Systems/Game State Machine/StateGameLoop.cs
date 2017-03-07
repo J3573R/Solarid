@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class StateGameLoop : GameStateBase
 {
+
     protected override void Awake()
     {
         base.Awake();
-        LevelName = SceneManager.GetActiveScene().name;   
+        LevelName = SceneManager.GetActiveScene().name;
     }
 
     protected override void Update()

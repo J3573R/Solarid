@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour {
     public void SetShooting(bool state)
     {
         if (state)
-        {
+        {            
             Shooting = state;
             _player.Animation.Casting = state;
             _moveSpeed = 3;
