@@ -25,7 +25,7 @@ public class MoveBetweenPoints : MonoBehaviour
         float fRatio = (Time.time - m_fEventTime) / m_fBounceDuration;
 
         Vector3 vPos = Vector3.Lerp(m_vStartPos, m_vEndPos, fRatio); // Easing.EaseInOut(fRatio, EasingType.Sine, EasingType.Sine));
-        vPos.z = m_gcTransform.position.z;
+        vPos.z = m_gcTransform.localPosition.z;
         m_gcTransform.localPosition = vPos;
 
         if (fRatio >= 1.0f)
