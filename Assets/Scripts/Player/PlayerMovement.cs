@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     private float _fAngle;
     private float _horizontalDirection;
     private float _verticalDirection;
+    private bool _goingRight;
 
 
     // Use this for initialization
@@ -111,9 +112,18 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Checks the direction player is moving towards, compares it to the directiuon he's facing and sets animation correctly
+    /// </summary>
+    /// <param name="direction">direction player moving towards</param>
     private void CheckDirection(Vector3 direction)
     {
+
         Vector3 forward = transform.forward;
+        Vector3 left = transform.position + (transform.right * -1);
+        Vector3 right = transform.position + transform.right * 1;
+
+        _goingRight = CheckSide(transform.position + direction, left, right);
         
         float tmp = Vector3.Angle(forward, direction);
 
@@ -122,57 +132,43 @@ public class PlayerMovement : MonoBehaviour {
         if (tmp >= 157.5f)
             _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBack;
 
-        if (forward.z >= 0)
+        if (_goingRight)
         {
-            //Debug.Log(tmp);
-
-            if (direction.x >= 0)
-            {
-                //Debug.Log(direction.x);
-                if (tmp >= 22.5f && tmp < 67.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
-                else if (tmp >= 67.5f && tmp < 112.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunRight; 
-                else if (tmp >= 112.5f && tmp < 157.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackRight;
-            } else
-            {
-                if (tmp >= 22.5f && tmp < 67.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardLeft;
-                else if (tmp >= 67.5f && tmp < 112.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
-                else if (tmp >= 112.5f && tmp < 157.5f)                
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
-                
-                    
-
-            }
+            //Debug.Log(direction.x);
+            if (tmp >= 22.5f && tmp < 67.5f)
+                _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
+            else if (tmp >= 67.5f && tmp < 112.5f)
+                _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunRight;
+            else if (tmp >= 112.5f && tmp < 157.5f)
+                _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackRight;
         }
         else
         {
-            if (direction.x >= 0)
-            {
-                if (tmp >= 22.5f && tmp < 67.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardLeft;
-                else if (tmp >= 67.5f && tmp < 112.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
-                else if (tmp >= 112.5f && tmp < 157.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;                
-            }
-            else
-            {
-                if (tmp >= 22.5f && tmp < 67.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardRight;
-                else if (tmp >= 67.5f && tmp < 112.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunRight;
-                else if (tmp >= 112.5f && tmp < 157.5f)
-                    _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackRight;
-            }
-        }
-        
-        //if (tmp >= )
-        
-        
+            if (tmp >= 22.5f && tmp < 67.5f)
+                _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunForwardLeft;
+            else if (tmp >= 67.5f && tmp < 112.5f)
+                _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunLeft;
+            else if (tmp >= 112.5f && tmp < 157.5f)
+                _player.Animation.MoveDirection = PlayerAnimation.AnimationState.RunBackLeft;
+        }                     
+    }
+
+    /// <summary>
+    /// Checks which side the player is moving towards, left or right
+    /// </summary>
+    /// <param name="direction">Point in the moving direction</param>
+    /// <param name="left">left side of player</param>
+    /// <param name="right">right side of player</param>
+    /// <returns>true if right, false if left</returns>
+    private bool CheckSide(Vector3 direction, Vector3 left, Vector3 right)
+    {
+        float distanceLeft = Vector3.Distance(direction, left);
+        float distanceRight = Vector3.Distance(direction, right);
+
+        if (distanceRight > distanceLeft)
+            return false;
+        else
+            return true;
     }
 
     /// <summary>
