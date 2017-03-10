@@ -24,7 +24,7 @@ public class StateMainMenu : GameStateBase {
 
     void PressPlay()
     {
-        GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, "Level1");
+        GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, "Sketch");
     }
 
     void PressOptions()
