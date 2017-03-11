@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
@@ -9,6 +10,7 @@ public class EnemyBase : MonoBehaviour
     public GameObject HealthBar;
     public Vector3 StartPosition;
     public Animator Animator;
+    public float RangeToAlert = 1;
 
     private Slider _healthBar;
     
@@ -66,7 +68,6 @@ public class EnemyBase : MonoBehaviour
     /// <returns>If dead true, otherwise false</returns>
     public virtual bool TakeDamage(int damage)
     {
-
         if (Health.TakeDamage(damage))
         {
             Die();
@@ -74,6 +75,7 @@ public class EnemyBase : MonoBehaviour
             return true;
         } else
         {
+            AlertOthers();
             SetState(EnemyBase.State.Move);
             _healthBar.value = Health.CurrentHealth;
             return false;
@@ -107,7 +109,24 @@ public class EnemyBase : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
-
+    public virtual void AlertOthers()
+    {
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var enemy in enemies)
+        {
+            try
+            {
+                if (Vector3.Distance(enemy.transform.position, transform.position) <= RangeToAlert)
+                {
+                    enemy.GetComponent<EnemyBase>().SetState(State.Alert);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log("ERROR CATCHED:");
+                Debug.LogError(e.Message);
+            }
+        }
+    }
 
 }

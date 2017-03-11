@@ -28,29 +28,33 @@ public class Ranger : EnemyBase
 
     public override void SetState(EnemyBase.State state)
     {
-        if (CurrentStateObject != null)
+        if (CurrentState != state)
         {
-            Destroy(CurrentStateObject);
-        }
+            if (CurrentStateObject != null)
+            {
+                Destroy(CurrentStateObject);
+            }
 
-        switch (state)
-        {
-            case State.Idle:
-                CurrentStateObject = gameObject.AddComponent<RangerIdle>();
-                CurrentState = state;
-                break;
-            case State.Alert:
-                CurrentStateObject = gameObject.AddComponent<RangerAlert>();
-                CurrentState = state;
-                break;
-            case State.Move:
-                CurrentStateObject = gameObject.AddComponent<RangerMove>();
-                CurrentState = state;
-                break;
-            case State.Attack:
-                CurrentStateObject = gameObject.AddComponent<RangerAttack>();
-                CurrentState = state;
-                break;
+            switch (state)
+            {
+                case State.Idle:
+                    CurrentStateObject = gameObject.AddComponent<RangerIdle>();
+                    CurrentState = state;
+                    break;
+                case State.Alert:
+                    CurrentStateObject = gameObject.AddComponent<RangerAlert>();
+                    CurrentState = state;
+                    AlertOthers();
+                    break;
+                case State.Move:
+                    CurrentStateObject = gameObject.AddComponent<RangerMove>();
+                    CurrentState = state;
+                    break;
+                case State.Attack:
+                    CurrentStateObject = gameObject.AddComponent<RangerAttack>();
+                    CurrentState = state;
+                    break;
+            }
         }
     }
 }
