@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
 
     public void Shoot()
     {
-        
         if (ShootingEnabled && !Movement.Casting)
         {
             Gun.Shoot();

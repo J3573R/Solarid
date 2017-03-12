@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         _active = true;
-
+        _time = 0;
     }
 
     void Update()
