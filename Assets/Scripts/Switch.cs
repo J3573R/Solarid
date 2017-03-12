@@ -22,6 +22,7 @@ public class Switch : MonoBehaviour
     private float _switchValue;
 
     private RotateConstantly _obeliskRotation;
+    private Collider[] _platformColliders;
     
 
     public void Awake()
@@ -31,7 +32,9 @@ public class Switch : MonoBehaviour
         _sliderBar.transform.SetParent(GameObject.Find("UI").transform);
         _slider = _sliderBar.GetComponent<Slider>();
         _switchValue = 0;
-        _sliderBar.SetActive(false);        
+        _sliderBar.SetActive(false);
+        _platformColliders = TargetDoor.gameObject.GetComponentsInChildren<Collider>();
+        ToggleDoorColliders(TargetDoor.Open);
     }
 
     void Update()
@@ -66,6 +69,7 @@ public class Switch : MonoBehaviour
                 if (_switchValue >= _slider.maxValue)
                 {                    
                     TargetDoor.ToggleDoor();
+                    ToggleDoorColliders(TargetDoor.Open);
                 }
             }
             else if (_switchValue > 0)
@@ -85,5 +89,13 @@ public class Switch : MonoBehaviour
             }
         }
         
+    }
+
+    void ToggleDoorColliders(bool state)
+    {
+        foreach (var collider in _platformColliders)
+        {
+            collider.enabled = state;
+        }
     }
 }

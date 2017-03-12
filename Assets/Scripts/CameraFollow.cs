@@ -48,7 +48,7 @@ public class CameraFollow : MonoBehaviour
     void FixedUpdate()
     {
         _vCurPos = _player.transform.position + CameraOffset;
-        var time = Time.smoothDeltaTime * CameraDelay;
+        var time = Time.smoothDeltaTime * CameraDelay * 2;
         _vCurPos = Vector3.Lerp(transform.position, _vCurPos + MouseOffset, time);
         transform.position = _vCurPos;
         /*if(MouseOffset == Vector3.zero)
@@ -76,6 +76,6 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 direction = (offset - _player.transform.position).normalized;        
         direction.y = 0;
-        MouseOffset = direction * 3;
+        MouseOffset = direction * 4;
     }
 }

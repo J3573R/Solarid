@@ -40,29 +40,33 @@ public class Charger : EnemyBase
     /// <param name="state">State to change</param>
     public override void SetState(EnemyBase.State state)
     {
-        if (CurrentStateObject != null)
+        if (CurrentState != state)
         {
-            Destroy(CurrentStateObject);
-        }
+            if (CurrentStateObject != null)
+            {
+                Destroy(CurrentStateObject);
+            }
 
-        switch (state)
-        {
-            case State.Idle:
-                CurrentStateObject = gameObject.AddComponent<ChargerIdle>();
-                CurrentState = state;
-                break;
-            case State.Alert:
-                CurrentStateObject = gameObject.AddComponent<ChargerAlert>();
-                CurrentState = state;
-                break;
-            case State.Move:
-                CurrentStateObject = gameObject.AddComponent<ChargerMove>();
-                CurrentState = state;
-                break;
-            case State.Attack:
-                CurrentStateObject = gameObject.AddComponent<ChargerAttack>();
-                CurrentState = state;
-                break;
+            switch (state)
+            {
+                case State.Idle:
+                    CurrentStateObject = gameObject.AddComponent<ChargerIdle>();
+                    CurrentState = state;
+                    break;
+                case State.Alert:
+                    CurrentStateObject = gameObject.AddComponent<ChargerAlert>();
+                    CurrentState = state;
+                    AlertOthers();
+                    break;
+                case State.Move:
+                    CurrentStateObject = gameObject.AddComponent<ChargerMove>();
+                    CurrentState = state;
+                    break;
+                case State.Attack:
+                    CurrentStateObject = gameObject.AddComponent<ChargerAttack>();
+                    CurrentState = state;
+                    break;
+            }
         }
     }
 }
