@@ -98,7 +98,7 @@ public class Gun : MonoBehaviour
     public void Shoot()
     {
 
-        
+
         if (_reload <= 0)
         {
             for (int i = 0; i < _bullets.Count; i++)
