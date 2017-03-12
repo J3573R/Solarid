@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,13 +48,28 @@ public class PlayerAnimation : MonoBehaviour {
     private void Update()
     {
         CheckAnimationStance();
-        CheckAnimation();
+
+        if (_currentStance == AnimationStance.Aiming)
+            CheckAimAnimation();
+        else if (_currentStance == AnimationStance.Casting)
+            CheckCastAnimation();
+        else if (_currentStance == AnimationStance.Idle)
+            CheckIdleAnimation();
     }
 
-    private void CheckAnimation()
+    private void CheckAnimationStance()
     {
-        if (_currentStance == AnimationStance.Aiming)
-        {
+        if (_player.Movement.Casting)
+            SetAnimationStance(AnimationStance.Casting);
+        else if (_player.Movement.Shooting)
+            SetAnimationStance(AnimationStance.Aiming);
+        else
+            SetAnimationStance(AnimationStance.Idle);
+    }
+
+    private void CheckAimAnimation()
+    {
+        
             if (!Moving)
                 SetAnimation(AnimationState.Idle);
             else if (Moving && MoveDirection == AnimationState.RunForward)
@@ -72,41 +88,47 @@ public class PlayerAnimation : MonoBehaviour {
                 SetAnimation(AnimationState.RunLeft);
             else if (Moving && MoveDirection == AnimationState.RunForwardLeft)
                 SetAnimation(AnimationState.RunForwardLeft);
-            
-        }
+
+    }
+
+    private void CheckCastAnimation()
+    {
         
-        
-                 
-    
-        if (_currentStance == AnimationStance.Casting)
-        {
             if (CastOnce)
             {
                 SetAnimation(AnimationState.Cast);
                 CastOnce = false;
                 StartCoroutine(ResetCastIdle());
             }
-
+            else if (!Moving)
+                SetAnimation(AnimationState.Idle);
+            else if (Moving && MoveDirection == AnimationState.RunForward)
+                SetAnimation(AnimationState.RunForward);
+            else if (Moving && MoveDirection == AnimationState.RunForwardRight)
+                SetAnimation(AnimationState.RunForwardRight);
+            else if (Moving && MoveDirection == AnimationState.RunRight)
+                SetAnimation(AnimationState.RunRight);
+            else if (Moving && MoveDirection == AnimationState.RunBackRight)
+                SetAnimation(AnimationState.RunBackRight);
+            else if (Moving && MoveDirection == AnimationState.RunBack)
+                SetAnimation(AnimationState.RunBack);
+            else if (Moving && MoveDirection == AnimationState.RunBackLeft)
+                SetAnimation(AnimationState.RunBackLeft);
+            else if (Moving && MoveDirection == AnimationState.RunLeft)
+                SetAnimation(AnimationState.RunLeft);
+            else if (Moving && MoveDirection == AnimationState.RunForwardLeft)
+                SetAnimation(AnimationState.RunForwardLeft);
 
         }
-        else if (_currentStance == AnimationStance.Idle)
-        {
-            if (Moving)
-                SetAnimation(AnimationState.Run);
-            else
-                SetAnimation(AnimationState.Idle);                           
-        }
-    }
+    
 
-    private void CheckAnimationStance()
+    private void CheckIdleAnimation()
     {
-        if (_player.Movement.Casting)        
-            SetAnimationStance(AnimationStance.Casting);        
-        else if (_player.Movement.Shooting)
-            SetAnimationStance(AnimationStance.Aiming);
+        if (Moving)
+            SetAnimation(AnimationState.Run);
         else
-            SetAnimationStance(AnimationStance.Idle);
-    }
+            SetAnimation(AnimationState.Idle);
+    }    
 
     private IEnumerator ResetCastIdle()
     {

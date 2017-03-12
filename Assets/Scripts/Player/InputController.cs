@@ -77,7 +77,9 @@ public class InputController : MonoBehaviour
                 _player.Movement.SetShooting(true);                
                 _player.Shoot();
             }           
-        } else
+        } 
+
+        if (Input.GetButtonUp("Fire1"))
         {
             _player.Movement.SetShooting(false);
             _player.Gun.SetShooting(false);
