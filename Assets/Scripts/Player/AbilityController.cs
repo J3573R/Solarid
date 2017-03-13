@@ -121,7 +121,6 @@ public class AbilityController : MonoBehaviour {
 
     private void Update()
     {
-        Debug.Log(_currentAbility);
         DisplayCooldown();        
     }
 
