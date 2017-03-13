@@ -10,6 +10,12 @@ public class AbilityBlast : AbilityBase
     [SerializeField]
     private GameObject _blast;
 
+    // Use this for initialization
+    void Start()
+    {
+        _player = GetComponent<Player>();
+    }
+
     /// <summary>
     /// Gets the mouseposition and throws the grenade to it
     /// </summary>
@@ -19,25 +25,13 @@ public class AbilityBlast : AbilityBase
 
         if (target != Vector3.zero)
         {
-            //_grenadeScript.targetPosition = target;
-            //_grenadeScript.ResetPosition(transform);
-            //_grenadeScript.Throw();
+            target.y = 1;           
+            Instantiate(_blast, target, Quaternion.Euler(90, 0, 0));
             CoolDownRemaining = CoolDown;
         }
 
 
         //TODO: Cooldown/mana stuff needed, for all abilities
     }
-
-
-
-    // Use this for initialization
-    void Start()
-    {
-        //_grenade = Instantiate(_grenade, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-        //_grenadeScript = _grenade.GetComponent<GrenadeScript>();
-        _player = GetComponent<Player>();
-        //_grenadeScript.angle = angle;
-    }
-
+    
 }
