@@ -58,6 +58,7 @@ public class AbilityBlink : AbilityBase {
         transform.position = _targetPosition;
         _startParticle.Play();
         StartCoroutine(BlinkDelay());
+        _player.Input.ListenInput = false;
     }
 
     /// <summary>
@@ -76,5 +77,6 @@ public class AbilityBlink : AbilityBase {
         
         _player.ShootingEnabled = true;
         _playerRender.enabled = true;
+        _player.Input.ListenInput = true;
     }
 }

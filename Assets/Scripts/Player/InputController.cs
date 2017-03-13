@@ -58,7 +58,7 @@ public class InputController : MonoBehaviour
         {            
             _player.Movement.SetCasting(true);
         }         
-        else if (Input.GetButtonUp("Ability"))
+        else if (!Input.GetButton("Ability"))
         {            
             _player.Movement.SetCasting(false);
         }
@@ -77,7 +77,9 @@ public class InputController : MonoBehaviour
                 _player.Movement.SetShooting(true);                
                 _player.Shoot();
             }           
-        } else
+        } 
+
+        if (Input.GetButtonUp("Fire1"))
         {
             _player.Movement.SetShooting(false);
             _player.Gun.SetShooting(false);
@@ -87,6 +89,7 @@ public class InputController : MonoBehaviour
         {
             _player.AbilityController.Execute();
             _player.Gun.SetShooting(true);
+            _player.Movement.SetShooting(true);
         }
 
         if (Input.GetButtonDown("Interact"))
