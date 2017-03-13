@@ -13,6 +13,10 @@ public class EnemyBase : MonoBehaviour
     public float RangeToAlert = 1;
 
     private Slider _healthBar;
+
+    // Pull effect for black hole
+    private Vector3 _pullPoint;
+    private float _pullDuration;
     
     public enum State
     {
@@ -51,6 +55,18 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Update()
     {
         _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PullToPoint(Vector3.zero, 3f);
+        }
+
+        if(_pullDuration > 0)
+        {
+            var direction = _pullPoint - transform.position;
+            transform.position += direction * Time.deltaTime * 2;
+            _pullDuration -= Time.deltaTime;
+        }
     }
 
     /// <summary>
@@ -90,8 +106,8 @@ public class EnemyBase : MonoBehaviour
         if (other.tag == "PlayerBullet")
         {
             TakeDamage(Globals.PlayerDamage);
-
-            other.gameObject.SetActive(false);
+            Bullet bullet = other.GetComponentInParent<Bullet>();
+            bullet.BulletHit();
         }
     }
 
@@ -112,6 +128,10 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void AlertOthers()
     {
+        if(CurrentState != EnemyBase.State.Alert)
+        {
+            SetState(State.Alert);
+        }
         var enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var enemy in enemies)
         {
@@ -128,6 +148,12 @@ public class EnemyBase : MonoBehaviour
                 Debug.LogError(e.Message);
             }
         }
+    }
+
+    public virtual void PullToPoint(Vector3 point, float duration)
+    {
+        _pullPoint = point;
+        _pullDuration = duration;
     }
 
 }
