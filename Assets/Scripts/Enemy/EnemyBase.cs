@@ -151,6 +151,9 @@ public class EnemyBase : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Alerts other enemies from range around them.
+    /// </summary>
     public virtual void AlertOthers()
     {
         if(CurrentState != EnemyBase.State.Alert)
@@ -175,12 +178,21 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Pulls enemy towards point.
+    /// </summary>
+    /// <param name="point">Point to pull towards.</param>
+    /// <param name="duration">Duration of the pull.</param>
     public virtual void PullToPoint(Vector3 point, float duration)
     {
         _pullPoint = point;
         _pullDuration = duration;
     }
 
+    /// <summary>
+    /// Confuses enemy, making it patrol for set amount of time.
+    /// </summary>
+    /// <param name="duration">Duration of confuse effect.</param>
     public virtual void Confuse(float duration)
     {
         _confusionPosition = transform.position;
@@ -190,9 +202,20 @@ public class EnemyBase : MonoBehaviour
         _confusionActive = true;
     }
 
-
+    /// <summary>
+    /// Animation and patrol calculation for confusion.
+    /// </summary>
     private void Confusion()
     {
+        if (IsNavMeshMoving())
+        {
+            Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+        }
+        else
+        {
+            Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
+        }
+
         if (_timeToWalk <= 0)
         {
             Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * 3) + Vector3.one * 2;
@@ -203,12 +226,31 @@ public class EnemyBase : MonoBehaviour
             {
                 Agent.destination = navHit.position;
                 _timeToWalk = 1f;
-                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
             }
         }
         else
         {
             _timeToWalk -= Time.deltaTime;
         }
+    }
+
+    /// <summary>
+    /// Checks if navigation agent is moving.
+    /// </summary>
+    /// <returns>False if nav mesh is reached target, otherwise true</returns>
+    private bool IsNavMeshMoving()
+    {
+        if (!Agent.pathPending)
+        {
+            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            {
+                if (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
