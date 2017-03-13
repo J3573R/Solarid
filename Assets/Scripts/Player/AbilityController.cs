@@ -11,6 +11,7 @@ public class AbilityController : MonoBehaviour {
     private AbilityBase _currentAbility;
     private float _abilityIndex;
     private Text _cooldownDisplay;
+    private RangeCheck _rangeCheck;
 
     public float CastDelayInSeconds;
 
@@ -24,6 +25,7 @@ public class AbilityController : MonoBehaviour {
         _currentAbility = _blink;
         GameObject tmp = GameObject.Find("CoolDown");
         _cooldownDisplay = tmp.GetComponent<Text>();
+        _rangeCheck = FindObjectOfType<RangeCheck>();
     }
 
     /// <summary>
@@ -61,7 +63,10 @@ public class AbilityController : MonoBehaviour {
         return _currentAbility.GetRemainingCooldown();
     }
 
-    
+    public float GetRange()
+    {
+        return _currentAbility.GetRange();
+    }
 
     /// <summary>
     /// Sets the current ability in use
@@ -105,10 +110,18 @@ public class AbilityController : MonoBehaviour {
         //Debug.Log("TRUEINDEX = " + _abilityIndex);
     }
 
+    public void DrawRange(bool draw)
+    {
+        if (draw)
+            _rangeCheck.DrawRange(GetRange(), true);
+        else
+            _rangeCheck.DrawRange(1f, false);
+    }
+
 
     private void Update()
     {
-        DisplayCooldown();
+        DisplayCooldown();        
     }
 
     /// <summary>

@@ -6,6 +6,7 @@ public abstract class AbilityBase : MonoBehaviour {
 
     public float CoolDown;
     public float CoolDownRemaining;
+    public float MaxRange;
 
     public abstract void Execute();
 
@@ -26,4 +27,10 @@ public abstract class AbilityBase : MonoBehaviour {
         }
     }
 
+    public float GetRange()
+    {
+        return MaxRange;
+    }
+
+    
 }

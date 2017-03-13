@@ -57,10 +57,12 @@ public class InputController : MonoBehaviour
         if (Input.GetButtonDown("Ability"))
         {            
             _player.Movement.SetCasting(true);
+            _player.AbilityController.DrawRange(true);                        
         }         
         else if (!Input.GetButton("Ability"))
         {            
             _player.Movement.SetCasting(false);
+            _player.AbilityController.DrawRange(false);
         }
         
         if (Input.GetButtonUp("Ability") && !Input.GetButton("Fire1"))
