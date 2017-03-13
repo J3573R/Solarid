@@ -90,8 +90,8 @@ public class EnemyBase : MonoBehaviour
         if (other.tag == "PlayerBullet")
         {
             TakeDamage(Globals.PlayerDamage);
-
-            other.gameObject.SetActive(false);
+            Bullet bullet = other.GetComponentInParent<Bullet>();
+            bullet.BulletHit();
         }
     }
 
