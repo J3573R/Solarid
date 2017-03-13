@@ -7,8 +7,8 @@ public class AbilityController : MonoBehaviour {
 
     private Player _player;    
     private AbilityBlink _blink;
-    private AbilityGrenade _grenade;
     private AbilityBlast _vortex;
+    private AbilityConfusion _confusion;
     private AbilityBase _currentAbility;
     private float _abilityIndex;
     private Text _cooldownDisplay;
@@ -23,7 +23,7 @@ public class AbilityController : MonoBehaviour {
         _player = GetComponent<Player>();
         _blink = GetComponent<AbilityBlink>();
         _vortex = GetComponent<AbilityBlast>();
-        //_grenade = GetComponent<AbilityGrenade>();
+        _confusion = GetComponent<AbilityConfusion>();
         _currentAbility = _blink;
         GameObject tmp = GameObject.Find("CoolDown");
         _cooldownDisplay = tmp.GetComponent<Text>();
@@ -37,7 +37,7 @@ public class AbilityController : MonoBehaviour {
     {
         Blink = 0,
         Grenade = 1,
-        SomeRandomAbility = 2
+        Confusion = 2
     }
 
     /// <summary>
@@ -85,7 +85,12 @@ public class AbilityController : MonoBehaviour {
         {
             _currentAbility = _vortex;
             _abilityIndex = 1;
-        }         
+        }
+        if (tmp == Ability.Confusion)
+        {
+            _currentAbility = _confusion;
+            _abilityIndex = 2;
+        }
     }
 
     /// <summary>

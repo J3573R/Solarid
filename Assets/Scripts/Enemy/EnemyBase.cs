@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
@@ -12,11 +13,19 @@ public class EnemyBase : MonoBehaviour
     public Animator Animator;
     public float RangeToAlert = 1;
 
+    protected NavMeshAgent Agent;
+
     private Slider _healthBar;
 
     // Pull effect for black hole
     private Vector3 _pullPoint;
     private float _pullDuration;
+
+    // Confuse effect
+    private Vector3 _confusionPosition;
+    private float _confusionDuration;
+    private float _timeToWalk;
+    private bool _confusionActive = false;
     
     public enum State
     {
@@ -46,6 +55,7 @@ public class EnemyBase : MonoBehaviour
     {
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
+        Agent = GetComponent<NavMeshAgent>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
@@ -58,7 +68,7 @@ public class EnemyBase : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            PullToPoint(Vector3.zero, 3f);
+            Confuse(3f);
         }
 
         if(_pullDuration > 0)
@@ -66,6 +76,17 @@ public class EnemyBase : MonoBehaviour
             var direction = _pullPoint - transform.position;
             transform.position += direction * Time.deltaTime * 2;
             _pullDuration -= Time.deltaTime;
+        }
+
+        if (_confusionDuration > 0 && _confusionActive)
+        {
+            Confusion();
+            _confusionDuration -= Time.deltaTime;
+        }
+        else if(_confusionActive)
+        {
+            CurrentStateObject.enabled = true;
+            _confusionActive = false;
         }
     }
 
@@ -102,12 +123,16 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        Debug.Log("HIT " + other.tag);
 
         if (other.tag == "PlayerBullet")
         {
             TakeDamage(Globals.PlayerDamage);
             Bullet bullet = other.GetComponentInParent<Bullet>();
             bullet.BulletHit();
+        } else if (other.tag == "Confusion")
+        {
+            Confuse(5f);
         }
     }
 
@@ -156,4 +181,34 @@ public class EnemyBase : MonoBehaviour
         _pullDuration = duration;
     }
 
+    public virtual void Confuse(float duration)
+    {
+        _confusionPosition = transform.position;
+        _confusionDuration = duration;
+        _timeToWalk = 0;
+        CurrentStateObject.enabled = false;
+        _confusionActive = true;
+    }
+
+
+    private void Confusion()
+    {
+        if (_timeToWalk <= 0)
+        {
+            Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * 3) + Vector3.one * 2;
+            randomDirection += _confusionPosition;
+
+            NavMeshHit navHit;
+            if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
+            {
+                Agent.destination = navHit.position;
+                _timeToWalk = 1f;
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+            }
+        }
+        else
+        {
+            _timeToWalk -= Time.deltaTime;
+        }
+    }
 }

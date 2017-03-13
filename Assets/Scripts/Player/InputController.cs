@@ -114,8 +114,8 @@ public class InputController : MonoBehaviour
             _player.AbilityController.SetAbility(AbilityController.Ability.Blink);
         if (Input.GetButtonUp("SetGrenade"))
             _player.AbilityController.SetAbility(AbilityController.Ability.Grenade);
-        if (Input.GetButtonUp("SetThirdAbility"))
-            _player.AbilityController.SetAbility(AbilityController.Ability.SomeRandomAbility);
+        if (Input.GetButtonUp("SetConfusion"))
+            _player.AbilityController.SetAbility(AbilityController.Ability.Confusion);
         
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {            
