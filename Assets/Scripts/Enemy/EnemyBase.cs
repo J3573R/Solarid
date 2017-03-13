@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour
     
     public enum State
     {
+        None,
         Idle,
         Alert,
         Move,
