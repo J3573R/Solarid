@@ -22,31 +22,36 @@ public class RangerMove : EnemyStateBase {
         _chaseTime = 0;
     }
 
-    protected override void OnDisable()
-    {
-        Agent.updateRotation = true;
-    }
-
     protected override void Update()
-    {     
+    {
+        if (IsNavMeshMoving())
+        {
+            Parent.Animator.SetInteger("animState", (int) EnemyBase.AnimationState.Walk);
+        }
+        else if(!Parent.Animator.GetCurrentAnimatorStateInfo(0).IsName("Anubis_Idle"))
+        {
+            Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
+        }
+
         _distance = Vector3.Distance(Globals.Player.transform.position, transform.position);
 
         if (_chaseTime > 3)
         {
             Agent.stoppingDistance = 0f;
             Parent.SetState(EnemyBase.State.Idle);
+        }
+        else if (_parent.ReadyToShoot <= 0)
+        {
+            Parent.SetState(EnemyBase.State.Attack);
+            _chaseTime += Time.deltaTime;
+
         } else if (_distance > _maxDistance)
         {
             Agent.stoppingDistance = _maxDistance;
             Agent.destination = Globals.Player.transform.position;
             _chaseTime += Time.deltaTime;
             
-        } else if (_parent.ReadyToShoot <= 0)
-        {
-            Parent.SetState(EnemyBase.State.Attack);
-            _chaseTime += Time.deltaTime;
-
-        } else if(_distance < _minDistance)
+        }  else if(_distance < _minDistance)
         {            
             _direction = (Globals.Player.transform.position - transform.position).normalized;
             Agent.stoppingDistance = 0f;
@@ -54,8 +59,25 @@ public class RangerMove : EnemyStateBase {
             _chaseTime += Time.deltaTime;
         }
 
-        _lookAtTarget.Set(Globals.Player.transform.position.x, transform.position.y, Globals.Player.transform.position.z);
-        transform.LookAt(_lookAtTarget);
+        _direction = (Globals.Player.transform.position - transform.position).normalized;
+        _direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(_direction);
+    }
+
+    private bool IsNavMeshMoving()
+    {
+        if (!Agent.pathPending)
+        {
+            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            {
+                if (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
 

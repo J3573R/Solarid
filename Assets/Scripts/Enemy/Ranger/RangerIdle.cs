@@ -28,6 +28,7 @@ public class RangerIdle : EnemyStateBase
         ChangeToAlert();
         if(IsNavMeshMoving() && !Idling)
         {
+            Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
             Idling = true;
         }
     }
@@ -64,6 +65,7 @@ public class RangerIdle : EnemyStateBase
             {
                 Agent.destination = navHit.position;
                 _timeToWalk = UnityEngine.Random.Range(1, 3);
+                Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
                 Idling = false;
             }
         }

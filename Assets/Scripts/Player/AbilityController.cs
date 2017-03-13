@@ -112,10 +112,11 @@ public class AbilityController : MonoBehaviour {
 
     public void DrawRange(bool draw)
     {
-        if (draw)
+        /*if (draw)
             _rangeCheck.DrawRange(GetRange(), true);
         else
             _rangeCheck.DrawRange(1f, false);
+       */
     }
 
 
