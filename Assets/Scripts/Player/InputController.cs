@@ -29,22 +29,22 @@ public class InputController : MonoBehaviour
         } else
         {
             _player.Movement.Move(0, 0);
-        }
-        
+        }        
     }
 
     void Update()
     {
         if (ListenInput)
         {
-            GetInput();
+            GetMouseInput();
+            GetKeyBoardInput();
         }        
-    }
+    }    
 
     /// <summary>
-    /// Gets Input for various keys and calls methods accordingly
+    /// Gets Input from mouse and does stuff accordingly
     /// </summary>
-    private void GetInput()
+    private void GetMouseInput()
     {
         if (Input.GetButton("Ability"))
         {
@@ -90,10 +90,29 @@ public class InputController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             _player.AbilityController.Execute();
-            _player.Gun.SetShooting(true);
-            _player.Movement.SetShooting(true);
-        }
+            if (!_player.Movement.Casting)
+            {
+                _player.Gun.SetShooting(true);
+                _player.Movement.SetShooting(true);
+            }
+        }        
 
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {            
+            float tmp = Input.GetAxis("Mouse ScrollWheel");
+
+            if (tmp < 0)
+                _player.AbilityController.ScrollWeapon(-1);
+            else if (tmp > 0)
+                _player.AbilityController.ScrollWeapon(1);
+        }        
+    }
+
+    /// <summary>
+    /// Gets Input from keyboard and does stuff accordingly
+    /// </summary>
+    private void GetKeyBoardInput()
+    {
         if (Input.GetButtonDown("Interact"))
         {
             Globals.Interact = true;
@@ -109,8 +128,8 @@ public class InputController : MonoBehaviour
             Debug.Log("PRAISE THE SUN");
             PlayerAnimation.SetAnimation(PlayerAnimation.AnimationState.Praise);
         }
-              
-        if (Input.GetButtonUp("SetBlink"))        
+
+        if (Input.GetButtonUp("SetBlink"))
             _player.AbilityController.SetAbility(AbilityController.Ability.Blink);
         if (Input.GetButtonUp("SetGrenade"))
             _player.AbilityController.SetAbility(AbilityController.Ability.Grenade);
@@ -118,16 +137,6 @@ public class InputController : MonoBehaviour
             _player.AbilityController.SetAbility(AbilityController.Ability.Confusion);
         if (Input.GetButtonUp("SetLightning"))
             _player.AbilityController.SetAbility(AbilityController.Ability.Lightning);
-
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {            
-            float tmp = Input.GetAxis("Mouse ScrollWheel");
-
-            if (tmp < 0)
-                _player.AbilityController.ScrollWeapon(-1);
-            else if (tmp > 0)
-                _player.AbilityController.ScrollWeapon(1);
-        }        
     }
 
     /// <summary>

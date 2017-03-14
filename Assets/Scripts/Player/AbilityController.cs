@@ -57,8 +57,9 @@ public class AbilityController : MonoBehaviour {
     public void Execute()
     {
         if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
-        {
-            _currentAbility.Execute();         
+        {            
+            if (_rangeCheck.GetDistance() <= GetRange())
+                _currentAbility.Execute();         
         }
             
     }
@@ -125,11 +126,11 @@ public class AbilityController : MonoBehaviour {
 
     public void DrawRange(bool draw)
     {
-        /*if (draw)
+        if (draw)
             _rangeCheck.DrawRange(GetRange(), true);
         else
             _rangeCheck.DrawRange(1f, false);
-       */
+       
     }
 
 
