@@ -116,7 +116,9 @@ public class InputController : MonoBehaviour
             _player.AbilityController.SetAbility(AbilityController.Ability.Grenade);
         if (Input.GetButtonUp("SetConfusion"))
             _player.AbilityController.SetAbility(AbilityController.Ability.Confusion);
-        
+        if (Input.GetButtonUp("SetLightning"))
+            _player.AbilityController.SetAbility(AbilityController.Ability.Lightning);
+
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {            
             float tmp = Input.GetAxis("Mouse ScrollWheel");

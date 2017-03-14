@@ -123,7 +123,6 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        Debug.Log("HIT " + other.tag);
 
         if (other.tag == "PlayerBullet")
         {
@@ -133,6 +132,9 @@ public class EnemyBase : MonoBehaviour
         } else if (other.tag == "Confusion")
         {
             Confuse(5f);
+        } else if (other.tag == "Lightning")
+        {
+            TakeDamage(Globals.PlayerDamage);
         }
     }
 

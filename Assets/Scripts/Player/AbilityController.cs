@@ -9,6 +9,7 @@ public class AbilityController : MonoBehaviour {
     private AbilityBlink _blink;
     private AbilityBlast _vortex;
     private AbilityConfusion _confusion;
+    private AbilityLightning _lightning;
     private AbilityBase _currentAbility;
     private float _abilityIndex;
     private Text _cooldownDisplay;
@@ -24,6 +25,7 @@ public class AbilityController : MonoBehaviour {
         _blink = GetComponent<AbilityBlink>();
         _vortex = GetComponent<AbilityBlast>();
         _confusion = GetComponent<AbilityConfusion>();
+        _lightning = GetComponent<AbilityLightning>();
         _currentAbility = _blink;
         GameObject tmp = GameObject.Find("CoolDown");
         _cooldownDisplay = tmp.GetComponent<Text>();
@@ -37,7 +39,8 @@ public class AbilityController : MonoBehaviour {
     {
         Blink = 0,
         Grenade = 1,
-        Confusion = 2
+        Confusion = 2,
+        Lightning = 3
     }
 
     /// <summary>
@@ -90,6 +93,11 @@ public class AbilityController : MonoBehaviour {
         {
             _currentAbility = _confusion;
             _abilityIndex = 2;
+        }
+        if (tmp == Ability.Lightning)
+        {
+            _currentAbility = _lightning;
+            _abilityIndex =32;
         }
     }
 
