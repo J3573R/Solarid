@@ -25,15 +25,6 @@ public class AbilityConfusion : AbilityBase
 
         var test = Instantiate(_blast, transform.position, Quaternion.identity);
         CoolDownRemaining = CoolDown;
-        Debug.Log("EXECUTE" + test);
-        /*if (target != Vector3.zero)
-        {
-            target.y = 1;           
-            Instantiate(_blast, target, Quaternion.Euler(90, 0, 0));
-            CoolDownRemaining = CoolDown;
-        }*/
-
-
         //TODO: Cooldown/mana stuff needed, for all abilities
     }
     

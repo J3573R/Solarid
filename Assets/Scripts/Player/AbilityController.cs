@@ -97,7 +97,7 @@ public class AbilityController : MonoBehaviour {
         if (tmp == Ability.Lightning)
         {
             _currentAbility = _lightning;
-            _abilityIndex =32;
+            _abilityIndex = 3;
         }
     }
 

@@ -29,7 +29,7 @@ public class AbilityLightning : AbilityBase
 
         float distance = Mathf.Infinity;
         EnemyBase closestEnemy = null;
-        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, 25);
+        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, 15);
         foreach (Collider enemy in enemyColliders)
         {
             EnemyBase tmp = enemy.gameObject.GetComponent<EnemyBase>();
@@ -45,21 +45,11 @@ public class AbilityLightning : AbilityBase
 
         if (closestEnemy != null)
         {
-            //LightningBolt bolt = Instantiate(_blast, transform.position, Quaternion.identity).GetComponent<LightningBolt>();
-            //LightningBolt bolt = _blast;
             _blast.transform.position = transform.position;
             _bolt.TargetEnemy = closestEnemy;
             _blast.SetActive(true);
             CoolDownRemaining = CoolDown;
         }
-
-        /*if (target != Vector3.zero)
-        {
-            target.y = 1;           
-            Instantiate(_blast, target, Quaternion.Euler(90, 0, 0));
-            CoolDownRemaining = CoolDown;
-        }*/
-
 
         //TODO: Cooldown/mana stuff needed, for all abilities
     }

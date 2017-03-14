@@ -27,7 +27,7 @@ public class LightningBolt : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            Collider[] enemyColliders = Physics.OverlapSphere(other.gameObject.transform.position, 15);
+            Collider[] enemyColliders = Physics.OverlapSphere(other.gameObject.transform.position, 25);
             foreach (Collider enemy in enemyColliders)
             {
                 EnemyBase tmp = enemy.gameObject.GetComponent<EnemyBase>();
