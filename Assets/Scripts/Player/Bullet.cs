@@ -103,6 +103,6 @@ public class Bullet : MonoBehaviour
             Debug.Log("yli tai ali");
         }
         
-    }
+    }  
 
 }

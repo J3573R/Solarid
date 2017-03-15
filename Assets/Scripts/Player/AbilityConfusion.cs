@@ -21,6 +21,7 @@ public class AbilityConfusion : AbilityBase
     /// </summary>
     public override void Execute()
     {
+        Debug.Log("Execture");
         Vector3 target = _player.Input.GetMouseGroundPosition();
 
         var test = Instantiate(_blast, transform.position, Quaternion.identity);

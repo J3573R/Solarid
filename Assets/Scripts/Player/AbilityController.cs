@@ -17,7 +17,6 @@ public class AbilityController : MonoBehaviour {
 
     public float CastDelayInSeconds;
 
-
     // Use this for initialization
     void Start()
     {
@@ -38,7 +37,7 @@ public class AbilityController : MonoBehaviour {
     public enum Ability
     {
         Blink = 0,
-        Grenade = 1,
+        Vortex = 1,
         Confusion = 2,
         Lightning = 3
     }
@@ -57,18 +56,32 @@ public class AbilityController : MonoBehaviour {
     public void Execute()
     {
         if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
-        {            
-            if (_rangeCheck.GetDistance() <= GetRange())
-                _currentAbility.Execute();         
-        }
-            
+        {
+            if (GetRange() == 0)
+            {
+                _currentAbility.Execute();
+            }
+            else
+            {
+                if (_rangeCheck.GetDistance() <= GetRange())
+                    _currentAbility.Execute();
+            }                    
+        }            
     }
 
+    /// <summary>
+    /// Returns remaining cooldown of the current ability
+    /// </summary>
+    /// <returns></returns>
     public float GetCurrentCooldown()
     {
         return _currentAbility.GetRemainingCooldown();
     }
 
+    /// <summary>
+    /// Returns the Max range of the current ability
+    /// </summary>
+    /// <returns></returns>
     public float GetRange()
     {
         return _currentAbility.GetRange();
@@ -85,7 +98,7 @@ public class AbilityController : MonoBehaviour {
             _currentAbility = _blink;
             _abilityIndex = 0;
         }            
-        if (tmp == Ability.Grenade)
+        if (tmp == Ability.Vortex)
         {
             _currentAbility = _vortex;
             _abilityIndex = 1;
@@ -103,36 +116,43 @@ public class AbilityController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Scrolls current weapon index
+    /// Scrolls current weapon index and sets the corect ability
     /// </summary>
     /// <param name="tmp"></param>
     public void ScrollWeapon(int tmp)
     {
-        //Debug.Log(_abilityIndex);
         _abilityIndex += tmp;
-        //Debug.Log(_abilityIndex);
 
+        Debug.Log("True AbilityIndex =" + _abilityIndex);
+
+        
         if (_abilityIndex < 0)
-            _abilityIndex = 1;
-        else if (_abilityIndex > 1)
+            _abilityIndex = 3;
+        else if (_abilityIndex > 3)
             _abilityIndex = 0;
+        
 
         if (_abilityIndex == 0)
             SetAbility(Ability.Blink);
         if (_abilityIndex == 1)
-            SetAbility(Ability.Grenade);
-        //Debug.Log("TRUEINDEX = " + _abilityIndex);
+            SetAbility(Ability.Vortex);
+        if (_abilityIndex == 2)
+            SetAbility(Ability.Confusion);
+        if (_abilityIndex == 3)
+            SetAbility(Ability.Lightning);
     }
 
+    /// <summary>
+    /// If true, tells RangeCheck to draw the range indicator. If false, stops drawing
+    /// </summary>
+    /// <param name="draw"></param>
     public void DrawRange(bool draw)
     {
         if (draw)
             _rangeCheck.DrawRange(GetRange(), true);
         else
-            _rangeCheck.DrawRange(1f, false);
-       
+            _rangeCheck.DrawRange(1f, false);       
     }
-
 
     private void Update()
     {

@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
         Dead = false;
     }
 
+    /// <summary>
+    /// Tries to shoot
+    /// </summary>
     public void Shoot()
     {
         if (ShootingEnabled && !Movement.Casting)
@@ -39,6 +42,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Damages the player
+    /// </summary>
+    /// <param name="damage">How much damage</param>
+    /// <returns>True if player died, else false</returns>
     public bool TakeDamage(int damage)
     {
 
@@ -54,6 +62,10 @@ public class Player : MonoBehaviour
         return false;
     }
 
+
+    /// <summary>
+    /// Kills the player
+    /// </summary>
     private void Die()
     {
         Dead = true;        

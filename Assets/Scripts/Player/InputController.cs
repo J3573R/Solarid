@@ -132,7 +132,7 @@ public class InputController : MonoBehaviour
         if (Input.GetButtonUp("SetBlink"))
             _player.AbilityController.SetAbility(AbilityController.Ability.Blink);
         if (Input.GetButtonUp("SetGrenade"))
-            _player.AbilityController.SetAbility(AbilityController.Ability.Grenade);
+            _player.AbilityController.SetAbility(AbilityController.Ability.Vortex);
         if (Input.GetButtonUp("SetConfusion"))
             _player.AbilityController.SetAbility(AbilityController.Ability.Confusion);
         if (Input.GetButtonUp("SetLightning"))

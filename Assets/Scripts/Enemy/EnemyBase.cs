@@ -126,9 +126,7 @@ public class EnemyBase : MonoBehaviour
 
         if (other.tag == "PlayerBullet")
         {
-            TakeDamage(Globals.PlayerDamage);
-            Bullet bullet = other.GetComponentInParent<Bullet>();
-            bullet.BulletHit();
+            TakeDamage(Globals.PlayerDamage);            
         } else if (other.tag == "Confusion")
         {
             Confuse(5f);
