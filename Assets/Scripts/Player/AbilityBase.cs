@@ -8,6 +8,9 @@ public abstract class AbilityBase : MonoBehaviour {
     public float CoolDownRemaining;
     public float MaxRange;
 
+    /// <summary>
+    /// Tries to execute the ability
+    /// </summary>
     public abstract void Execute();
 
     /// <summary>
@@ -27,6 +30,10 @@ public abstract class AbilityBase : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns Max range of the skill
+    /// </summary>
+    /// <returns>Mac range of the skill, zero if no range/selfcast</returns>
     public float GetRange()
     {
         return MaxRange;

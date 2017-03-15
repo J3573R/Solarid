@@ -38,6 +38,10 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Sets the player to shooting and changes the movement speed accordingly
+    /// </summary>
+    /// <param name="state"></param>
     public void SetShooting(bool state)
     {
         if (state)
@@ -55,6 +59,10 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Sets the player to Casting and changes the movement speed accordingly
+    /// </summary>
+    /// <param name="state"></param>
     public void SetCasting(bool state)
     {
         if (state)

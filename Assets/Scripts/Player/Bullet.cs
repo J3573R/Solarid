@@ -29,13 +29,14 @@ public class Bullet : MonoBehaviour
 
     void Awake()
     {
-        _fMaxDist = Range / Speed;
-        
+        _fMaxDist = Range / Speed;        
         _time = 0;
-
         GetObjects();
     }
 
+    /// <summary>
+    /// Gets the used object references
+    /// </summary>
     private void GetObjects()
     {
         _bulletPart = gameObject.transform.GetChild(0);
@@ -56,6 +57,9 @@ public class Bullet : MonoBehaviour
         //transform.position = _player.transform.position;
     }
 
+    /// <summary>
+    /// Called if the bullet hits something. Starts the hit effect sequence and disables the bullet itself
+    /// </summary>
     public void BulletHit()
     {
         _bulletPart.transform.gameObject.SetActive(false);
@@ -66,6 +70,10 @@ public class Bullet : MonoBehaviour
         StartCoroutine(HitEffectDelay());
     }
 
+    /// <summary>
+    /// Delay before the hit effect is disabled too
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator HitEffectDelay()
     {
         yield return new WaitForSeconds(HitEffectTime);
@@ -101,8 +109,6 @@ public class Bullet : MonoBehaviour
         if (transform.position.y > 1.55f || transform.position.y < 1.45f)
         {
             Debug.Log("yli tai ali");
-        }
-        
+        }        
     }  
-
 }

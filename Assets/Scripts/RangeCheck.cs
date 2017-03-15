@@ -21,6 +21,11 @@ public class RangeCheck : MonoBehaviour {
         transform.position = tmp;
 	}
 
+    /// <summary>
+    /// Changes the indicator size to match max range and enables or disables the indicator
+    /// </summary>
+    /// <param name="range">Max range of the skill</param>
+    /// <param name="draw">enable if true, disable if false</param>
     public void DrawRange(float range, bool draw)
     {
         Vector3 tmp = new Vector3(range * 2, 0.1f, range * 2);
@@ -35,6 +40,10 @@ public class RangeCheck : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Gets the distance between player and cast point
+    /// </summary>
+    /// <returns></returns>
     public float GetDistance()
     {
         Vector3 tmpVec = transform.position;

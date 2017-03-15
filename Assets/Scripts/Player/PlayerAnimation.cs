@@ -16,6 +16,9 @@ public class PlayerAnimation : MonoBehaviour {
     private AnimationState _currentState;
     private AnimationStance _currentStance;
 
+    /// <summary>
+    /// Current animation state, within current stance
+    /// </summary>
     public enum AnimationState
     {
         Idle = 0,
@@ -32,6 +35,9 @@ public class PlayerAnimation : MonoBehaviour {
         Praise = 30
     }
 
+    /// <summary>
+    /// Top level of the animation hierarchy. Which of the 3 Animation statemachines are we gonna use
+    /// </summary>
     public enum AnimationStance
     {
         Idle = 0,
@@ -57,6 +63,9 @@ public class PlayerAnimation : MonoBehaviour {
             CheckIdleAnimation();
     }
 
+    /// <summary>
+    /// Check which animation state machine we shouls use
+    /// </summary>
     private void CheckAnimationStance()
     {
         if (_player.Movement.Casting)
@@ -67,6 +76,9 @@ public class PlayerAnimation : MonoBehaviour {
             SetAnimationStance(AnimationStance.Idle);
     }
 
+    /// <summary>
+    /// Check which animation in Aiming substatemachine we should use
+    /// </summary>
     private void CheckAimAnimation()
     {
         
@@ -88,12 +100,13 @@ public class PlayerAnimation : MonoBehaviour {
                 SetAnimation(AnimationState.RunLeft);
             else if (Moving && MoveDirection == AnimationState.RunForwardLeft)
                 SetAnimation(AnimationState.RunForwardLeft);
-
     }
 
+    /// <summary>
+    /// Check which animation in Casting substatemachine we should use
+    /// </summary>
     private void CheckCastAnimation()
-    {
-        
+    {        
             if (CastOnce)
             {
                 SetAnimation(AnimationState.Cast);
@@ -118,10 +131,11 @@ public class PlayerAnimation : MonoBehaviour {
                 SetAnimation(AnimationState.RunLeft);
             else if (Moving && MoveDirection == AnimationState.RunForwardLeft)
                 SetAnimation(AnimationState.RunForwardLeft);
+        }    
 
-        }
-    
-
+    /// <summary>
+    /// Which animation in Idle statemachine we should use
+    /// </summary>
     private void CheckIdleAnimation()
     {
         if (Moving)
@@ -130,14 +144,20 @@ public class PlayerAnimation : MonoBehaviour {
             SetAnimation(AnimationState.Idle);
     }    
 
+    /// <summary>
+    /// resets to Idle animation after single cast animation
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator ResetCastIdle()
     {
         yield return new WaitForSeconds(CastTime);
-        SetAnimation(AnimationState.Idle);
-
-        
+        SetAnimation(AnimationState.Idle);                
     }
 
+    /// <summary>
+    /// Changes the animation stance if it's not already same
+    /// </summary>
+    /// <param name="stance"></param>
     private void SetAnimationStance(AnimationStance stance)
     {
         if (stance != _currentStance)
@@ -148,6 +168,10 @@ public class PlayerAnimation : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Changes the animation state if it's not already same
+    /// </summary>
+    /// <param name="animation"></param>
     public void SetAnimation(AnimationState animation)
     {
         if(animation != _currentState)
