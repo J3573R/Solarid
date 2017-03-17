@@ -20,6 +20,7 @@ public class EnemyBase : MonoBehaviour
     // Pull effect for black hole
     private Vector3 _pullPoint;
     private float _pullDuration;
+    private bool _pullActive = false;
 
     // Confuse effect
     private Vector3 _confusionPosition;
@@ -66,16 +67,17 @@ public class EnemyBase : MonoBehaviour
     {
         _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Confuse(3f);
-        }
-
-        if(_pullDuration > 0)
+        if(_pullActive && _pullDuration > 0)
         {
             var direction = _pullPoint - transform.position;
-            transform.position += direction * Time.deltaTime * 2;
+            transform.position += direction * Time.deltaTime;
             _pullDuration -= Time.deltaTime;
+        }
+
+        if (_pullActive && _pullDuration <= 0)
+        {
+            _pullActive = false;
+            Agent.enabled = true;
         }
 
         if (_confusionDuration > 0 && _confusionActive)
@@ -187,6 +189,8 @@ public class EnemyBase : MonoBehaviour
     {
         _pullPoint = point;
         _pullDuration = duration;
+        _pullActive = true;
+        Agent.enabled = false;
     }
 
     /// <summary>
