@@ -14,5 +14,4 @@ public static class Globals
     public static bool Interact;
 
     public static CameraFollow CameraScript;
-    
 }

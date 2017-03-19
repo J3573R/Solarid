@@ -73,7 +73,6 @@ public class GrenadeScript : MonoBehaviour {
         } else if (distance > maxDistance)
         {
             distance = maxDistance;
-            float tmpY = targetPosition.y;
 
             targetPosition = startPosition + (direction * distance);
         }

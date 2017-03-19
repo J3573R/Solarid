@@ -14,8 +14,11 @@ public class AbilityController : MonoBehaviour {
     private float _abilityIndex;
     private Text _cooldownDisplay;
     private RangeCheck _rangeCheck;
+    private bool _allAbilitiesDisabled;
+    private int _maxAbilityIndex;
 
     public float CastDelayInSeconds;
+    public Dictionary<Ability, bool> AbilityArray;
 
     // Use this for initialization
     void Start()
@@ -29,6 +32,14 @@ public class AbilityController : MonoBehaviour {
         GameObject tmp = GameObject.Find("CoolDown");
         _cooldownDisplay = tmp.GetComponent<Text>();
         _rangeCheck = FindObjectOfType<RangeCheck>();
+        AbilityArray = new Dictionary<Ability, bool>();        
+
+        AbilityArray.Add(Ability.Blink, false);
+        AbilityArray.Add(Ability.Vortex, false);
+        AbilityArray.Add(Ability.Confusion, false);
+        AbilityArray.Add(Ability.Lightning, false);
+
+        SetupAbilites();
     }
 
     /// <summary>
@@ -50,23 +61,73 @@ public class AbilityController : MonoBehaviour {
         //TODO: Draw the targeting icon somehow
     }
 
+    public void EnableOrDisableAbility(Ability ability, bool state)
+    {
+        AbilityArray[ability] = state;
+        SetupAbilites();
+    }
+
+    private void SetupAbilites()
+    {
+        int tmpIndex = 0;
+
+        if (AbilityArray[Ability.Blink])
+        {
+            _blink.enabled = true;
+            tmpIndex += 1;
+        }
+        else
+            _blink.enabled = false;
+        if (AbilityArray[Ability.Vortex])
+        {
+            _vortex.enabled = true;
+            tmpIndex += 1;
+        }
+        else
+            _vortex.enabled = false;
+
+        if (AbilityArray[Ability.Confusion])
+        {
+            _confusion.enabled = true;
+            tmpIndex += 1;
+        }
+        else
+            _confusion.enabled = false;
+
+        if (AbilityArray[Ability.Lightning])
+        {
+            _lightning.enabled = true;
+            tmpIndex += 1;
+        }
+        else
+            _lightning.enabled = false;
+
+        if (tmpIndex == 0)
+            _allAbilitiesDisabled = true;
+
+        _maxAbilityIndex = tmpIndex;
+    }
+
     /// <summary>
     /// Executes the current ability
     /// </summary>
     public void Execute()
     {
-        if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
+        if (!_allAbilitiesDisabled)
         {
-            if (GetRange() == 0)
+            if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
             {
-                _currentAbility.Execute();
-            }
-            else
-            {
-                if (_rangeCheck.GetDistance() <= GetRange())
+                if (GetRange() == 0)
+                {
                     _currentAbility.Execute();
-            }                    
-        }            
+                }
+                else
+                {
+                    if (_rangeCheck.GetDistance() <= GetRange())
+                        _currentAbility.Execute();
+                }
+            }
+        }        
     }
 
     /// <summary>
@@ -75,7 +136,10 @@ public class AbilityController : MonoBehaviour {
     /// <returns></returns>
     public float GetCurrentCooldown()
     {
-        return _currentAbility.GetRemainingCooldown();
+        if (!_allAbilitiesDisabled)
+            return _currentAbility.GetRemainingCooldown();
+        else
+            return 0;
     }
 
     /// <summary>
@@ -84,7 +148,10 @@ public class AbilityController : MonoBehaviour {
     /// <returns></returns>
     public float GetRange()
     {
-        return _currentAbility.GetRange();
+        if (!_allAbilitiesDisabled)
+            return _currentAbility.GetRange();
+        else
+            return 0;
     }
 
     /// <summary>
@@ -93,22 +160,22 @@ public class AbilityController : MonoBehaviour {
     /// <param name="tmp">Ability to set</param>
     public void SetAbility(Ability tmp)
     {
-        if (tmp == Ability.Blink)
+        if (tmp == Ability.Blink && _blink.enabled)
         {
             _currentAbility = _blink;
             _abilityIndex = 0;
         }            
-        if (tmp == Ability.Vortex)
+        if (tmp == Ability.Vortex && _vortex.enabled)
         {
             _currentAbility = _vortex;
             _abilityIndex = 1;
         }
-        if (tmp == Ability.Confusion)
+        if (tmp == Ability.Confusion && _confusion.enabled)
         {
             _currentAbility = _confusion;
             _abilityIndex = 2;
         }
-        if (tmp == Ability.Lightning)
+        if (tmp == Ability.Lightning && _lightning.enabled)
         {
             _currentAbility = _lightning;
             _abilityIndex = 3;

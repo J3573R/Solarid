@@ -49,7 +49,6 @@ public class RangeCheck : MonoBehaviour {
         Vector3 tmpVec = transform.position;
         Vector3 tmpMouse = _player.Input.GetMouseGroundPosition();
         //Debug.Log(tmpMouse);
-        Debug.Log(transform.position);
         tmpVec.y = tmpMouse.y;
 
         return Vector3.Distance(tmpMouse, transform.position);
