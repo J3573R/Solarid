@@ -60,6 +60,7 @@ public class EnemyBase : MonoBehaviour
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
+        _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         _healthBar.maxValue = Health.CurrentHealth;
     }
 
