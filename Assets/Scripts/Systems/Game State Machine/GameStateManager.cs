@@ -8,6 +8,8 @@ public class GameStateManager : MonoBehaviour
     #region Singleton
     // Single instance of singleton
     public static GameStateManager Instance;
+    [SerializeField]
+    private GameObject _saveSystemPrefab;
 
     void Awake()
     {
@@ -21,7 +23,9 @@ public class GameStateManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        SetupSaveSystem();
     }
+    
     #endregion
 
     public enum GameState
@@ -36,6 +40,15 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameState _gameState = GameState.SplashScreen;
     // Gameobject including game state script
     private GameObject _gameStateObj;
+
+    public void SetupSaveSystem()
+    {
+        GameObject go = GameObject.Find("SaveSystem");
+        if (go == null)
+        {
+            Instantiate(_saveSystemPrefab);            
+        }
+    }
 
     /// <summary>
     /// Changes or sets game state.

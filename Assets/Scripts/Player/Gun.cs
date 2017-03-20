@@ -81,14 +81,7 @@ public class Gun : MonoBehaviour
                 _recoil += RecoilBuildUp;
             }
         }
-        //Debug.Log(_recoil);
 
-        Vector3 tmp = GetTargetPosition();
-        tmp.y = 1.5f;
-        Vector3 tmp2 = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);
-
-
-        //Debug.DrawLine(tmp2, tmp, Color.red, 1f, true);
         
     }
 

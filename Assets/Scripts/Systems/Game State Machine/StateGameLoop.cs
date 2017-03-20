@@ -17,11 +17,19 @@ public class StateGameLoop : GameStateBase
         LevelName = SceneManager.GetActiveScene().name;
         GitGud = GameObject.Find("UI/Git_gud").GetComponent<Text>();
         GitGud.gameObject.SetActive(false);
+        
+        if (SaveSystem.Instance != null)
+            SaveSystem.Instance.SaveCurrentLevel();
+        else
+        {
+            GameStateManager.Instance.SetupSaveSystem();
+            SaveSystem.Instance.SaveCurrentLevel();
+        }
     }
 
     void Start()
     {
-        Player = Globals.Player.GetComponent<Player>();
+        Player = Globals.Player.GetComponent<Player>();        
     }
 
     protected override void Update()

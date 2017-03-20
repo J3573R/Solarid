@@ -68,7 +68,7 @@ public class PlayerAnimation : MonoBehaviour {
     /// </summary>
     private void CheckAnimationStance()
     {
-        if (_player.Movement.Casting)
+        if (_player.Movement.Casting && !_player.AbilityController._allAbilitiesDisabled)
             SetAnimationStance(AnimationStance.Casting);
         else if (_player.Movement.Shooting)
             SetAnimationStance(AnimationStance.Aiming);
@@ -80,8 +80,7 @@ public class PlayerAnimation : MonoBehaviour {
     /// Check which animation in Aiming substatemachine we should use
     /// </summary>
     private void CheckAimAnimation()
-    {
-        
+    {        
             if (!Moving)
                 SetAnimation(AnimationState.Idle);
             else if (Moving && MoveDirection == AnimationState.RunForward)
@@ -131,7 +130,7 @@ public class PlayerAnimation : MonoBehaviour {
                 SetAnimation(AnimationState.RunLeft);
             else if (Moving && MoveDirection == AnimationState.RunForwardLeft)
                 SetAnimation(AnimationState.RunForwardLeft);
-        }    
+    }    
 
     /// <summary>
     /// Which animation in Idle statemachine we should use

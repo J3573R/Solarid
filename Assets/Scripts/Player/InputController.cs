@@ -46,7 +46,7 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void GetMouseInput()
     {
-        if (Input.GetButton("Ability"))
+        if (Input.GetButton("Ability") && !_player.AbilityController._allAbilitiesDisabled)
         {
             Globals.CameraScript.AddMouseOffset(GetMousePosition());
         } else
@@ -54,7 +54,7 @@ public class InputController : MonoBehaviour
             Globals.CameraScript.MouseOffset = Vector3.zero;
         }
 
-        if (Input.GetButtonDown("Ability"))
+        if (Input.GetButtonDown("Ability") && !_player.AbilityController._allAbilitiesDisabled)
         {            
             _player.Movement.SetCasting(true);
             _player.AbilityController.DrawRange(true);                        
@@ -125,7 +125,6 @@ public class InputController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.P))
         {
-            Debug.Log("PRAISE THE SUN");
             PlayerAnimation.SetAnimation(PlayerAnimation.AnimationState.Praise);
         }
 
