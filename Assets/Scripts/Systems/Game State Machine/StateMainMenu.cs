@@ -57,13 +57,17 @@ public class StateMainMenu : GameStateBase {
     private void PressReset()
     {
         SaveSystem.Instance.SaveData.SetCurrentLevel(SaveData.Level.NoSave);
+        SaveSystem.Instance.SaveData.ResetAbilityData();
         SaveSystem.Instance.SaveStats();
     }
 
     void PressNewGame()
     {
         if (!_saveExists)
+        {
+            SaveSystem.Instance.SaveData.ResetAbilityData();
             GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, "South1");
+        }                      
         else
         {
             _warningPanel.SetActive(true);

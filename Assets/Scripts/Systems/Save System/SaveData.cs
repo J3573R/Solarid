@@ -61,6 +61,14 @@ public class SaveData {
         return _abilityArray;
     }
 
+    public void ResetAbilityData()
+    {
+        _abilityArray[AbilityController.Ability.Blink] = false;
+        _abilityArray[AbilityController.Ability.Vortex] = false;
+        _abilityArray[AbilityController.Ability.Confusion] = false;
+        _abilityArray[AbilityController.Ability.Lightning] = false;
+    }
+
     public void SetAbilityArray(Dictionary<AbilityController.Ability, bool> array)
     {
         _abilityArray = array;
