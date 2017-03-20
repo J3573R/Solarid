@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class AbilityBase : MonoBehaviour {
 
+    // Cooldown of the skill
     public float CoolDown;
+    // Remaining cooldown
     public float CoolDownRemaining;
+    // Max range, set in editor
     public float MaxRange;
 
     /// <summary>
@@ -33,11 +36,9 @@ public abstract class AbilityBase : MonoBehaviour {
     /// <summary>
     /// Returns Max range of the skill
     /// </summary>
-    /// <returns>Mac range of the skill, zero if no range/selfcast</returns>
+    /// <returns>Max range of the skill, zero if no range/selfcast</returns>
     public float GetRange()
     {
         return MaxRange;
-    }
-
-    
+    }    
 }

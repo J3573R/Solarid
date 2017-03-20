@@ -5,9 +5,9 @@ public class InputController : MonoBehaviour
 {
     // Rotation speed of the player
     public float RotationSpeed = 8f;
-
+    // Animation controller component in Player
     public PlayerAnimation PlayerAnimation;
-
+    // Should the character face towards mouse?
     public bool ListenInput = true;
     
     private Player _player;
@@ -42,10 +42,12 @@ public class InputController : MonoBehaviour
     }    
 
     /// <summary>
-    /// Gets Input from mouse and does stuff accordingly
+    /// Gets Input from mouse and calls methods accordingly
     /// </summary>
     private void GetMouseInput()
     {
+        //TODO: If this any larger, refactor whole shit. Or refactor anyways.
+
         if (Input.GetButton("Ability") && !_player.AbilityController._allAbilitiesDisabled)
         {
             Globals.CameraScript.AddMouseOffset(GetMousePosition());
@@ -90,6 +92,7 @@ public class InputController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             _player.AbilityController.Execute();
+
             if (!_player.Movement.Casting)
             {
                 _player.Gun.SetShooting(true);
@@ -144,10 +147,8 @@ public class InputController : MonoBehaviour
     /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>
     public Vector3 GetMouseGroundPosition()
     {
-
         var layerMask = 1 << 8;
         layerMask = ~layerMask;
-        //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = _camera.transform.position;
         var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)) - _camera.transform.position;
 
@@ -155,7 +156,6 @@ public class InputController : MonoBehaviour
         var direction = heading / distance; 
 
         Ray ray = new Ray(pos, direction);
-        Debug.DrawRay(pos, direction * 20, Color.green, 5, false);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 100f, layerMask))
@@ -167,6 +167,11 @@ public class InputController : MonoBehaviour
         return Vector3.zero;
     }
 
+    /// <summary>
+    /// uses raycast to determine mouseposition and returns it. 
+    /// Works in MouseTracker layer so the mouse position is allways accessible and in certaing height
+    /// </summary>
+    /// <returns>position</returns>
     public Vector3 GetMousePosition()
     {
         var layerMask = 1 << 8;

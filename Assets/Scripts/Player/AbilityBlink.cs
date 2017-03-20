@@ -34,9 +34,8 @@ public class AbilityBlink : AbilityBase {
     /// </summary>
     public override void Execute()
     {
-
         _targetPosition = _player.Input.GetMouseGroundPosition();
-        //Debug.Log(_targetPosition);
+
         if (_targetPosition != Vector3.zero)
         {
             _player.Animation.CastOnce = true;
@@ -47,6 +46,10 @@ public class AbilityBlink : AbilityBase {
         }                  
     }
 
+    /// <summary>
+    /// Delay before the actual execution so animation can complete
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CastDelay()
     {
         yield return new WaitForSeconds(_castDelayInSeconds);

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Dev script. used to enable abilities in runtime
+/// </summary>
 public class AbilitySetter : MonoBehaviour {
 
     public bool Blink;

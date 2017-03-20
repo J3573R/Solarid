@@ -49,7 +49,6 @@ public class PlayerMovement : MonoBehaviour {
             Shooting = state;
             _player.Animation.Casting = state;
             _moveSpeed = 3;
-
         }
         else
         {
@@ -82,9 +81,7 @@ public class PlayerMovement : MonoBehaviour {
     /// takes keyboard Input and increases horizontal & vertical velocity of player times Speed. Called from InputController
     /// </summary>
     public void Move(float inputX, float inputZ)
-    {
-        
-
+    {       
         if (inputX != 0 || inputZ != 0)
         {
                         
@@ -113,8 +110,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
         else
-        {
-            
+        {            
             _rigidbody.velocity = Vector3.zero;
             _player.Animation.Moving = false;
         }
@@ -126,7 +122,6 @@ public class PlayerMovement : MonoBehaviour {
     /// <param name="direction">direction player moving towards</param>
     private void CheckDirection(Vector3 direction)
     {
-
         Vector3 forward = transform.forward;
         Vector3 left = transform.position + (transform.right * -1);
         Vector3 right = transform.position + transform.right * 1;
@@ -187,7 +182,6 @@ public class PlayerMovement : MonoBehaviour {
     /// <returns></returns>
     private bool CanMoveDirection(float horizontal, float vertical)
     {
-
         _moveDirectionRay = _rigidbody.transform.position;
         _moveDirectionRay.x += horizontal;
         _moveDirectionRay.z += vertical;
@@ -198,8 +192,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (Physics.Raycast(ray, 2f))
         {
-            //Debug.Log(Physics.Raycast(ray, 2f));
-            
+            //Debug.Log(Physics.Raycast(ray, 2f));            
             return true;
         }
         return false;

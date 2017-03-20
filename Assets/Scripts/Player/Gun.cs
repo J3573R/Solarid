@@ -51,6 +51,10 @@ public class Gun : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the status of shooting...
+    /// </summary>
+    /// <param name="state"></param>
     public void SetShooting(bool state)
     {
         if (state)
@@ -80,9 +84,7 @@ public class Gun : MonoBehaviour
             {
                 _recoil += RecoilBuildUp;
             }
-        }
-
-        
+        }        
     }
 
     /// <summary>
@@ -90,8 +92,6 @@ public class Gun : MonoBehaviour
     /// </summary>
     public void Shoot()
     {
-
-
         if (_reload <= 0)
         {
             for (int i = 0; i < _bullets.Count; i++)
@@ -108,13 +108,15 @@ public class Gun : MonoBehaviour
                 }
             }
             _reload = Reload;
-        }
-        
+        }        
     }
 
+    /// <summary>
+    /// Returns the targetposition where the player is aiming
+    /// </summary>
+    /// <returns></returns>
     private Vector3 GetTargetPosition()
     {
-
         //TODO: Fix the aim offset in shooting
         Vector3 tmpVec = _player.Input.GetMousePosition();
         

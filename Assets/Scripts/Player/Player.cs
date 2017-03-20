@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Sort of "master" component for all player related, has links to all other components
+/// </summary>
 [RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour
 {
@@ -15,8 +18,7 @@ public class Player : MonoBehaviour
     public bool ShootingEnabled = true;
     public Slider HealthBar;
     
-    public bool Dead {get; private set; }
-    
+    public bool Dead {get; private set; }    
 
     void Awake()
     {
@@ -69,6 +71,6 @@ public class Player : MonoBehaviour
     private void Die()
     {
         Dead = true;        
-        //TODO: Implement dieing
+        //TODO: Implement dying
     }
 }

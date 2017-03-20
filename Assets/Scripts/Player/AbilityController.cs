@@ -62,13 +62,10 @@ public class AbilityController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Draws the targeting icon
+    /// Enables or disables ability in the controller, can be used in runtime
     /// </summary>
-    public void Target()
-    {
-        //TODO: Draw the targeting icon somehow
-    }
-
+    /// <param name="ability">the ability</param>
+    /// <param name="state">true or false</param>
     public void EnableOrDisableAbility(Ability ability, bool state)
     {
         AbilityArray[ability] = state;
@@ -79,6 +76,10 @@ public class AbilityController : MonoBehaviour {
         SetupAbilites();
     }
 
+    /// <summary>
+    /// Goes through the Dictionary and enables or disables abilities accordingly. 
+    /// Also counts new max index value for scrolling weapons selection
+    /// </summary>
     private void SetupAbilites()
     {
         int tmpIndex = 0;
@@ -202,22 +203,17 @@ public class AbilityController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Scrolls current weapon index and sets the corect ability
+    /// Scrolls current weapon index and sets the correct ability
     /// </summary>
     /// <param name="tmp"></param>
     public void ScrollWeapon(int tmp)
     {
         _abilityIndex += tmp;
-
-        Debug.Log("True AbilityIndex = " + _abilityIndex);
-
         
         if (_abilityIndex < 0)
             _abilityIndex = _maxAbilityIndex;
         else if (_abilityIndex > _maxAbilityIndex)
             _abilityIndex = 0;
-
-        Debug.Log("AbilityIndex after limit = " + _abilityIndex);
 
         if (_abilityIndex == 0)
             SetAbility(Ability.Blink);
