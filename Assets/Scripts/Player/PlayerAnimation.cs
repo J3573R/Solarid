@@ -68,7 +68,7 @@ public class PlayerAnimation : MonoBehaviour {
     /// </summary>
     private void CheckAnimationStance()
     {
-        if (_player.Movement.Casting)
+        if (_player.Movement.Casting && !_player.AbilityController._allAbilitiesDisabled)
             SetAnimationStance(AnimationStance.Casting);
         else if (_player.Movement.Shooting)
             SetAnimationStance(AnimationStance.Aiming);

@@ -14,6 +14,7 @@ public class ChangeLevel : MonoBehaviour
         {
             try
             {
+                SaveSystem.Instance.SaveAbilities();
                 GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, TargetScene);
             }
             catch (Exception e)

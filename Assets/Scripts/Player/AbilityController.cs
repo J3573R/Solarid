@@ -13,10 +13,10 @@ public class AbilityController : MonoBehaviour {
     private AbilityBase _currentAbility;
     private float _abilityIndex;
     private Text _cooldownDisplay;
-    private RangeCheck _rangeCheck;
-    private bool _allAbilitiesDisabled;
+    private RangeCheck _rangeCheck;    
     private int _maxAbilityIndex;
 
+    public bool _allAbilitiesDisabled;
     public float CastDelayInSeconds;
     public Dictionary<Ability, bool> AbilityArray;
 
@@ -32,14 +32,22 @@ public class AbilityController : MonoBehaviour {
         GameObject tmp = GameObject.Find("CoolDown");
         _cooldownDisplay = tmp.GetComponent<Text>();
         _rangeCheck = FindObjectOfType<RangeCheck>();
-        AbilityArray = new Dictionary<Ability, bool>();        
 
-        AbilityArray.Add(Ability.Blink, false);
-        AbilityArray.Add(Ability.Vortex, false);
-        AbilityArray.Add(Ability.Confusion, false);
-        AbilityArray.Add(Ability.Lightning, false);
+        if (SaveSystem.Instance.SaveData != null)
+            AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
+        else
+        {
+            GameStateManager.Instance.SetupSaveSystem();
+            AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
+        }  
+
+        if (SaveSystem.Instance.SaveData.GetAbilityArray() == null) {
+            Debug.Log("NULL SAATANA");
+        }
 
         SetupAbilites();
+
+        
     }
 
     /// <summary>
@@ -64,6 +72,10 @@ public class AbilityController : MonoBehaviour {
     public void EnableOrDisableAbility(Ability ability, bool state)
     {
         AbilityArray[ability] = state;
+        foreach (KeyValuePair<Ability, bool> pair in AbilityArray)
+        {
+            Debug.Log(pair.Key + " = " + pair.Value);
+        }
         SetupAbilites();
     }
 
@@ -104,6 +116,13 @@ public class AbilityController : MonoBehaviour {
 
         if (tmpIndex == 0)
             _allAbilitiesDisabled = true;
+        else
+            _allAbilitiesDisabled = false;
+
+        if (tmpIndex> 0)
+        {
+            tmpIndex -= 1;
+        }
 
         _maxAbilityIndex = tmpIndex;
     }
@@ -190,14 +209,15 @@ public class AbilityController : MonoBehaviour {
     {
         _abilityIndex += tmp;
 
-        Debug.Log("True AbilityIndex =" + _abilityIndex);
+        Debug.Log("True AbilityIndex = " + _abilityIndex);
 
         
         if (_abilityIndex < 0)
-            _abilityIndex = 3;
-        else if (_abilityIndex > 3)
+            _abilityIndex = _maxAbilityIndex;
+        else if (_abilityIndex > _maxAbilityIndex)
             _abilityIndex = 0;
-        
+
+        Debug.Log("AbilityIndex after limit = " + _abilityIndex);
 
         if (_abilityIndex == 0)
             SetAbility(Ability.Blink);

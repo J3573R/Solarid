@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Shooting || Casting)
+        if (Shooting || Casting && !_player.AbilityController._allAbilitiesDisabled)
         {
             ListenMouse();
         }

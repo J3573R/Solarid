@@ -32,7 +32,10 @@ public class SaveSystem : MonoBehaviour
             if (SaveFileExists())
                 LoadSaveData();
             else
+            {
                 SaveData = new SaveData(SaveData.Level.NoSave);
+            }
+                
         }
         else
             LoadSaveData();
@@ -53,6 +56,12 @@ public class SaveSystem : MonoBehaviour
         bf.Serialize(stream, SaveData);
         File.WriteAllBytes(SaveFilePath, stream.GetBuffer());
         Debug.Log("Saved Data, CurrentLevel =" + SaveData.GetCurrentLevel());
+    }
+
+    public void SaveAbilities()
+    {
+        SaveData.SetAbilityArray(Globals.Player.GetComponent<AbilityController>().AbilityArray);
+        SaveStats();
     }
 
     public void SaveCurrentLevel()
