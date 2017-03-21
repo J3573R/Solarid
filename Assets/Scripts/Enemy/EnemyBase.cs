@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour
     protected NavMeshAgent Agent;
 
     private Slider _healthBar;
+    private bool _showHealth = false;
 
     // Pull effect for black hole
     private Vector3 _pullPoint;
@@ -62,11 +63,18 @@ public class EnemyBase : MonoBehaviour
         _healthBar = bar.GetComponent<Slider>();
         _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         _healthBar.maxValue = Health.CurrentHealth;
+        _healthBar.gameObject.SetActive(false);
     }
 
     protected virtual void Update()
     {
         _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
+
+        if(!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
+        {
+            _healthBar.gameObject.SetActive(true);
+            _showHealth = true;
+        }
 
         if(_pullActive && _pullDuration > 0)
         {
