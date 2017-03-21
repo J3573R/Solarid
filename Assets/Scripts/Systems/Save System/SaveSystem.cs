@@ -55,7 +55,7 @@ public class SaveSystem : MonoBehaviour
         MemoryStream stream = new MemoryStream();
         bf.Serialize(stream, SaveData);
         File.WriteAllBytes(SaveFilePath, stream.GetBuffer());
-        Debug.Log("Saved Data, CurrentLevel =" + SaveData.GetCurrentLevel());
+        //Debug.Log("Saved Data, CurrentLevel =" + SaveData.GetCurrentLevel());
     }
 
     public void SaveAbilities()
@@ -107,7 +107,7 @@ public class SaveSystem : MonoBehaviour
             BinaryFormatter bf = new BinaryFormatter();
             MemoryStream ms = new MemoryStream(data);
             SaveData = (SaveData)bf.Deserialize(ms);
-            Debug.Log("LOADED, Level = " + SaveData.GetCurrentLevel());
+            //Debug.Log("LOADED, Level = " + SaveData.GetCurrentLevel());
         }
     }
 }

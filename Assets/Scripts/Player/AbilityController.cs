@@ -72,10 +72,10 @@ public class AbilityController : MonoBehaviour {
     public void EnableOrDisableAbility(Ability ability, bool state)
     {
         AbilityArray[ability] = state;
-        foreach (KeyValuePair<Ability, bool> pair in AbilityArray)
+        /*foreach (KeyValuePair<Ability, bool> pair in AbilityArray)
         {
             Debug.Log(pair.Key + " = " + pair.Value);
-        }
+        }*/
         SetupAbilites();
     }
 

@@ -22,7 +22,7 @@ public class AbilitySetter : MonoBehaviour {
 
         if (SetAbilities)
         {
-            Debug.Log("SETTING ABILITIES");
+            //Debug.Log("SETTING ABILITIES");
             if (Blink)
                 _controller.EnableOrDisableAbility(AbilityController.Ability.Blink, true);
             if (Vortex)

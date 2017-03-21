@@ -24,11 +24,8 @@ public class Activator : MonoBehaviour
 
             if (ActivateChildren)
             {
-                Debug.Log("HERE");
-                Transform[] children = GetComponentsInChildren<Transform>();
                 foreach (Transform child in transform)
                 {
-                    Debug.Log("ACTIVATE");
                     child.gameObject.SetActive(true);
                 }
             }

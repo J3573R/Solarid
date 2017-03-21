@@ -8,7 +8,6 @@ public class ChargerAttack : EnemyStateBase
     
     private float _distance;
     private Charger _charger;
-    private bool _ready = false;
 
     protected override void Awake()
     {
