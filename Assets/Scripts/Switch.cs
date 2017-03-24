@@ -9,6 +9,8 @@ public class Switch : MonoBehaviour
     public Door TargetDoor;
     // Default slider to use
     public GameObject SliderPrefab;
+    //Objects to activate when interacted
+    public List<GameObject> ActivateObjects;
 
     // Sliderbar offset from switch
     [SerializeField] private Vector3 _offset = new Vector3(0, 1, 0);
@@ -50,7 +52,7 @@ public class Switch : MonoBehaviour
         _distance = Vector3.Distance(Globals.Player.transform.position, transform.position);
 
         // If player is close enought and door is not moving, show meter and response to interaction
-        if (_distance <= 2 && !TargetDoor.Moving)
+        if (_distance <= 2 && !TargetDoor.Moving && !TargetDoor.Open)
         {
             if (!_sliderBar.activeInHierarchy)
             {
@@ -67,7 +69,14 @@ public class Switch : MonoBehaviour
 
                 // Slider is on top
                 if (_switchValue >= _slider.maxValue)
-                {                    
+                {
+                    if (ActivateObjects.Count > 0)
+                    {
+                        foreach (var currentObject in ActivateObjects)
+                        {
+                            currentObject.SetActive(true);
+                        }
+                    }
                     TargetDoor.ToggleDoor();
                     ToggleDoorColliders(TargetDoor.Open);
                 }

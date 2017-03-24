@@ -18,7 +18,6 @@ public class CameraFollow : MonoBehaviour
     private float shakeAmount = 0;
     private float shakeDuration = 0;
     private float originalShakeDuration;
-    private Vector3 _originalPosition;
 
     void Awake()
     {
@@ -65,7 +64,6 @@ public class CameraFollow : MonoBehaviour
 
     public void Harlem(float amount, float duration)
     {
-        _originalPosition = transform.position;
         shakeAmount = amount;
         shakeDuration = duration;
         originalShakeDuration = duration;

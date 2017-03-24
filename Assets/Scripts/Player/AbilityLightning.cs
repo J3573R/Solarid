@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class AbilityLightning : AbilityBase
 {
-
-    private Player _player;
     [SerializeField]
     private GameObject _blast;
     private LightningBolt _bolt;
@@ -14,7 +12,6 @@ public class AbilityLightning : AbilityBase
     // Use this for initialization
     void Start()
     {
-        _player = GetComponent<Player>();
         _blast = Instantiate(_blast, transform.position, Quaternion.identity);
         _blast.SetActive(false);
         _bolt = _blast.GetComponent<LightningBolt>();
@@ -25,8 +22,6 @@ public class AbilityLightning : AbilityBase
     /// </summary>
     public override void Execute()
     {
-        Vector3 target = _player.Input.GetMouseGroundPosition();
-
         float distance = Mathf.Infinity;
         EnemyBase closestEnemy = null;
         Collider[] enemyColliders = Physics.OverlapSphere(transform.position, 15);

@@ -9,7 +9,7 @@ public static class Globals
     public static InputController InputController;
     // Player damage
     // TODO: Transfer this to player or gun or something
-    public static int PlayerDamage = 10;
+    public static int PlayerDamage = 100;
     // Interact button is or is not pressed
     public static bool Interact;
 
