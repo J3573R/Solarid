@@ -77,7 +77,7 @@ public class RangeCheck : MonoBehaviour {
 
                 foreach(Collider col in list)
                 {
-                    if (col.tag.Equals("Prop"))
+                    if (col.transform.tag.Equals("Prop"))
                     {
                         areaClear = false;
                         Debug.Log("Löyty proppi");
@@ -113,21 +113,24 @@ public class RangeCheck : MonoBehaviour {
         RaycastHit hit;
 
         while (distance > 0)
-        {            
+        {
+            Debug.Log("Distance = " + distance);
             distance -= PositionCheckInterval;
             Vector3 tmpPos = start + (direction * distance);
             Ray ray = new Ray(tmpPos, Vector3.down);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
                 if (hit.transform.tag.Equals("Ground")) {
-                    Collider[] list = Physics.OverlapSphere(transform.position, 2);
+                    Collider[] list = Physics.OverlapSphere(hit.point, 1);
 
                     foreach (Collider col in list)
                     {
-                        if (col.tag.Equals("Prop"))
+                        Debug.Log(col);
+                        if (col.transform.tag.Equals("Prop"))
                         {
-                            areaClear = false;
+                            areaClear = false;                            
                             Debug.Log("Löyty proppi");
+                            break;
                         }
                     }
                     if (areaClear)
