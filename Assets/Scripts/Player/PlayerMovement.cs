@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour {
     private float _verticalDirection;
     private bool _goingRight;
 
-
     // Use this for initialization
     void Start () {
         _player = GetComponent<Player>();
@@ -31,7 +30,6 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (Shooting || Casting && !_player.AbilityController._allAbilitiesDisabled)
         {
             ListenMouse();
@@ -49,6 +47,7 @@ public class PlayerMovement : MonoBehaviour {
             Shooting = state;
             _player.Animation.Casting = state;
             _moveSpeed = 3;
+
         }
         else
         {
@@ -81,36 +80,28 @@ public class PlayerMovement : MonoBehaviour {
     /// takes keyboard Input and increases horizontal & vertical velocity of player times Speed. Called from InputController
     /// </summary>
     public void Move(float inputX, float inputZ)
-    {       
+    {      
         if (inputX != 0 || inputZ != 0)
-        {
-                        
+        {                        
             float rotationSpeed = 7;
             _player.Animation.Moving = true;
             _moveDirection = Vector3.zero;
             Vector3 previousLocation = transform.position;
-
             _moveDirection.x = inputX;
             _moveDirection.z = inputZ;
 
+            if (!Shooting)
+                _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
+                    Time.fixedDeltaTime * rotationSpeed);
+
+            _moveDirection = MovementBounds(_moveDirection);
+
+            _rigidbody.velocity = _moveDirection.normalized * _moveSpeed;
             CheckDirection(_moveDirection);
-
-            if (CanMoveDirection(_moveDirection.x, _moveDirection.z))
-            {
-                _rigidbody.velocity = _moveDirection.normalized * _moveSpeed;
-
-                if (!Shooting)
-                    _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
-                        Time.fixedDeltaTime * rotationSpeed);
-            }
-            else
-            {
-                _rigidbody.velocity = Vector3.zero;
-                
-            }
         }
         else
-        {            
+        {
+            
             _rigidbody.velocity = Vector3.zero;
             _player.Animation.Moving = false;
         }
@@ -122,6 +113,7 @@ public class PlayerMovement : MonoBehaviour {
     /// <param name="direction">direction player moving towards</param>
     private void CheckDirection(Vector3 direction)
     {
+
         Vector3 forward = transform.forward;
         Vector3 left = transform.position + (transform.right * -1);
         Vector3 right = transform.position + transform.right * 1;
@@ -182,19 +174,57 @@ public class PlayerMovement : MonoBehaviour {
     /// <returns></returns>
     private bool CanMoveDirection(float horizontal, float vertical)
     {
+
         _moveDirectionRay = _rigidbody.transform.position;
         _moveDirectionRay.x += horizontal;
         _moveDirectionRay.z += vertical;
         _moveDirectionRay.y = 1;
 
         Ray ray = new Ray(_moveDirectionRay, Vector3.down);
+        Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
 
         if (Physics.Raycast(ray, 2f))
         {
-            //Debug.Log(Physics.Raycast(ray, 2f));            
+            Debug.Log(Physics.Raycast(ray, 2f));
+            
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Checks horizontal and vertical directions and alters direction vector acording it.
+    /// </summary>
+    /// <param name="direction">Direction to check.</param>
+    /// <returns>Modified direction.</returns>
+    private Vector3 MovementBounds(Vector3 direction)
+    {
+        Vector3 result = new Vector3();
+
+        _moveDirectionRay = _rigidbody.transform.position;
+        _moveDirectionRay.x += direction.x;
+        _moveDirectionRay.y = 1;
+
+        Ray ray = new Ray(_moveDirectionRay, Vector3.down);
+
+        if (Physics.Raycast(ray, 2f))
+        {
+            //Debug.Log(Physics.Raycast(ray, 2f));
+            result.x = direction.x;
+        }
+
+        _moveDirectionRay = _rigidbody.transform.position;
+        _moveDirectionRay.z += direction.z;
+        _moveDirectionRay.y = 1;
+        ray = new Ray(_moveDirectionRay, Vector3.down);
+        if (Physics.Raycast(ray, 2f))
+        {
+            //Debug.Log(Physics.Raycast(ray, 2f));
+            result.z = direction.z;
+        }
+
+        result.y = 0;
+        return result;
     }
 
     /// <summary>

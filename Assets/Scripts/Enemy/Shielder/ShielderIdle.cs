@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChargerIdle : EnemyStateBase
+public class ShielderIdle : EnemyStateBase
 {
 
-    private Charger _parent;
+    private Shielder _parent;
     private float _timeToWalk;
     private float _distance;
     private float _transitionToAlert;
@@ -21,11 +21,11 @@ public class ChargerIdle : EnemyStateBase
 
         try
         {
-            _parent = (Charger) Parent;
+            _parent = (Shielder) Parent;
         }
         catch (Exception e)
         {
-            Debug.LogError("Parent was not Charger in ChargerIdle: " + e.Message);
+            Debug.LogError("Parent was not Shielder in ShielderIdle: " + e.Message);
         }
         
     }

@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChargerMove : EnemyStateBase
+public class ShielderMove : EnemyStateBase
 {
-    private Charger _parent;
+    private Shielder _parent;
     private float _distance;
     private float _followTime;
     private float _rotationSpeed = 2;
@@ -20,11 +20,11 @@ public class ChargerMove : EnemyStateBase
 
         try
         {
-            _parent = (Charger)Parent;
+            _parent = (Shielder)Parent;
         }
         catch (Exception e)
         {
-            Debug.LogError("Parent was not Charger in ChargerMove: " + e.Message);
+            Debug.LogError("Parent was not Shielder in ShielderMove: " + e.Message);
         }
     }
 
@@ -42,7 +42,7 @@ public class ChargerMove : EnemyStateBase
         // Based on distance, ether attack the player or change to idle state
         _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
 
-        if (_distance <= 2)
+        if (_distance <= 3)
         {
             Parent.SetState(EnemyBase.State.Attack);
         }
