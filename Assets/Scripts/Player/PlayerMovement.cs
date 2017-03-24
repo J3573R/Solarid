@@ -87,8 +87,8 @@ public class PlayerMovement : MonoBehaviour {
             _player.Animation.Moving = true;
             _moveDirection = Vector3.zero;
             Vector3 previousLocation = transform.position;
-            _moveDirection.x = inputX;
-            _moveDirection.z = inputZ;
+            _moveDirection.x = inputX / 2;
+            _moveDirection.z = inputZ / 2;
 
             if (!Shooting)
                 _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
@@ -100,8 +100,7 @@ public class PlayerMovement : MonoBehaviour {
             CheckDirection(_moveDirection);
         }
         else
-        {
-            
+        {            
             _rigidbody.velocity = Vector3.zero;
             _player.Animation.Moving = false;
         }
@@ -210,7 +209,10 @@ public class PlayerMovement : MonoBehaviour {
         if (Physics.Raycast(ray, 2f))
         {
             //Debug.Log(Physics.Raycast(ray, 2f));
-            result.x = direction.x;
+            result.x = direction.x;            
+        } else
+        {
+            _moveSpeed = 3;
         }
 
         _moveDirectionRay = _rigidbody.transform.position;
@@ -221,6 +223,9 @@ public class PlayerMovement : MonoBehaviour {
         {
             //Debug.Log(Physics.Raycast(ray, 2f));
             result.z = direction.z;
+        } else
+        {
+            _moveSpeed = 3;
         }
 
         result.y = 0;
