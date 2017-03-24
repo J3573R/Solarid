@@ -101,7 +101,7 @@ public class EnemyBase : MonoBehaviour
             _confusionActive = false;
         }
 
-        if(CurrentState != State.Attack)
+        if(Animator != null && CurrentState != State.Attack)
         {
             if (_positionAtLastFrame == transform.position)
             {
