@@ -7,12 +7,15 @@ public class ChargerMove : EnemyStateBase
     private Charger _parent;
     private float _distance;
     private float _followTime;
+    private float _rotationSpeed = 2;
+    private float _step;
+    private Vector3 _targetDirection;
+    private Vector3 _newDirection;
 
     protected override void Awake()
     {
         base.Awake();
         eState = EnemyBase.State.Move;
-        Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
         Agent.speed = 5;
 
         try
@@ -28,9 +31,13 @@ public class ChargerMove : EnemyStateBase
     protected override void Update()
     {
         _followTime += Time.deltaTime;
-
-        // Follow player
+        
         Agent.destination = Globals.Player.transform.position;
+        _targetDirection = Globals.Player.transform.position - transform.position;
+        _step = _rotationSpeed * Time.deltaTime;
+        _newDirection = Vector3.RotateTowards(transform.forward, _targetDirection, _step, 0.0F);
+        transform.rotation = Quaternion.LookRotation(_newDirection);
+        _targetDirection = Globals.Player.transform.position - transform.position;        
 
         // Based on distance, ether attack the player or change to idle state
         _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);

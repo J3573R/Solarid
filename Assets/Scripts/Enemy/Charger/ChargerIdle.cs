@@ -34,28 +34,11 @@ public class ChargerIdle : EnemyStateBase
     {
         Patrol();
         ChangeToAlert();
-        if(IsNavMeshMoving() && !Idling)
+        if(Parent.IsNavMeshMoving() && !Idling)
         {
-            Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
             Idling = true;
         }
-    }
-
-    private bool IsNavMeshMoving()
-    {
-        if (!Agent.pathPending)
-        {
-            if (Agent.remainingDistance <= Agent.stoppingDistance)
-            {
-                if (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f)
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
+    }    
 
     /// <summary>
     /// Gets random position from range, 
@@ -73,7 +56,6 @@ public class ChargerIdle : EnemyStateBase
             {
                 Agent.destination = navHit.position;
                 _timeToWalk = UnityEngine.Random.Range(1, 3);
-                Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
                 Idling = false;
             }
         }

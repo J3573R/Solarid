@@ -17,6 +17,7 @@ public class EnemyBase : MonoBehaviour
 
     private Slider _healthBar;
     private bool _showHealth = false;
+    private Vector3 _positionAtLastFrame;
 
     // Pull effect for black hole
     private Vector3 _pullPoint;
@@ -99,6 +100,22 @@ public class EnemyBase : MonoBehaviour
             CurrentStateObject.enabled = true;
             _confusionActive = false;
         }
+
+        if(CurrentState != State.Attack)
+        {
+            if (_positionAtLastFrame == transform.position)
+            {
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
+
+            }
+            else
+            {
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+            }
+
+            _positionAtLastFrame = transform.position;
+        }
+        
     }
 
     /// <summary>
@@ -251,7 +268,7 @@ public class EnemyBase : MonoBehaviour
     /// Checks if navigation agent is moving.
     /// </summary>
     /// <returns>False if nav mesh is reached target, otherwise true</returns>
-    private bool IsNavMeshMoving()
+    public bool IsNavMeshMoving()
     {
         if (!Agent.pathPending)
         {
