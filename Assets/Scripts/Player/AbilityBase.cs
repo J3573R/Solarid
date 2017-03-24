@@ -14,7 +14,7 @@ public abstract class AbilityBase : MonoBehaviour {
     /// <summary>
     /// Tries to execute the ability
     /// </summary>
-    public abstract void Execute();
+    public abstract void Execute(Vector3 targetPos);
 
     /// <summary>
     /// Returns remaining cooldown

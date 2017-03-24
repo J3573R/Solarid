@@ -32,18 +32,17 @@ public class AbilityBlink : AbilityBase {
     /// <summary>
     /// Performs the blink on the position of the mouse. 
     /// </summary>
-    public override void Execute()
+    public override void Execute(Vector3 targetPos)
     {
-        _targetPosition = _player.Input.GetMouseGroundPosition();
+        _targetPosition = targetPos;
 
-        if (_targetPosition != Vector3.zero)
-        {
-            _player.Animation.CastOnce = true;
-            StartCoroutine(CastDelay());
-            _targetPosition.y = 0;
-            _startParticle.transform.position = transform.position;
-            CoolDownRemaining = CoolDown;            
-        }                  
+
+        _player.Animation.CastOnce = true;
+        StartCoroutine(CastDelay());
+        _targetPosition.y = 0;
+        _startParticle.transform.position = transform.position;
+        CoolDownRemaining = CoolDown;            
+                          
     }
 
     /// <summary>

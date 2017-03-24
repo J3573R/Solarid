@@ -188,7 +188,6 @@ public class PlayerMovement : MonoBehaviour {
         _moveDirectionRay.y = 1;
 
         Ray ray = new Ray(_moveDirectionRay, Vector3.down);
-        Debug.DrawRay(_moveDirectionRay, Vector3.down, Color.green, 0.1f);
 
         if (Physics.Raycast(ray, 2f))
         {

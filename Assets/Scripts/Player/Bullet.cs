@@ -97,11 +97,6 @@ public class Bullet : MonoBehaviour
                 transform.Translate(Vector3.forward * Speed * Time.deltaTime);
                 _time += Time.deltaTime;
             }
-        }
-
-        if (transform.position.y > 1.55f || transform.position.y < 1.45f)
-        {
-            Debug.Log("yli tai ali");
-        }        
+        }      
     }  
 }
