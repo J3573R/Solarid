@@ -111,7 +111,6 @@ public class RangeCheck : MonoBehaviour {
 
         if (distance > maxRange)
         {
-            Debug.Log("Too Long");
             distance = maxRange;
         } 
         
