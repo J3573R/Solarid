@@ -14,7 +14,7 @@ public class AbilityController : MonoBehaviour {
     private float _abilityIndex;
     private Text _cooldownDisplay;
     private RangeCheck _rangeCheck;    
-    private int _maxAbilityIndex;
+    private int _maxAbilityIndex;    
 
     public bool _allAbilitiesDisabled;
     public float CastDelayInSeconds;
@@ -29,8 +29,7 @@ public class AbilityController : MonoBehaviour {
         _confusion = GetComponent<AbilityConfusion>();
         _lightning = GetComponent<AbilityLightning>();
         _currentAbility = _blink;
-        GameObject tmp = GameObject.Find("CoolDown");
-        _cooldownDisplay = tmp.GetComponent<Text>();
+        _cooldownDisplay = GameObject.Find("CoolDown").GetComponent<Text>();
         _rangeCheck = FindObjectOfType<RangeCheck>();
 
         if (SaveSystem.Instance.SaveData != null)
@@ -41,13 +40,7 @@ public class AbilityController : MonoBehaviour {
             AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
         }  
 
-        if (SaveSystem.Instance.SaveData.GetAbilityArray() == null) {
-            Debug.Log("NULL SAATANA");
-        }
-
-        SetupAbilites();
-
-        
+        SetupAbilites();        
     }
 
     /// <summary>
@@ -69,10 +62,6 @@ public class AbilityController : MonoBehaviour {
     public void EnableOrDisableAbility(Ability ability, bool state)
     {
         AbilityArray[ability] = state;
-        /*foreach (KeyValuePair<Ability, bool> pair in AbilityArray)
-        {
-            Debug.Log(pair.Key + " = " + pair.Value);
-        }*/
         SetupAbilites();
     }
 
@@ -170,6 +159,8 @@ public class AbilityController : MonoBehaviour {
                 {
                     _currentAbility.Execute(new Vector3(transform.position.x, _rangeCheck.transform.position.y, transform.position.z));
                 }
+
+                _player.Mana.SubStractMana(_currentAbility.ManaCost);
             }
         }        
     }

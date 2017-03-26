@@ -10,6 +10,8 @@ public abstract class AbilityBase : MonoBehaviour {
     public float CoolDownRemaining;
     // Max range, set in editor
     public float MaxRange;
+    // Mana cost of the ability
+    public int ManaCost;
 
     /// <summary>
     /// Tries to execute the ability

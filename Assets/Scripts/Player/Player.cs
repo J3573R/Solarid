@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerMovement Movement;
     [HideInInspector] public PlayerAnimation Animation;
     [HideInInspector] public Gun Gun;
+    [HideInInspector] public PlayerMana Mana;
     public bool ShootingEnabled = true;
     public Slider HealthBar;
     
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
         Movement = GetComponent<PlayerMovement>();
         Animation = GetComponent<PlayerAnimation>();        
         Health = GetComponent<Health>();
+        Mana = GetComponent<PlayerMana>();
         HealthBar.maxValue = Health.CurrentHealth;
         Dead = false;
     }

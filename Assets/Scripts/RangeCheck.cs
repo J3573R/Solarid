@@ -93,6 +93,12 @@ public class RangeCheck : MonoBehaviour {
         
     }
 
+    /// <summary>
+    /// This beast of a horrible code looks for a suitable position for abilities. It checks regular intervals and looks for 
+    /// props on certain radius. If changed, careful not to create performance issues
+    /// </summary>
+    /// <param name="maxRange">Max range of the ability</param>
+    /// <returns>Suitable position</returns>
     public Vector3 GetNextSuitablePosition(float maxRange)
     {
         Vector3 target = _player.Input.GetMousePosition();
@@ -114,25 +120,23 @@ public class RangeCheck : MonoBehaviour {
 
         while (distance > 0)
         {
-            Debug.Log("Distance = " + distance);
             distance -= PositionCheckInterval;
             Vector3 tmpPos = start + (direction * distance);
             Ray ray = new Ray(tmpPos, Vector3.down);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
                 if (hit.transform.tag.Equals("Ground")) {
-                    Collider[] list = Physics.OverlapSphere(hit.point, 1);
-
+                    Collider[] list = Physics.OverlapSphere(hit.point, 0.7f);
+                    areaClear = true;
                     foreach (Collider col in list)
                     {
-                        Debug.Log(col);
                         if (col.transform.tag.Equals("Prop"))
                         {
                             areaClear = false;                            
-                            Debug.Log("Löyty proppi");
                             break;
                         }
                     }
+
                     if (areaClear)
                         return hit.point;
                 }
