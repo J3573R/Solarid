@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour {
 
-    [SerializeField] private int _health = 100;
+    [SerializeField] protected int _health;
 
     public int CurrentHealth
     {
@@ -12,7 +12,7 @@ public class Health : MonoBehaviour {
         private set { _health = (int)Mathf.Clamp(value, 0, Mathf.Infinity); }
     }
     
-    public bool TakeDamage(int damage)
+    virtual public bool TakeDamage(int damage)
     {
         if (!IsDead())
         {

@@ -54,10 +54,10 @@ public class Player : MonoBehaviour
     public bool TakeDamage(int damage)
     {
 
-        Globals.Interact = false;
+        
         if (Health.TakeDamage(damage))
         {
-            Die();
+            //Die();
             HealthBar.value = Health.CurrentHealth;
             return true;
         }
@@ -67,12 +67,5 @@ public class Player : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Kills the player
-    /// </summary>
-    private void Die()
-    {
-        Dead = true;        
-        //TODO: Implement dying
-    }
+
 }
