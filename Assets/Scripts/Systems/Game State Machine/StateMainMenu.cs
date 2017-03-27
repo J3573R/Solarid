@@ -94,6 +94,9 @@ public class StateMainMenu : GameStateBase {
 
     private void PressYes()
     {
+        SaveSystem.Instance.SaveData.ResetAbilityData();
+        SaveSystem.Instance.SaveData.SetCurrentLevel(SaveData.Level.NoSave);
+        SaveSystem.Instance.SaveStats();
         GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, "South1");
     }
 

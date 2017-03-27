@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Sort of "master" component for all player related, has links to all other components
+/// </summary>
 [RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour
 {
@@ -12,11 +15,11 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerMovement Movement;
     [HideInInspector] public PlayerAnimation Animation;
     [HideInInspector] public Gun Gun;
+    [HideInInspector] public PlayerMana Mana;
     public bool ShootingEnabled = true;
     public Slider HealthBar;
     
-    public bool Dead {get; private set; }
-    
+    public bool Dead {get; private set; }    
 
     void Awake()
     {
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour
         Movement = GetComponent<PlayerMovement>();
         Animation = GetComponent<PlayerAnimation>();        
         Health = GetComponent<Health>();
+        Mana = GetComponent<PlayerMana>();
         HealthBar.maxValue = Health.CurrentHealth;
         Dead = false;
     }
@@ -69,6 +73,6 @@ public class Player : MonoBehaviour
     private void Die()
     {
         Dead = true;        
-        //TODO: Implement dieing
+        //TODO: Implement dying
     }
 }
