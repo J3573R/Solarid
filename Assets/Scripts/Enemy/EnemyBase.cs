@@ -12,6 +12,7 @@ public class EnemyBase : MonoBehaviour
     public Vector3 StartPosition;
     public Animator Animator;
     public float RangeToAlert = 1;
+    public float ChaseTime = 3;
 
     protected NavMeshAgent Agent;
 
