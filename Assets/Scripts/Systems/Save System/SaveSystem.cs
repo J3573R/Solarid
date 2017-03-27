@@ -35,18 +35,18 @@ public class SaveSystem : MonoBehaviour
             {
                 SaveData = new SaveData(SaveData.Level.NoSave);
             }
-                
         }
         else
+        {
             LoadSaveData();
-
+        }
     }    
-
     
+    // Path to the save file
     public static string SaveFilePath { get { return Path.Combine(Application.persistentDataPath, SaveFileName); } }
 
     /// <summary>
-    /// Saves the game data
+    /// Saves the current game data
     /// </summary>
     /// <param name="saveData"></param>
     public void SaveStats()
@@ -58,12 +58,18 @@ public class SaveSystem : MonoBehaviour
         //Debug.Log("Saved Data, CurrentLevel =" + SaveData.GetCurrentLevel());
     }
 
+    /// <summary>
+    /// Sets the current AbilityArray in use to SaveData and saves it to file
+    /// </summary>
     public void SaveAbilities()
     {
         SaveData.SetAbilityArray(Globals.Player.GetComponent<AbilityController>().AbilityArray);
         SaveStats();
     }
 
+    /// <summary>
+    /// Sets the current level in use to SaveData and saves it to file
+    /// </summary>
     public void SaveCurrentLevel()
     {
         string levelName = SceneManager.GetActiveScene().name;

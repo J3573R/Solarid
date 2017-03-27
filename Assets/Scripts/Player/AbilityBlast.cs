@@ -19,9 +19,9 @@ public class AbilityBlast : AbilityBase
     /// <summary>
     /// Gets the mouseposition and throws the grenade to it
     /// </summary>
-    public override void Execute()
+    public override void Execute(Vector3 targetPos)
     {
-        Vector3 target = _player.Input.GetMouseGroundPosition();
+        Vector3 target = targetPos;
 
         if (target != Vector3.zero)
         {

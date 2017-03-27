@@ -11,7 +11,7 @@ public class AbilityConfusion : AbilityBase
     /// <summary>
     /// Gets the mouseposition and throws the grenade to it
     /// </summary>
-    public override void Execute()
+    public override void Execute(Vector3 targetPos)
     {
         CoolDownRemaining = CoolDown;
         //TODO: Cooldown/mana stuff needed, for all abilities
