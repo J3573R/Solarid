@@ -40,9 +40,7 @@ public class StateGameLoop : GameStateBase
             GitGud.gameObject.SetActive(true);
             Globals.InputController.ListenInput = false;
             StartCoroutine(Die());
-
         }
-        //Debug.Log("Running GameLoop Code at:" + LevelName);
     }
 
     public IEnumerator Die()

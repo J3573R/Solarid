@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public Player _player;
     // Speed of the bullet
     public float Speed = 5f;
     // Range of the bullet
     public float Range = 1f;
-
+    // How long the hit effect is displayed, set in editor
     public float HitEffectTime;
 
     // Maximium travelled distance
@@ -18,14 +19,9 @@ public class Bullet : MonoBehaviour
     private float _time;
     private ParticleSystem _hitPlasma1;
     private ParticleSystem _hitPlasma2;
-
-    private Transform _bulletPart;
-    private Transform _bulletHit;
-    
-
-
-    public Player _player;
     private bool _active;
+    private Transform _bulletPart;
+    private Transform _bulletHit;         
 
     void Awake()
     {
@@ -41,9 +37,6 @@ public class Bullet : MonoBehaviour
     {
         _bulletPart = gameObject.transform.GetChild(0);
         _bulletHit = gameObject.transform.GetChild(1);
-
-        //Debug.Log("BulletHit = " +_bulletHit.transform.name);
-        //Debug.Log("BulletPart = " + _bulletPart.transform.name);
         
         _player = FindObjectOfType<Player>();
         _hitPlasma1 = _bulletHit.GetChild(0).GetComponent<ParticleSystem>();
@@ -104,11 +97,6 @@ public class Bullet : MonoBehaviour
                 transform.Translate(Vector3.forward * Speed * Time.deltaTime);
                 _time += Time.deltaTime;
             }
-        }
-
-        if (transform.position.y > 1.55f || transform.position.y < 1.45f)
-        {
-            Debug.Log("yli tai ali");
-        }        
+        }      
     }  
 }
