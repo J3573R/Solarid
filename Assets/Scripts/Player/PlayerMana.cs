@@ -14,7 +14,7 @@ public class PlayerMana : MonoBehaviour {
     private int _PassiveRechargeAmount;
 
     private Player _player;
-    private Text _manaText;
+    public Text ManaText;
     private int _currentMana;
     private float _rechargeTimer = 0;
     
@@ -28,7 +28,7 @@ public class PlayerMana : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _player = GetComponent<Player>();
-        _manaText = GameObject.Find("ManaText").GetComponent<Text>();
+        ManaText = GameObject.Find("ManaText").GetComponent<Text>();
         AddMana(_maxMana);
 	}
 	
@@ -44,8 +44,9 @@ public class PlayerMana : MonoBehaviour {
 
     private void UpdateManaDisplay()
     {
+
         string tmp = (CurrentMana / 10).ToString();
-        _manaText.text = "Mana: " + tmp;
+        ManaText.text = "Mana: " + tmp;
     }
 
     public void SubStractMana(int amount)

@@ -40,7 +40,8 @@ public class AbilityController : MonoBehaviour {
             AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
         }  
 
-        SetupAbilites();        
+        SetupAbilites();
+
     }
 
     /// <summary>
@@ -105,9 +106,18 @@ public class AbilityController : MonoBehaviour {
             _lightning.enabled = false;
 
         if (tmpIndex == 0)
+        {
             _allAbilitiesDisabled = true;
+            _cooldownDisplay.enabled = false;
+            _player.Mana.ManaText.enabled = false;
+        }
         else
+        {
             _allAbilitiesDisabled = false;
+            _cooldownDisplay.enabled = true;
+            _player.Mana.ManaText.enabled = true;
+        }
+            
 
         if (tmpIndex> 0)
         {
@@ -267,14 +277,24 @@ public class AbilityController : MonoBehaviour {
     private void DisplayCooldown()
     {
         int tmp = (int)_currentAbility.GetRemainingCooldown();
+        string name = "";
+
+        if (_currentAbility == _blink)
+            name = "Blink: ";
+        if (_currentAbility == _vortex)
+            name = "Vortex: ";
+        if (_currentAbility == _confusion)
+            name = "Confusion: ";
+        if (_currentAbility == _lightning)
+            name = "Lightning: ";
 
         if (tmp <= 0)
         {
-            _cooldownDisplay.text = "Ready";
+            _cooldownDisplay.text = name + "Ready";
         }
         else
         {
-            _cooldownDisplay.text = "Cooldown: " + tmp.ToString();
+            _cooldownDisplay.text = name + tmp.ToString();
         }
     }
 }
