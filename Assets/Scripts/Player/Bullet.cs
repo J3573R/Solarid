@@ -90,7 +90,7 @@ public class Bullet : MonoBehaviour
         _time = 0;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_active)
         {

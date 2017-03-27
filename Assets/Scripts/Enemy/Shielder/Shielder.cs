@@ -13,7 +13,7 @@ public class Shielder : EnemyBase
     public int DisengageDistance = 7;
 
     // Attack speed of the enemy
-    public float TimeBetweenAttacks = 1f;
+    public float TimeBetweenAttacks = 1.5f;
 
     // Time after last attack
     public float AttackTimer = 0;

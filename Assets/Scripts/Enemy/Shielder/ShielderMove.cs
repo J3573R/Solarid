@@ -16,7 +16,7 @@ public class ShielderMove : EnemyStateBase
     {
         base.Awake();
         eState = EnemyBase.State.Move;
-        Agent.speed = 5;
+        Agent.speed = 2f;
 
         try
         {

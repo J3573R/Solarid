@@ -209,7 +209,7 @@ public class AbilityController : MonoBehaviour {
     {
         _abilityIndex += tmp;
 
-        Debug.Log("True AbilityIndex = " + _abilityIndex);
+        //Debug.Log("True AbilityIndex = " + _abilityIndex);
 
         
         if (_abilityIndex < 0)
@@ -217,7 +217,7 @@ public class AbilityController : MonoBehaviour {
         else if (_abilityIndex > _maxAbilityIndex)
             _abilityIndex = 0;
 
-        Debug.Log("AbilityIndex after limit = " + _abilityIndex);
+        //Debug.Log("AbilityIndex after limit = " + _abilityIndex);
 
         if (_abilityIndex == 0)
             SetAbility(Ability.Blink);
