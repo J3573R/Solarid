@@ -59,6 +59,11 @@ public class EnemyBullet : MonoBehaviour
                 p.TakeDamage(Damage);
                 MyPool.ReturnBullet(gameObject);
             }
+
+            if (other.tag.Equals("Prop"))
+            {
+                MyPool.ReturnBullet(gameObject);
+            }
         }
         else
         {
