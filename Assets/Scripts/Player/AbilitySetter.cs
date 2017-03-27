@@ -9,8 +9,7 @@ public class AbilitySetter : MonoBehaviour {
 
     public bool Blink;
     public bool Vortex;
-    public bool Confusion;
-    public bool Lightning;
+    public bool Clone;
     public bool SetAbilities;
 
     private AbilityController _controller;
@@ -30,10 +29,8 @@ public class AbilitySetter : MonoBehaviour {
                 _controller.EnableOrDisableAbility(AbilityController.Ability.Blink, true);
             if (Vortex)
                 _controller.EnableOrDisableAbility(AbilityController.Ability.Vortex, true);
-            if (Confusion)
-                _controller.EnableOrDisableAbility(AbilityController.Ability.Confusion, true);
-            if (Lightning)
-                _controller.EnableOrDisableAbility(AbilityController.Ability.Lightning, true);
+            if (Clone)
+                _controller.EnableOrDisableAbility(AbilityController.Ability.Clone, true);
 
             SetAbilities = false;
         }

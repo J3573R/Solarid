@@ -35,8 +35,6 @@ public class AbilityBlink : AbilityBase {
     public override void Execute(Vector3 targetPos)
     {
         _targetPosition = targetPos;
-
-
         _player.Animation.CastOnce = true;
         StartCoroutine(CastDelay());
         _targetPosition.y = 0;

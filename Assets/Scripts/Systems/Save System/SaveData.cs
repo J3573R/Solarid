@@ -33,8 +33,7 @@ public class SaveData {
 
         _abilityArray.Add(AbilityController.Ability.Blink, false);
         _abilityArray.Add(AbilityController.Ability.Vortex, false);
-        _abilityArray.Add(AbilityController.Ability.Confusion, false);
-        _abilityArray.Add(AbilityController.Ability.Lightning, false);
+        _abilityArray.Add(AbilityController.Ability.Clone, false);
     }
 
     /// <summary>
@@ -67,8 +66,7 @@ public class SaveData {
 
             _abilityArray.Add(AbilityController.Ability.Blink, false);
             _abilityArray.Add(AbilityController.Ability.Vortex, false);
-            _abilityArray.Add(AbilityController.Ability.Confusion, false);
-            _abilityArray.Add(AbilityController.Ability.Lightning, false);
+            _abilityArray.Add(AbilityController.Ability.Clone, false);
         }
 
         return _abilityArray;
@@ -81,8 +79,7 @@ public class SaveData {
     {
         _abilityArray[AbilityController.Ability.Blink] = false;
         _abilityArray[AbilityController.Ability.Vortex] = false;
-        _abilityArray[AbilityController.Ability.Confusion] = false;
-        _abilityArray[AbilityController.Ability.Lightning] = false;
+        _abilityArray[AbilityController.Ability.Clone] = false;
     }
 
     /// <summary>

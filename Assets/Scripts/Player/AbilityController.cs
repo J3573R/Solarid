@@ -8,8 +8,7 @@ public class AbilityController : MonoBehaviour {
     private Player _player;    
     private AbilityBlink _blink;
     private AbilityBlast _vortex;
-    private AbilityConfusion _confusion;
-    private AbilityLightning _lightning;
+    private AbilityClone _clone;
     private AbilityBase _currentAbility;
     private float _abilityIndex;
     private Text _cooldownDisplay;
@@ -26,8 +25,7 @@ public class AbilityController : MonoBehaviour {
         _player = GetComponent<Player>();
         _blink = GetComponent<AbilityBlink>();
         _vortex = GetComponent<AbilityBlast>();
-        _confusion = GetComponent<AbilityConfusion>();
-        _lightning = GetComponent<AbilityLightning>();
+        _clone = GetComponent<AbilityClone>();
         _currentAbility = _blink;
         _cooldownDisplay = GameObject.Find("CoolDown").GetComponent<Text>();
         _rangeCheck = FindObjectOfType<RangeCheck>();
@@ -51,8 +49,7 @@ public class AbilityController : MonoBehaviour {
     {
         Blink = 0,
         Vortex = 1,
-        Confusion = 2,
-        Lightning = 3
+        Clone = 2
     }
 
     /// <summary>
@@ -89,21 +86,13 @@ public class AbilityController : MonoBehaviour {
         else
             _vortex.enabled = false;
 
-        if (AbilityArray[Ability.Confusion])
+        if (AbilityArray[Ability.Clone])
         {
-            _confusion.enabled = true;
+            _clone.enabled = true;
             tmpIndex += 1;
         }
         else
-            _confusion.enabled = false;
-
-        if (AbilityArray[Ability.Lightning])
-        {
-            _lightning.enabled = true;
-            tmpIndex += 1;
-        }
-        else
-            _lightning.enabled = false;
+            _clone.enabled = false;        
 
         if (tmpIndex == 0)
         {
@@ -219,15 +208,10 @@ public class AbilityController : MonoBehaviour {
             _currentAbility = _vortex;
             _abilityIndex = 1;
         }
-        if (tmp == Ability.Confusion && _confusion.enabled)
+        if (tmp == Ability.Clone && _clone.enabled)
         {
-            _currentAbility = _confusion;
+            _currentAbility = _clone;
             _abilityIndex = 2;
-        }
-        if (tmp == Ability.Lightning && _lightning.enabled)
-        {
-            _currentAbility = _lightning;
-            _abilityIndex = 3;
         }
     }
 
@@ -249,9 +233,7 @@ public class AbilityController : MonoBehaviour {
         if (_abilityIndex == 1)
             SetAbility(Ability.Vortex);
         if (_abilityIndex == 2)
-            SetAbility(Ability.Confusion);
-        if (_abilityIndex == 3)
-            SetAbility(Ability.Lightning);
+            SetAbility(Ability.Clone);
     }
 
     /// <summary>
@@ -283,10 +265,8 @@ public class AbilityController : MonoBehaviour {
             name = "Blink: ";
         if (_currentAbility == _vortex)
             name = "Vortex: ";
-        if (_currentAbility == _confusion)
-            name = "Confusion: ";
-        if (_currentAbility == _lightning)
-            name = "Lightning: ";
+        if (_currentAbility == _clone)
+            name = "Clone: ";
 
         if (tmp <= 0)
         {
