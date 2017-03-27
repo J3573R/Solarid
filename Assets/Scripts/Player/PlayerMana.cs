@@ -44,7 +44,7 @@ public class PlayerMana : MonoBehaviour {
 
     private void UpdateManaDisplay()
     {
-        string tmp = CurrentMana.ToString();
+        string tmp = (CurrentMana / 10).ToString();
         _manaText.text = "Mana: " + tmp;
     }
 

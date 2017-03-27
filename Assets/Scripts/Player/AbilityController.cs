@@ -128,13 +128,17 @@ public class AbilityController : MonoBehaviour {
             if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
             {
                 Vector3 targetPosition = _player.Input.GetMouseGroundPosition();
-                
+                bool inRange = true;
+
                 if (GetRange() == 0)
                 {
                     _currentAbility.Execute(targetPosition);
                     notExecuted = false;
                 }
-                if (_rangeCheck.GetDistance() <= GetRange() && targetPosition != Vector3.zero && notExecuted)
+                if (_rangeCheck.GetDistance() > GetRange())
+                    inRange = false;
+
+                if (inRange && targetPosition != Vector3.zero && notExecuted)
                 {
                     _currentAbility.Execute(targetPosition);
                     notExecuted = false;
@@ -142,7 +146,7 @@ public class AbilityController : MonoBehaviour {
 
                 targetPosition = _rangeCheck.GetMaxRangePosition(GetRange());
 
-                if (targetPosition != Vector3.zero && notExecuted)
+                if (!inRange && targetPosition != Vector3.zero && notExecuted)
                 {
                     _currentAbility.Execute(targetPosition);
                     notExecuted = false;
