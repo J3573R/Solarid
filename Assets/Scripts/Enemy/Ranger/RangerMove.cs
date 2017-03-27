@@ -35,7 +35,7 @@ public class RangerMove : EnemyStateBase {
 
         _distance = Vector3.Distance(Globals.Player.transform.position, transform.position);
 
-        if (_chaseTime > 3)
+        if (_chaseTime > Parent.ChaseTime)
         {
             Agent.stoppingDistance = 0f;
             Parent.SetState(EnemyBase.State.Idle);
