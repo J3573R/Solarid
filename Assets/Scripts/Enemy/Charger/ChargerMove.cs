@@ -46,7 +46,7 @@ public class ChargerMove : EnemyStateBase
         {
             Parent.SetState(EnemyBase.State.Attack);
         }
-        else if(_distance >= _parent.DisengageDistance && _followTime >= 3)
+        else if(_distance >= _parent.DisengageDistance && _followTime >= Parent.ChaseTime)
         {
             Parent.SetState(EnemyBase.State.Idle);
         }

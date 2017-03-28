@@ -17,7 +17,7 @@ public class ShielderIdle : EnemyStateBase
         eState = EnemyBase.State.Idle;
         _timeToWalk = 2;
         _transitionToAlert = 0;
-        Agent.speed = 3.5f;
+        Agent.speed = 1.5f;
 
         try
         {
@@ -55,7 +55,7 @@ public class ShielderIdle : EnemyStateBase
             if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
             {
                 Agent.destination = navHit.position;
-                _timeToWalk = UnityEngine.Random.Range(1, 3);
+                _timeToWalk = UnityEngine.Random.Range(3, 4);
                 Idling = false;
             }
         }
