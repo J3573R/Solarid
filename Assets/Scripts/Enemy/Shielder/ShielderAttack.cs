@@ -30,7 +30,7 @@ public class ShielderAttack : EnemyStateBase
             if (_charger.AttackTimer >= _charger.TimeBetweenAttacks)
             {
                 //Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
-                Globals.Player.GetComponent<Player>().TakeDamage(Parent.Damage);
+                Globals.Player.GetComponent<PlayerHealth>().TakeDamage(Parent.Damage);
                 _charger.AttackTimer = 0;
             }
         }

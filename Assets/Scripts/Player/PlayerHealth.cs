@@ -44,8 +44,8 @@ public class PlayerHealth : Health {
     /// </summary>
     private void Die()
     {
-        //Globals.Player.Dead = true;
-        //Dead = true;
+        Globals.Player.GetComponent<Player>().Dead = true;
+        
         //TODO: Implement dying
     }
 

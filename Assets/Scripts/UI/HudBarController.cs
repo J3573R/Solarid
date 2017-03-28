@@ -51,7 +51,7 @@ public class HudBarController : MonoBehaviour {
     {
         if (_secondary > 0)
         {
-            SecondaryProgress = SecondaryProgress - Time.deltaTime;
+            SecondaryProgress = SecondaryProgress - (Time.deltaTime * 0.7f);
         }
     }
 
