@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Sort of "master" component for all player related, has links to all other components
 /// </summary>
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(PlayerHealth))]
 public class Player : MonoBehaviour
 {
     [HideInInspector] public InputController Input;
@@ -18,9 +18,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerMana Mana;
     [HideInInspector] public List<GameObject> Clones;
     public bool ShootingEnabled = true;
-    public Slider HealthBar;
     
-    public bool Dead {get; private set; }    
+    public bool Dead { get; set; }    
 
     void Awake()
     {
@@ -32,7 +31,6 @@ public class Player : MonoBehaviour
         Animation = GetComponent<PlayerAnimation>();        
         Health = GetComponent<Health>();
         Mana = GetComponent<PlayerMana>();
-        HealthBar.maxValue = Health.CurrentHealth;
         Dead = false;
     }
 
@@ -47,33 +45,4 @@ public class Player : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Damages the player
-    /// </summary>
-    /// <param name="damage">How much damage</param>
-    /// <returns>True if player died, else false</returns>
-    public bool TakeDamage(int damage)
-    {
-
-        Globals.Interact = false;
-        if (Health.TakeDamage(damage))
-        {
-            Die();
-            HealthBar.value = Health.CurrentHealth;
-            return true;
-        }
-
-        HealthBar.value = Health.CurrentHealth;
-        return false;
-    }
-
-
-    /// <summary>
-    /// Kills the player
-    /// </summary>
-    private void Die()
-    {
-        Dead = true;        
-        //TODO: Implement dying
-    }
 }

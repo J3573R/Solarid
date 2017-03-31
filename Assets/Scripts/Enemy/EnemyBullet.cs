@@ -55,8 +55,13 @@ public class EnemyBullet : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                Player p = Globals.Player.GetComponent<Player>();
-                p.TakeDamage(Damage);
+                PlayerHealth hp = Globals.Player.GetComponent<PlayerHealth>();
+                hp.TakeDamage(Damage);
+                MyPool.ReturnBullet(gameObject);
+            }
+
+            if (other.tag.Equals("Prop"))
+            {
                 MyPool.ReturnBullet(gameObject);
             } else if (other.tag == "Clone")
             {

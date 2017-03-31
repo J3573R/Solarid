@@ -126,44 +126,47 @@ public class AbilityController : MonoBehaviour {
         {
             if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0 && _player.Mana.CurrentMana > _currentAbility.ManaCost)
             {
-                Vector3 targetPosition = _player.Input.GetMouseGroundPosition();
-                bool inRange = true;
-
-                if (GetRange() == 0)
+                if (_player.Mana.HasEnoughMana(_currentAbility.ManaCost))
                 {
-                    _currentAbility.Execute(targetPosition);
-                    notExecuted = false;
+                    Vector3 targetPosition = _player.Input.GetMouseGroundPosition();
+                    bool inRange = true;
+
+                    if (GetRange() == 0)
+                    {
+                        _currentAbility.Execute(targetPosition);
+                        notExecuted = false;
+                    }
+                    if (_rangeCheck.GetDistance() > GetRange())
+                        inRange = false;
+
+                    if (inRange && targetPosition != Vector3.zero && notExecuted)
+                    {
+                        _currentAbility.Execute(targetPosition);
+                        notExecuted = false;
+                    }
+
+                    targetPosition = _rangeCheck.GetMaxRangePosition(GetRange());
+
+                    if (!inRange && targetPosition != Vector3.zero && notExecuted)
+                    {
+                        _currentAbility.Execute(targetPosition);
+                        notExecuted = false;
+                    }
+
+                    targetPosition = _rangeCheck.GetNextSuitablePosition(GetRange());
+
+                    if (targetPosition != Vector3.zero && notExecuted)
+                    {
+                        _currentAbility.Execute(targetPosition);
+                        notExecuted = false;
+                    }
+                    if (notExecuted)
+                    {
+                        _currentAbility.Execute(new Vector3(transform.position.x, _rangeCheck.transform.position.y, transform.position.z));
+                    }
+
+                    _player.Mana.SubStractMana(_currentAbility.ManaCost);
                 }
-                if (_rangeCheck.GetDistance() > GetRange())
-                    inRange = false;
-
-                if (inRange && targetPosition != Vector3.zero && notExecuted)
-                {
-                    _currentAbility.Execute(targetPosition);
-                    notExecuted = false;
-                }
-
-                targetPosition = _rangeCheck.GetMaxRangePosition(GetRange());
-
-                if (!inRange && targetPosition != Vector3.zero && notExecuted)
-                {
-                    _currentAbility.Execute(targetPosition);
-                    notExecuted = false;
-                }
-
-                targetPosition = _rangeCheck.GetNextSuitablePosition(GetRange());
-
-                if (targetPosition != Vector3.zero && notExecuted)
-                {
-                    _currentAbility.Execute(targetPosition);
-                    notExecuted = false;
-                } 
-                if (notExecuted)
-                {
-                    _currentAbility.Execute(new Vector3(transform.position.x, _rangeCheck.transform.position.y, transform.position.z));
-                }
-
-                _player.Mana.SubStractMana(_currentAbility.ManaCost);
             }
         }        
     }
