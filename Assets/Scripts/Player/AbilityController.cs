@@ -124,7 +124,7 @@ public class AbilityController : MonoBehaviour {
         bool notExecuted = true;
         if (!_allAbilitiesDisabled)
         {
-            if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
+            if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0 && _player.Mana.CurrentMana > _currentAbility.ManaCost)
             {
                 Vector3 targetPosition = _player.Input.GetMouseGroundPosition();
                 bool inRange = true;
