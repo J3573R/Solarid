@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerAnimation Animation;
     [HideInInspector] public Gun Gun;
     [HideInInspector] public PlayerMana Mana;
+    [HideInInspector] public List<GameObject> Clones;
     public bool ShootingEnabled = true;
     public Slider HealthBar;
     

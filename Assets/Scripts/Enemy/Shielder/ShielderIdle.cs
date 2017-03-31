@@ -4,11 +4,7 @@ using UnityEngine.AI;
 
 public class ShielderIdle : EnemyStateBase
 {
-
-    private Shielder _parent;
     private float _timeToWalk;
-    private float _distance;
-    private float _transitionToAlert;
     private bool Idling;
 
     protected override void Awake()
@@ -16,18 +12,7 @@ public class ShielderIdle : EnemyStateBase
         base.Awake();
         eState = EnemyBase.State.Idle;
         _timeToWalk = 2;
-        _transitionToAlert = 0;
         Agent.speed = 1.5f;
-
-        try
-        {
-            _parent = (Shielder) Parent;
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Parent was not Shielder in ShielderIdle: " + e.Message);
-        }
-        
     }
 
     protected override void Update()
@@ -65,24 +50,4 @@ public class ShielderIdle : EnemyStateBase
         }
     }
 
-    /// <summary>
-    /// Changes enemys state to alert if distance is small enough.
-    /// </summary>
-    private void ChangeToAlert()
-    {
-        _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
-
-        if (_distance < _parent.AlertDistance)
-        {
-            _transitionToAlert += Time.deltaTime;
-            if (_transitionToAlert >= 0.5f)
-            {
-                Parent.SetState(EnemyBase.State.Alert);
-            }
-        }
-        else
-        {
-            _transitionToAlert = 0;
-        }
-    }
 }

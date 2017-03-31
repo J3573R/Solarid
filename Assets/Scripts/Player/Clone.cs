@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Clone : MonoBehaviour {
 
     public float Lifetime;
     public GameObject Hero;
+    public GameObject HealthBar;
+    public Vector3 HealthBarOffset;
+
+    protected Health Health;
 
     private Gun _gun;
     private float _targetDistance = Mathf.Infinity;
@@ -13,17 +18,28 @@ public class Clone : MonoBehaviour {
     private Animator _animator;
     private float _lifetime;
     private ParticleSystem _destroyEffect;
-    private bool _dying;   
-    
+    private bool _dying;
+    private Slider _healthBar;
+    private bool _showHealth = false;
+
     void Awake()
     {
+        Health = GetComponent<Health>();
         _gun = GetComponentInChildren<Gun>();
         _animator = GetComponentInChildren<Animator>();
         _destroyEffect = GetComponent<ParticleSystem>();
+        GameObject bar = Instantiate(HealthBar);
+        bar.transform.SetParent(GameObject.Find("UI").transform);
+        _healthBar = bar.GetComponent<Slider>();
+        _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        _healthBar.maxValue = Health.CurrentHealth;
+        _healthBar.gameObject.SetActive(false);
     }
 
     void OnEnable()
-    {                
+    {
+        Health.CurrentHealth = (int)_healthBar.maxValue;
+        _showHealth = false;
         _lifetime = Lifetime;        
         _destroyEffect.Stop();
         Hero.SetActive(true);
@@ -31,6 +47,15 @@ public class Clone : MonoBehaviour {
     }
 		
 	void Update () {
+
+        _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + HealthBarOffset);
+	    _healthBar.value = Health.CurrentHealth;
+
+        if (!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
+        {
+            _healthBar.gameObject.SetActive(true);
+            _showHealth = true;
+        }
 
         if (!_dying)
         {
@@ -62,14 +87,16 @@ public class Clone : MonoBehaviour {
             {
                 _animator.SetInteger("animState", 1);
                 Vector3 direction = _target.transform.position - transform.position;
+                direction.y = 0;
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = lookRotation;//Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
                 _gun.ShootDirection(_target.transform.position);
             }
             _lifetime -= Time.deltaTime;
-            if (_lifetime <= 0)
+            if (_lifetime <= 0 || Health.CurrentHealth <= 0)
             {
                 _dying = true;
+                _healthBar.gameObject.SetActive(false);
                 Hero.SetActive(false);
                 _destroyEffect.Play();
             }
@@ -80,8 +107,14 @@ public class Clone : MonoBehaviour {
                 gameObject.SetActive(false);
             }            
         }
-        
+    }
 
-        
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "EnemyBullet")
+        {
+            EnemyBullet bullet = other.gameObject.GetComponent<EnemyBullet>();
+            Health.TakeDamage(bullet.Damage);
+        }
     }
 }

@@ -9,7 +9,7 @@ public class Health : MonoBehaviour {
     public int CurrentHealth
     {
         get { return _health; }
-        private set { _health = (int)Mathf.Clamp(value, 0, Mathf.Infinity); }
+        set { _health = (int)Mathf.Clamp(value, 0, Mathf.Infinity); }
     }
     
     public bool TakeDamage(int damage)

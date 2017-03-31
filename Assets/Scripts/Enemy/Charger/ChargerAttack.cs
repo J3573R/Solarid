@@ -18,7 +18,7 @@ public class ChargerAttack : EnemyStateBase
 
     protected override void Update()
     {
-        _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
+        _distance = Vector3.Distance(transform.position, Parent.Target.transform.position);
 
         // If distance is bigger than 2 change back to move, else attack
         if (_distance > 2)
@@ -30,7 +30,7 @@ public class ChargerAttack : EnemyStateBase
             if (_charger.AttackTimer >= _charger.TimeBetweenAttacks)
             {
                 Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
-                Globals.Player.GetComponent<Player>().TakeDamage(Parent.Damage);
+                Parent.Target.GetComponent<Health>().TakeDamage(Parent.Damage);
                 _charger.AttackTimer = 0;
             }
         }

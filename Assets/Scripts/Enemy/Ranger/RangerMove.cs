@@ -33,7 +33,7 @@ public class RangerMove : EnemyStateBase {
             Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
         }
 
-        _distance = Vector3.Distance(Globals.Player.transform.position, transform.position);
+        _distance = Vector3.Distance(Parent.Target.transform.position, transform.position);
 
         if (_chaseTime > Parent.ChaseTime)
         {
@@ -48,18 +48,18 @@ public class RangerMove : EnemyStateBase {
         } else if (_distance > _maxDistance)
         {
             Agent.stoppingDistance = _maxDistance;
-            Agent.destination = Globals.Player.transform.position;
+            Agent.destination = Parent.Target.transform.position;
             _chaseTime += Time.deltaTime;
             
         }  else if(_distance < _minDistance)
         {            
-            _direction = (Globals.Player.transform.position - transform.position).normalized;
+            _direction = (Parent.Target.transform.position - transform.position).normalized;
             Agent.stoppingDistance = 0f;
             Agent.destination = transform.position + -_direction;
             _chaseTime += Time.deltaTime;
         }
 
-        _direction = (Globals.Player.transform.position - transform.position).normalized;
+        _direction = (Parent.Target.transform.position - transform.position).normalized;
         _direction.y = 0;
         transform.rotation = Quaternion.LookRotation(_direction);
     }

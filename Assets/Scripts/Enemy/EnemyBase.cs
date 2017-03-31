@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -13,23 +14,25 @@ public class EnemyBase : MonoBehaviour
     public Animator Animator;
     public float RangeToAlert = 1;
     public float ChaseTime = 3;
+    public GameObject Target;
+
+    // Changes enemy state to alert when distance is smaller than this
+    public int AlertDistance = 5;
+
+    // Changes enemy state to idle when distance is bigger than this
+    public int DisengageDistance = 7;
 
     protected NavMeshAgent Agent;
 
     private Slider _healthBar;
     private bool _showHealth = false;
     private Vector3 _positionAtLastFrame;
+    private Player _player;
 
     // Pull effect for black hole
     private Vector3 _pullPoint;
     private float _pullDuration;
     private bool _pullActive = false;
-
-    // Confuse effect
-    private Vector3 _confusionPosition;
-    private float _confusionDuration;
-    private float _timeToWalk;
-    private bool _confusionActive = false;
     
     public enum State
     {
@@ -60,6 +63,7 @@ public class EnemyBase : MonoBehaviour
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
+        _player = Globals.Player.GetComponent<Player>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
@@ -70,6 +74,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
+        Target = GetClosestTarget();
         _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
 
         if(!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
@@ -89,17 +94,6 @@ public class EnemyBase : MonoBehaviour
         {
             _pullActive = false;
             Agent.enabled = true;
-        }
-
-        if (_confusionDuration > 0 && _confusionActive)
-        {
-            Confusion();
-            _confusionDuration -= Time.deltaTime;
-        }
-        else if(_confusionActive)
-        {
-            CurrentStateObject.enabled = true;
-            _confusionActive = false;
         }
 
         if(Animator != null && CurrentState != State.Attack)
@@ -156,12 +150,6 @@ public class EnemyBase : MonoBehaviour
         if (other.tag == "PlayerBullet")
         {
             TakeDamage(Globals.PlayerDamage);            
-        } else if (other.tag == "Confusion")
-        {
-            Confuse(5f);
-        } else if (other.tag == "Lightning")
-        {
-            TakeDamage(Globals.PlayerDamage);
         }
     }
 
@@ -221,51 +209,6 @@ public class EnemyBase : MonoBehaviour
     }
 
     /// <summary>
-    /// Confuses enemy, making it patrol for set amount of time.
-    /// </summary>
-    /// <param name="duration">Duration of confuse effect.</param>
-    public virtual void Confuse(float duration)
-    {
-        _confusionPosition = transform.position;
-        _confusionDuration = duration;
-        _timeToWalk = 0;
-        CurrentStateObject.enabled = false;
-        _confusionActive = true;
-    }
-
-    /// <summary>
-    /// Animation and patrol calculation for confusion.
-    /// </summary>
-    private void Confusion()
-    {
-        if (IsNavMeshMoving())
-        {
-            Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
-        }
-        else
-        {
-            Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
-        }
-
-        if (_timeToWalk <= 0)
-        {
-            Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * 3) + Vector3.one * 2;
-            randomDirection += _confusionPosition;
-
-            NavMeshHit navHit;
-            if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
-            {
-                Agent.destination = navHit.position;
-                _timeToWalk = 1f;
-            }
-        }
-        else
-        {
-            _timeToWalk -= Time.deltaTime;
-        }
-    }
-
-    /// <summary>
     /// Checks if navigation agent is moving.
     /// </summary>
     /// <returns>False if nav mesh is reached target, otherwise true</returns>
@@ -283,5 +226,26 @@ public class EnemyBase : MonoBehaviour
         }
 
         return true;
+    }
+
+    public GameObject GetClosestTarget()
+    {
+        GameObject target = Globals.Player;
+        float targetDistance = Vector3.Distance(transform.position, target.transform.position);
+
+        foreach (var clone in _player.Clones)
+        {
+            if (clone.activeInHierarchy)
+            {
+                float distance = Vector3.Distance(transform.position, clone.transform.position);
+                if (distance < targetDistance)
+                {
+                    target = clone;
+                    targetDistance = distance;
+                }
+            }
+        }
+
+        return target;
     }
 }

@@ -18,20 +18,20 @@ public class RangerAlert : EnemyStateBase {
 
     protected override void Update()
     {
-        LookPlayer();
+        LookTarget();
         ChangeToMove();
     }
 
     /// <summary>
-    /// Looks at player.
+    /// Looks at target.
     /// </summary>
-    private void LookPlayer()
+    private void LookTarget()
     {
-        _targetDirection = Globals.Player.transform.position - transform.position;
+        _targetDirection = Parent.Target.transform.position - transform.position;
         _step = _rotationSpeed * Time.deltaTime;
         _newDirection = Vector3.RotateTowards(transform.forward, _targetDirection, _step, 0.0F);
         transform.rotation = Quaternion.LookRotation(_newDirection);
-        _targetDirection = Globals.Player.transform.position - transform.position;
+        _targetDirection = Parent.Target.transform.position - transform.position;
     }
 
     /// <summary>

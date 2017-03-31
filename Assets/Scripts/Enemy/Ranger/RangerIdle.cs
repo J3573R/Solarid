@@ -5,9 +5,6 @@ using UnityEngine.AI;
 public class RangerIdle : EnemyStateBase
 {
     private float _timeToWalk;
-    private float _distance;
-    private float _alertDistance = 8f;
-    private float _transitionToAlert;
     private bool Idling;
 
     protected override void Awake()
@@ -15,7 +12,6 @@ public class RangerIdle : EnemyStateBase
         base.Awake();
         eState = EnemyBase.State.Idle;
         _timeToWalk = 2;
-        _transitionToAlert = 0;
         Agent.speed = 3.5f;
         Agent.updatePosition = true;
         Agent.updateRotation = true;
@@ -72,27 +68,6 @@ public class RangerIdle : EnemyStateBase
         else
         {
             _timeToWalk -= Time.deltaTime;
-        }
-    }
-
-    /// <summary>
-    /// Changes enemys state to alert if distance is small enough.
-    /// </summary>
-    private void ChangeToAlert()
-    {
-        _distance = Vector3.Distance(transform.position, Globals.Player.transform.position);
-
-        if (_distance < _alertDistance)
-        {
-            _transitionToAlert += Time.deltaTime;
-            if (_transitionToAlert >= 0.5f)
-            {
-                Parent.SetState(EnemyBase.State.Alert);
-            }
-        }
-        else
-        {
-            _transitionToAlert = 0;
         }
     }
 

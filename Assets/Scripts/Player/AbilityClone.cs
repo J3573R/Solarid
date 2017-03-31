@@ -7,19 +7,20 @@ public class AbilityClone : AbilityBase {
 
     public GameObject ClonePrefab;
     public int ClonePoolSize;
+    public List<GameObject> Clones = new List<GameObject>();
 
     private Vector3 _targetPosition;
     private Player _player;
-    private List<GameObject> _clones = new List<GameObject>();
 
 	// Use this for initialization
 	void Awake () {
         _player = GetComponent<Player>();
+	    _player.Clones = Clones;
         for(int i = 0; i < ClonePoolSize; i++)
         {
             GameObject clone = Instantiate(ClonePrefab, transform.position, Quaternion.identity);
             clone.SetActive(false);
-            _clones.Add(clone);
+            Clones.Add(clone);
         }
 	}
 
@@ -30,7 +31,7 @@ public class AbilityClone : AbilityBase {
     {
         _targetPosition = targetPos;        
 
-        foreach(var clone in _clones)
+        foreach(var clone in Clones)
         {
             if (!clone.activeInHierarchy)
             {
