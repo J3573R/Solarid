@@ -14,7 +14,10 @@ public class Charger : EnemyBase
     protected override void Start()
     {
         base.Start();
-        SetState(EnemyBase.State.Idle);
+        if (CurrentState == State.None)
+        {
+            SetState(EnemyBase.State.Idle);
+        }
         StartPosition = transform.position;
     }
 

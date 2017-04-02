@@ -11,7 +11,7 @@ public class RangerIdle : EnemyStateBase
     {
         base.Start();
         eState = EnemyBase.State.Idle;
-        _timeToWalk = 2;
+        _timeToWalk = 0;
         Agent.speed = 3.5f;
         Agent.updatePosition = true;
         Agent.updateRotation = true;
