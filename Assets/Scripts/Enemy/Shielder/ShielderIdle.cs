@@ -11,7 +11,7 @@ public class ShielderIdle : EnemyStateBase
     {
         base.Start();
         eState = EnemyBase.State.Idle;
-        _timeToWalk = 2;
+        _timeToWalk = 0;
         Agent.speed = 1.5f;
     }
 
