@@ -9,9 +9,9 @@ public class Ranger : EnemyBase
     public float ReadyToShoot;
     public RangerBulletPool RangerBulletPool;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         SetState(EnemyBase.State.Idle);
         RangerBulletPool = GetComponent<RangerBulletPool>();
         StartPosition = transform.position;

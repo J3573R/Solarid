@@ -15,9 +15,9 @@ public class Shielder : EnemyBase
 
     private Vector3 _shieldOffset;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         SetState(EnemyBase.State.Idle);
         StartPosition = transform.position;
         _shieldOffset = Shield.transform.position - transform.position;

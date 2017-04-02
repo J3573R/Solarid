@@ -58,12 +58,13 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     private Vector3 _healthBarOffset = Vector3.zero;
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
-        _player = Globals.Player.GetComponent<Player>();
+        if(Globals.Player != null)
+            _player = Globals.Player.GetComponent<Player>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();

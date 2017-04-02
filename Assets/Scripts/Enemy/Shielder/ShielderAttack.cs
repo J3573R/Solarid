@@ -9,9 +9,9 @@ public class ShielderAttack : EnemyStateBase
     private float _distance;
     private Shielder _charger;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         eState = EnemyBase.State.Idle;
         _charger = (Shielder)Parent;
     }

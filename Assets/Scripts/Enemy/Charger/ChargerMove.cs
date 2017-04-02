@@ -12,9 +12,9 @@ public class ChargerMove : EnemyStateBase
     private Vector3 _targetDirection;
     private Vector3 _newDirection;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         eState = EnemyBase.State.Move;
         Agent.speed = 5;
 
@@ -31,7 +31,6 @@ public class ChargerMove : EnemyStateBase
     protected override void Update()
     {
         _followTime += Time.deltaTime;
-        
         Agent.destination = Parent.Target.transform.position;
         _targetDirection = Parent.Target.transform.position - transform.position;
         _step = _rotationSpeed * Time.deltaTime;

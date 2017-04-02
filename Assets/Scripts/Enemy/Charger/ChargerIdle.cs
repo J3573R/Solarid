@@ -9,9 +9,9 @@ public class ChargerIdle : EnemyStateBase
     private float _timeToWalk;
     private bool Idling;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         eState = EnemyBase.State.Idle;
         _timeToWalk = 2;
         Agent.speed = 3.5f;

@@ -7,9 +7,9 @@ public class RangerAttack : EnemyStateBase
     private Ranger _ranger;
     private float _animationDuration = 0;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         _ranger = (Ranger) Parent;
     }
 

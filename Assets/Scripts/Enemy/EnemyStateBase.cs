@@ -18,7 +18,7 @@ public class EnemyStateBase : MonoBehaviour
         get { return eState; }
     }
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         Parent = GetComponent<EnemyBase>();
         Agent = GetComponent<NavMeshAgent>();

@@ -11,9 +11,9 @@ public class Charger : EnemyBase
     // Time after last attack
     public float AttackTimer = 0;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         SetState(EnemyBase.State.Idle);
         StartPosition = transform.position;
     }

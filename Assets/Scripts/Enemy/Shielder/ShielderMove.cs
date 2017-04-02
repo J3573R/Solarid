@@ -12,9 +12,9 @@ public class ShielderMove : EnemyStateBase
     private Vector3 _targetDirection;
     private Vector3 _newDirection;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         eState = EnemyBase.State.Move;
         Agent.speed = 2f;
 
