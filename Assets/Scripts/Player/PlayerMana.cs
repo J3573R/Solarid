@@ -16,7 +16,6 @@ public class PlayerMana : MonoBehaviour {
     private float _manaBarFlashTime;
 
     private Player _player;
-    public Text ManaText;
     private int _currentMana;
     private float _rechargeTimer = 0;
     private HudBarController _controller;
@@ -34,7 +33,6 @@ public class PlayerMana : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _player = GetComponent<Player>();
-        ManaText = GameObject.Find("ManaText").GetComponent<Text>();
         _controller = GameObject.Find("HudMana").GetComponent<HudBarController>();
         _manabar = GameObject.Find("HudMana").GetComponent<Image>();
         _manaBarOriginalColor = _manabar.color;
@@ -74,7 +72,6 @@ public class PlayerMana : MonoBehaviour {
     private void UpdateManaDisplay()
     {        
         _controller.Progress = ((float)_currentMana) / ((float)_maxMana);
-        ManaText.text = "Mana: " + (_currentMana / 10).ToString();
 
         if (_flashManaBar)
             FlashManaBar();
