@@ -6,7 +6,7 @@ using UnityEngine;
 public class Vortex : MonoBehaviour
 {
 
-    public int DamagePerSecond = 25;
+    public int DamagePerSecond = 50;
     public float Lifetime = 5f;
 
     private float _damageTickTime = 0;

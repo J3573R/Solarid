@@ -7,7 +7,7 @@ public class AbilityController : MonoBehaviour {
 
     private Player _player;    
     private AbilityBlink _blink;
-    private AbilityBlast _vortex;
+    private AbilityVortex _vortex;
     private AbilityClone _clone;
     private AbilityBase _currentAbility;
     private float _abilityIndex;
@@ -24,7 +24,7 @@ public class AbilityController : MonoBehaviour {
     {
         _player = GetComponent<Player>();
         _blink = GetComponent<AbilityBlink>();
-        _vortex = GetComponent<AbilityBlast>();
+        _vortex = GetComponent<AbilityVortex>();
         _clone = GetComponent<AbilityClone>();
         _currentAbility = _blink;
         _cooldownDisplay = GameObject.Find("CoolDown").GetComponent<Text>();
