@@ -26,7 +26,6 @@ public class EnemyBase : MonoBehaviour
 
     private Slider _healthBar;
     private bool _showHealth = false;
-    private Vector3 _positionAtLastFrame;
     private Player _player;
 
     // Pull effect for black hole
@@ -48,7 +47,9 @@ public class EnemyBase : MonoBehaviour
         Idle = 0,
         Walk = 1,
         Attack = 2,
-        Death = 3
+        WalkBack = 3,
+        Death = 4
+        
     }
 
     protected EnemyBase.State CurrentState;
@@ -95,21 +96,6 @@ public class EnemyBase : MonoBehaviour
         {
             _pullActive = false;
             Agent.enabled = true;
-        }
-
-        if(Animator != null && CurrentState != State.Attack)
-        {
-            if (_positionAtLastFrame == transform.position)
-            {
-                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
-
-            }
-            else
-            {
-                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
-            }
-
-            _positionAtLastFrame = transform.position;
         }
         
     }
@@ -248,5 +234,10 @@ public class EnemyBase : MonoBehaviour
         }
 
         return target;
+    }
+
+    public void InflictDirectDamage()
+    {
+        Target.GetComponent<Health>().TakeDamage(Damage);
     }
 }

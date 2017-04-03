@@ -15,7 +15,6 @@ public class PlayerHealth : Health {
 
     public override bool TakeDamage(int damage)
     {
-        Debug.Log("ME TAKE DAMAGE");
         Globals.Interact = false;
         if (!IsDead())
         {            
@@ -36,7 +35,6 @@ public class PlayerHealth : Health {
         {
             Die();
         }
-
         return IsDead();
 
         
