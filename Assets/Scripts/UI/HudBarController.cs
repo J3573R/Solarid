@@ -6,9 +6,13 @@ using UnityEngine.UI;
 public class HudBarController : MonoBehaviour {
 
     private Material _bar = null;
+    private Material _secondaryBar = null;
     private Image _barImage = null;
-    [SerializeField]
+    private Image _secondaryBarImage = null;
+    [SerializeField]    
     private GameObject _barGO;
+    [SerializeField]
+    private GameObject _secondarBarGO;
 
     public float Progress
     {
@@ -51,15 +55,20 @@ public class HudBarController : MonoBehaviour {
     {
         if (_secondary > 0)
         {
-            SecondaryProgress = SecondaryProgress - (Time.deltaTime * 0.7f);
+            SecondaryProgress = SecondaryProgress - (Time.deltaTime * 0.4f);
+            
         }
+        Debug.Log("SecondaruProgress = " + _secondary);
     }
 
     void Awake()
     {
         _barImage = _barGO.GetComponent<Image>();
+        _secondaryBarImage = _secondarBarGO.GetComponent<Image>();
+        _secondaryBar = Instantiate(_secondaryBarImage.material);
         _bar = Instantiate(_barImage.material);
         _barImage.material = _bar;
+        _secondaryBarImage.material = _secondaryBar;
         SetBarProgress(Progress);
     }
 
@@ -68,5 +77,8 @@ public class HudBarController : MonoBehaviour {
     {
         _bar.SetFloat("_Progress", __progress);
         _bar.SetFloat("_SegmentTwo", __segmentTwoProgress);
+
+        _secondaryBar.SetFloat("_Progress", __progress);
+        _secondaryBar.SetFloat("_SegmentTwo", __segmentTwoProgress);
     }
 }

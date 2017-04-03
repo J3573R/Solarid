@@ -1,9 +1,10 @@
-﻿Shader "Sprites/CastBar"
+﻿Shader "Sprites/HPBarShader"
 {
 	Properties
 	{
 		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
-		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0
+		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0	
+		_ColorSegmentTwo("Segment 2 progress color", Color) = (1, 1, 1, 1)
 		_Progress("Bar Progress", Float) = 0
 		_SegmentTwo("Second Segment", Float) = 0
 	}
@@ -44,10 +45,11 @@
 	struct v2f
 	{
 		float4 vertex : SV_POSITION;
-		fixed4 color : COLOR;
+		fixed4 color : COLOR;		
 		float2 texcoord : TEXCOORD0;
 	};
 
+	fixed4 _ColorSegmentTwo;
 	float _Progress;
 	float _SegmentTwo;
 
@@ -74,13 +76,12 @@
 
 		if (IN.texcoord.x > _Progress + _SegmentTwo)
 		{
-			//c.rgb = _ColorCastElapsed.rgb;
 			c.rgba = 0;
 		}
-		/*else if (IN.texcoord.x > _Progress)
+		else if (IN.texcoord.x > _Progress)
 		{
 			c.rgb = _ColorSegmentTwo.rgb;
-		}*/
+		}
 
 		return c;
 	}
