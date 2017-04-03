@@ -122,7 +122,7 @@ public class AbilityController : MonoBehaviour {
         bool notExecuted = true;
         if (!_allAbilitiesDisabled)
         {
-            if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldown() <= 0)
+            if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldownProgress() <= 0)
             {
                 if (_player.Mana.HasEnoughMana(_currentAbility.ManaCost))
                 {
@@ -173,13 +173,20 @@ public class AbilityController : MonoBehaviour {
     /// Returns remaining cooldown of the current ability
     /// </summary>
     /// <returns></returns>
-    public float GetCurrentCooldown()
+    public float GetCurrentCooldownProgress()
     {
         if (!_allAbilitiesDisabled)
-            return _currentAbility.GetRemainingCooldown();
+        {
+            float cd = Mathf.Clamp(_currentAbility.GetRemainingCooldown(), 0, 1);
+
+            return cd;
+        }
+            
         else
             return 0;
     }
+
+    
 
     /// <summary>
     /// Returns the Max range of the current ability

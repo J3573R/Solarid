@@ -28,8 +28,7 @@ public class PlayerMana : MonoBehaviour {
 
     private float _lerpTarget;
     private float _lerpStart;
-    private float _lerpTime;
-    
+    private float _lerpTime;    
 
     public int CurrentMana
     {
@@ -59,6 +58,11 @@ public class PlayerMana : MonoBehaviour {
         UpdateManaDisplay();
 	}
 
+    /// <summary>
+    /// Check if player has enough mana for certain ability
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <returns></returns>
     public bool HasEnoughMana(int amount)
     {
         if (amount <= _currentMana)
@@ -81,6 +85,10 @@ public class PlayerMana : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// Timer to stop mana bar flash effect
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator StopFlashing()
     {
         yield return new WaitForSeconds(_manaBarFlashDuration);
@@ -90,12 +98,19 @@ public class PlayerMana : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Update progress of mana bar
+    /// </summary>
     private void UpdateManaDisplay()
     {        
         _controller.Progress = ((float)_currentMana) / ((float)_maxMana);
 
     }
 
+    /// <summary>
+    /// Substract mana from player
+    /// </summary>
+    /// <param name="amount"></param>
     public void SubStractMana(int amount)
     {
         _controller.SecondaryProgress += ((float)amount) / ((float)_maxMana);
@@ -103,12 +118,19 @@ public class PlayerMana : MonoBehaviour {
         CurrentMana = Mathf.Clamp(CurrentMana, 0, _maxMana);
     }
 
+    /// <summary>
+    /// Add x amount of mana for player
+    /// </summary>
+    /// <param name="amount"></param>
     public void AddMana(int amount)
     {
         CurrentMana += amount;
         CurrentMana = Mathf.Clamp(CurrentMana, 0, _maxMana);
     }
 
+    /// <summary>
+    /// Passive recharge for mana
+    /// </summary>
     private void PassiveManaRecharge ()
     {
         if (_rechargeTimer >= _manaRechargeTickTime)
@@ -120,9 +142,12 @@ public class PlayerMana : MonoBehaviour {
             _rechargeTimer += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Changes alpha of the mana bar effect, to visible or inbisible
+    /// </summary>
+    /// <param name="state">true if visible</param>
     internal void FlashManaBar(bool state)
     {
-        Debug.Log("flashing");
         if (state)
         {
             _manaFlashImage.CrossFadeAlpha(1, _manaBarFlashTime, true);
@@ -139,6 +164,11 @@ public class PlayerMana : MonoBehaviour {
         }           
     }
 
+    /// <summary>
+    /// Delay before mana bar flash effect fades again
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
     private IEnumerator FlashDelay(bool state)
     {
         yield return new WaitForSeconds(_manaBarFlashTime);
