@@ -4,7 +4,6 @@
 	{
 		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
 		[MaterialToggle] PixelSnap("Pixel snap", Float) = 0	
-		_ColorSegmentTwo("Segment 2 progress color", Color) = (1, 1, 1, 1)
 		_Progress("Bar Progress", Float) = 0
 		_SegmentTwo("Second Segment", Float) = 0
 	}
@@ -49,7 +48,6 @@
 		float2 texcoord : TEXCOORD0;
 	};
 
-	fixed4 _ColorSegmentTwo;
 	float _Progress;
 	float _SegmentTwo;
 
@@ -80,7 +78,7 @@
 		}
 		else if (IN.texcoord.x > _Progress)
 		{
-			c.rgb = _ColorSegmentTwo.rgb;
+			//c.rgb = _ColorSegmentTwo.rgb;
 		}
 
 		return c;

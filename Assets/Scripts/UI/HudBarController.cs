@@ -58,7 +58,6 @@ public class HudBarController : MonoBehaviour {
             SecondaryProgress = SecondaryProgress - (Time.deltaTime * 0.4f);
             
         }
-        Debug.Log("SecondaruProgress = " + _secondary);
     }
 
     void Awake()
@@ -76,7 +75,7 @@ public class HudBarController : MonoBehaviour {
     private void SetBarProgress(float __progress, float __segmentTwoProgress = 0f)
     {
         _bar.SetFloat("_Progress", __progress);
-        _bar.SetFloat("_SegmentTwo", __segmentTwoProgress);
+        //_bar.SetFloat("_SegmentTwo", __segmentTwoProgress);
 
         _secondaryBar.SetFloat("_Progress", __progress);
         _secondaryBar.SetFloat("_SegmentTwo", __segmentTwoProgress);
