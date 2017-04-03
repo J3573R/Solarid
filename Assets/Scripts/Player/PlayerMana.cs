@@ -13,16 +13,22 @@ public class PlayerMana : MonoBehaviour {
     [SerializeField]
     private int _PassiveRechargeAmount;
     [SerializeField]
+    private float _manaBarFlashDuration;
+    [SerializeField]
     private float _manaBarFlashTime;
 
     private Player _player;
-    public Text ManaText;
     private int _currentMana;
     private float _rechargeTimer = 0;
     private HudBarController _controller;
     private Image _manabar;
+    private Image _manaFlashImage;
     private bool _flashManaBar;
     private Color _manaBarOriginalColor;
+
+    private float _lerpTarget;
+    private float _lerpStart;
+    private float _lerpTime;
     
 
     public int CurrentMana
@@ -34,12 +40,14 @@ public class PlayerMana : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _player = GetComponent<Player>();
-        ManaText = GameObject.Find("ManaText").GetComponent<Text>();
         _controller = GameObject.Find("HudMana").GetComponent<HudBarController>();
         _manabar = GameObject.Find("HudMana").GetComponent<Image>();
+        _manaFlashImage = GameObject.Find("HudNoMana").GetComponent<Image>();
         _manaBarOriginalColor = _manabar.color;
-        AddMana(_maxMana);        
-	}
+        AddMana(_maxMana);
+
+        _manaFlashImage.CrossFadeAlpha(0, 0, true);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -58,26 +66,34 @@ public class PlayerMana : MonoBehaviour {
             return true;
         }
 
-        _flashManaBar = true;
-        StartCoroutine(StopFlashing());
+        if (!_flashManaBar)
+        {
+            _flashManaBar = true;
+            FlashManaBar(true);
+            StartCoroutine(StopFlashing());
+        } else
+        {
+            StopCoroutine(StopFlashing());
+            
+            StartCoroutine(StopFlashing());
+        }
+
         return false;
     }
 
     private IEnumerator StopFlashing()
     {
-        yield return new WaitForSeconds(_manaBarFlashTime);
+        yield return new WaitForSeconds(_manaBarFlashDuration);
+        StopAllCoroutines();
         _flashManaBar = false;
-        _manabar.color = _manaBarOriginalColor;
+        FlashManaBar(false);
 
     }
 
     private void UpdateManaDisplay()
     {        
         _controller.Progress = ((float)_currentMana) / ((float)_maxMana);
-        ManaText.text = "Mana: " + (_currentMana / 10).ToString();
 
-        if (_flashManaBar)
-            FlashManaBar();
     }
 
     public void SubStractMana(int amount)
@@ -104,10 +120,29 @@ public class PlayerMana : MonoBehaviour {
             _rechargeTimer += Time.deltaTime;
     }
 
-    internal void FlashManaBar()
+    internal void FlashManaBar(bool state)
     {
         Debug.Log("flashing");
-        _manabar.color = Color.Lerp(_manaBarOriginalColor, Color.red, Time.deltaTime);
+        if (state)
+        {
+            _manaFlashImage.CrossFadeAlpha(1, _manaBarFlashTime, true);
 
+            if (_flashManaBar)
+                StartCoroutine(FlashDelay(false));
+        }            
+        else
+        {
+            _manaFlashImage.CrossFadeAlpha(0, _manaBarFlashTime, true);
+
+            if (_flashManaBar)
+                StartCoroutine(FlashDelay(true));
+        }           
+    }
+
+    private IEnumerator FlashDelay(bool state)
+    {
+        yield return new WaitForSeconds(_manaBarFlashTime);
+        FlashManaBar(state);
+        
     }
 }
