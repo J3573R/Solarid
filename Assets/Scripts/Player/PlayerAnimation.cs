@@ -48,7 +48,7 @@ public class PlayerAnimation : MonoBehaviour {
 	void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
-        _player = GetComponent<Player>();  
+        _player = GetComponent<Player>();          
     }
 
     private void Update()

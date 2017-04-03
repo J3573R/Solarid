@@ -98,13 +98,11 @@ public class AbilityController : MonoBehaviour {
         {
             _allAbilitiesDisabled = true;
             _cooldownDisplay.enabled = false;
-            _player.Mana.ManaText.enabled = false;
         }
         else
         {
             _allAbilitiesDisabled = false;
             _cooldownDisplay.enabled = true;
-            _player.Mana.ManaText.enabled = true;
         }
             
 
