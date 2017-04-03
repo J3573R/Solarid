@@ -15,18 +15,21 @@ public class PlayerHealth : Health {
 
     public override bool TakeDamage(int damage)
     {
+        Debug.Log("ME TAKE DAMAGE");
         Globals.Interact = false;
         if (!IsDead())
-        {
-            _health -= damage;
-            _controller.SecondaryProgress += ((float)damage) / ((float)_originalHP);
+        {            
+            float secondary = ((float)damage) / ((float)_originalHP);
+            float progress = ((float)_health) / ((float)_originalHP);
 
-            if (_health < damage)
-            {
-                _health = 0;
-            }
-            _controller.Progress = ((float)_health) / ((float)_originalHP);
-            Debug.Log(_controller.Progress);
+            CurrentHealth -= damage;
+
+            if (secondary > progress)
+                secondary = progress;
+
+            progress = ((float)_health) / ((float)_originalHP);
+            _controller.SecondaryProgress += secondary;
+            _controller.Progress = progress;
         }
 
         if (IsDead())
