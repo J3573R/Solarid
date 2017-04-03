@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityBlast : AbilityBase
+public class AbilityVortex : AbilityBase
 {
 
     private Player _player;
@@ -25,7 +25,7 @@ public class AbilityBlast : AbilityBase
 
         if (target != Vector3.zero)
         {
-            target.y = 1;           
+            target.y = 1;
             Instantiate(_blast, target, Quaternion.Euler(90, 0, 0));
             CoolDownRemaining = CoolDown;
         }

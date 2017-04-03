@@ -34,6 +34,7 @@ public class Switch : MonoBehaviour
         _sliderBar.transform.SetParent(GameObject.Find("UI").transform);
         _slider = _sliderBar.GetComponent<Slider>();
         _switchValue = 0;
+        _slider.transform.localScale = new Vector3(1f, 1f, 1f);
         _sliderBar.SetActive(false);
         _platformColliders = TargetDoor.gameObject.GetComponentsInChildren<Collider>();
         ToggleDoorColliders(TargetDoor.Open);
