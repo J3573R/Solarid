@@ -6,10 +6,14 @@ using UnityEngine.AI;
 public class Charger : EnemyBase
 {
     // Attack speed of the enemy
-    public float TimeBetweenAttacks = 1f;
+    public float TimeBetweenAttacks = 0.2f;
 
     // Time after last attack
     public float AttackTimer = 0;
+
+    public ChargerAnimationTracker animTracker;
+
+    private Vector3 _positionAtLastFrame;
 
     protected override void Start()
     {
@@ -19,15 +23,27 @@ public class Charger : EnemyBase
             SetState(EnemyBase.State.Idle);
         }
         StartPosition = transform.position;
+
+        animTracker = GetComponentInChildren<ChargerAnimationTracker>();
     }
 
     protected override void Update()
     {
         base.Update();
-        if(AttackTimer < TimeBetweenAttacks)
+
+        if (Animator != null && CurrentState != State.Attack)
         {
-            AttackTimer += Time.deltaTime;
-        }        
+            if (_positionAtLastFrame == transform.position)
+            {
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
+            }
+            else
+            {
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+            }
+
+            _positionAtLastFrame = transform.position;
+        }
     }
 
     /// <summary>

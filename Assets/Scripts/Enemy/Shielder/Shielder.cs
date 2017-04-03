@@ -14,6 +14,7 @@ public class Shielder : EnemyBase
     public GameObject Shield;
 
     private Vector3 _shieldOffset;
+    private Vector3 _positionAtLastFrame;
 
     protected override void Start()
     {
@@ -26,6 +27,21 @@ public class Shielder : EnemyBase
     protected override void Update()
     {
         base.Update();
+
+        if (Animator != null && CurrentState != State.Attack)
+        {
+            if (_positionAtLastFrame == transform.position)
+            {
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
+            }
+            else
+            {
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+            }
+
+            _positionAtLastFrame = transform.position;
+        }
+
         Shield.transform.position = transform.position + transform.forward; //+ _shieldOffset;
         Shield.transform.rotation = transform.rotation;
 

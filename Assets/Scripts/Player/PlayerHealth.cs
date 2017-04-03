@@ -15,7 +15,6 @@ public class PlayerHealth : Health {
 
     public override bool TakeDamage(int damage)
     {
-        
         Globals.Interact = false;
         if (!IsDead())
         {            
@@ -36,7 +35,6 @@ public class PlayerHealth : Health {
         {
             Die();
         }
-
         return IsDead();
 
         
@@ -53,8 +51,7 @@ public class PlayerHealth : Health {
     }
 
     // Update is called once per frame
-    void Update ()
-    {
-        
-    }
+    void Update () {
+		
+	}
 }

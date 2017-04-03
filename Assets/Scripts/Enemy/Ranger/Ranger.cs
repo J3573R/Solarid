@@ -5,9 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(RangerBulletPool))]
 public class Ranger : EnemyBase
 {
-
     public float ReadyToShoot;
     public RangerBulletPool RangerBulletPool;
+
+
+    private Vector3 _positionAtLastFrame;
+    private float _distanceAtLastFrame;
 
     protected override void Start()
     {
@@ -20,9 +23,41 @@ public class Ranger : EnemyBase
     protected override void Update()
     {
         base.Update();
+
+        if (Animator != null && CurrentState != State.Attack)
+        {
+            if (_positionAtLastFrame == transform.position)
+            {
+                Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Idle);
+            }
+            else
+            {
+                if(CurrentState != State.Move)
+                {
+                    Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+                }
+                else
+                {
+                    float distance = Vector3.Distance(transform.position, Target.transform.position);
+                    if (distance < _distanceAtLastFrame)
+                    {
+                        Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
+                    }
+                    else if (distance > _distanceAtLastFrame)
+                    {
+                        Animator.SetInteger("animState", (int)EnemyBase.AnimationState.WalkBack);
+                    }
+                    _distanceAtLastFrame = distance;
+                }             
+                
+            }
+
+            _positionAtLastFrame = transform.position;
+        }
+
         if (ReadyToShoot > 0)
         {
-            ReadyToShoot = Mathf.Clamp(ReadyToShoot - Time.deltaTime, 0, Mathf.Infinity);
+            ReadyToShoot = ReadyToShoot - Time.deltaTime;
         }
     }
 
@@ -56,5 +91,16 @@ public class Ranger : EnemyBase
                     break;
             }
         }
+    }
+
+    public void Shoot()
+    {
+        GameObject bullet = RangerBulletPool.GetBullet();
+        bullet.transform.position = gameObject.transform.position;
+        bullet.transform.rotation = gameObject.transform.rotation;
+        EnemyBullet b = bullet.GetComponent<EnemyBullet>();
+        b.MyPool = RangerBulletPool;
+        b.Damage = Damage;
+        ReadyToShoot = 2f;
     }
 }
