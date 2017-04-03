@@ -26,7 +26,7 @@ public class RangerMove : EnemyStateBase {
     {
         if (IsNavMeshMoving())
         {
-            Parent.Animator.SetInteger("animState", (int) EnemyBase.AnimationState.Walk);
+            Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
         }
         else if(!Parent.Animator.GetCurrentAnimatorStateInfo(0).IsName("Anubis_Idle"))
         {
@@ -43,22 +43,22 @@ public class RangerMove : EnemyStateBase {
         else if (_parent.ReadyToShoot <= 0)
         {
             Parent.SetState(EnemyBase.State.Attack);
-            _chaseTime += Time.deltaTime;
-
+            
         } else if (_distance > _maxDistance)
         {
+            Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
             Agent.stoppingDistance = _maxDistance;
             Agent.destination = Parent.Target.transform.position;
-            _chaseTime += Time.deltaTime;
             
         }  else if(_distance < _minDistance)
-        {            
+        {
+            Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.WalkBack);
             _direction = (Parent.Target.transform.position - transform.position).normalized;
             Agent.stoppingDistance = 0f;
             Agent.destination = transform.position + -_direction;
-            _chaseTime += Time.deltaTime;
         }
 
+        _chaseTime += Time.deltaTime;
         _direction = (Parent.Target.transform.position - transform.position).normalized;
         _direction.y = 0;
         transform.rotation = Quaternion.LookRotation(_direction);
