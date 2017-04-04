@@ -4,10 +4,6 @@ using UnityEngine;
 
 public abstract class AbilityBase : MonoBehaviour {
 
-    // Cooldown of the skill
-    public float CoolDown;
-    // Remaining cooldown
-    public float CoolDownRemaining;
     // Max range, set in editor
     public float MaxRange;
     // Mana cost of the ability
@@ -17,23 +13,6 @@ public abstract class AbilityBase : MonoBehaviour {
     /// Tries to execute the ability
     /// </summary>
     public abstract void Execute(Vector3 targetPos);
-
-    /// <summary>
-    /// Returns remaining cooldown
-    /// </summary>
-    /// <returns>Obvious isn't it...?</returns>
-    public float GetRemainingCooldown()
-    {
-        return CoolDownRemaining;
-    }
-
-    public virtual void Update()
-    {
-        if (CoolDownRemaining >= 0)
-        {
-            CoolDownRemaining -= Time.deltaTime;
-        }
-    }
 
     /// <summary>
     /// Returns Max range of the skill

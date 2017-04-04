@@ -23,7 +23,6 @@ public class AbilityGrenade : AbilityBase {
                 _grenadeScript.targetPosition = target;
                 _grenadeScript.ResetPosition(transform);
                 _grenadeScript.Throw();
-                CoolDownRemaining = CoolDown;
             }
         
 

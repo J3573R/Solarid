@@ -13,7 +13,6 @@ public class AbilityConfusion : AbilityBase
     /// </summary>
     public override void Execute(Vector3 targetPos)
     {
-        CoolDownRemaining = CoolDown;
         //TODO: Cooldown/mana stuff needed, for all abilities
     }
     

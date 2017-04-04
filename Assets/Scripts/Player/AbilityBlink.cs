@@ -38,9 +38,7 @@ public class AbilityBlink : AbilityBase {
         _player.Animation.CastOnce = true;
         StartCoroutine(CastDelay());
         _targetPosition.y = 0;
-        _startParticle.transform.position = transform.position;
-        CoolDownRemaining = CoolDown;            
-                          
+        _startParticle.transform.position = transform.position;                          
     }
 
     /// <summary>

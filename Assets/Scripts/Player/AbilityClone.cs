@@ -41,7 +41,5 @@ public class AbilityClone : AbilityBase {
                 break;
             }
         }
-
-        CoolDownRemaining = CoolDown;
     }
 }

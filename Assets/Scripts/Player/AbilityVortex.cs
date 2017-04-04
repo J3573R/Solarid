@@ -27,11 +27,8 @@ public class AbilityVortex : AbilityBase
         {
             target.y = 1;
             Instantiate(_blast, target, Quaternion.Euler(90, 0, 0));
-            CoolDownRemaining = CoolDown;
         }
 
-
-        //TODO: Cooldown/mana stuff needed, for all abilities
     }
     
 }

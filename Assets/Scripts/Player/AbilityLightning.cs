@@ -43,7 +43,6 @@ public class AbilityLightning : AbilityBase
             _blast.transform.position = transform.position;
             _bolt.TargetEnemy = closestEnemy;
             _blast.SetActive(true);
-            CoolDownRemaining = CoolDown;
         }
 
         //TODO: Cooldown/mana stuff needed, for all abilities

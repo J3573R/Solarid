@@ -5,15 +5,19 @@ using UnityEngine.UI;
 
 public class AbilityController : MonoBehaviour {
 
+    [SerializeField]
+    private float _maxCooldown;
+
+    private float _currentCooldown;
     private Player _player;    
     private AbilityBlink _blink;
     private AbilityVortex _vortex;
     private AbilityClone _clone;
     private AbilityBase _currentAbility;
     private float _abilityIndex;
-    private Text _cooldownDisplay;
     private RangeCheck _rangeCheck;    
-    private int _maxAbilityIndex;    
+    private int _maxAbilityIndex;
+    private HudController _hudController;
 
     public bool _allAbilitiesDisabled;
     public float CastDelayInSeconds;
@@ -27,7 +31,8 @@ public class AbilityController : MonoBehaviour {
         _vortex = GetComponent<AbilityVortex>();
         _clone = GetComponent<AbilityClone>();
         _currentAbility = _blink;
-        _cooldownDisplay = GameObject.Find("CoolDown").GetComponent<Text>();
+        _hudController = FindObjectOfType<HudController>();
+        _hudController.init();
         _rangeCheck = FindObjectOfType<RangeCheck>();
 
         if (SaveSystem.Instance.SaveData != null)
@@ -52,6 +57,14 @@ public class AbilityController : MonoBehaviour {
         Clone = 2
     }
 
+    private void Update()
+    {
+        if (_currentCooldown > 0)
+        {
+            _currentCooldown -= Time.deltaTime;
+        }
+    }
+
     /// <summary>
     /// Enables or disables ability in the controller, can be used in runtime
     /// </summary>
@@ -74,12 +87,14 @@ public class AbilityController : MonoBehaviour {
         if (AbilityArray[Ability.Blink])
         {
             _blink.enabled = true;
+            _hudController.EnableSmallIcon(Ability.Blink);
             tmpIndex += 1;
         }
         else
             _blink.enabled = false;
         if (AbilityArray[Ability.Vortex])
         {
+            _hudController.EnableSmallIcon(Ability.Vortex);
             _vortex.enabled = true;
             tmpIndex += 1;
         }
@@ -88,6 +103,7 @@ public class AbilityController : MonoBehaviour {
 
         if (AbilityArray[Ability.Clone])
         {
+            _hudController.EnableSmallIcon(Ability.Clone);
             _clone.enabled = true;
             tmpIndex += 1;
         }
@@ -96,15 +112,13 @@ public class AbilityController : MonoBehaviour {
 
         if (tmpIndex == 0)
         {
+            _hudController.AllAbilitesDisabled(true);
             _allAbilitiesDisabled = true;
-            _cooldownDisplay.enabled = false;
         }
         else
         {
             _allAbilitiesDisabled = false;
-            _cooldownDisplay.enabled = true;
-        }
-            
+        }            
 
         if (tmpIndex> 0)
         {
@@ -164,6 +178,7 @@ public class AbilityController : MonoBehaviour {
                     }
 
                     _player.Mana.SubStractMana(_currentAbility.ManaCost);
+                    _currentCooldown = _maxCooldown;
                 }
             }
         }        
@@ -177,16 +192,14 @@ public class AbilityController : MonoBehaviour {
     {
         if (!_allAbilitiesDisabled)
         {
-            float cd = Mathf.Clamp(_currentAbility.GetRemainingCooldown(), 0, 1);
+            float cd = Mathf.Clamp(_currentCooldown, 0, 1);
 
             return cd;
         }
             
         else
             return 0;
-    }
-
-    
+    }    
 
     /// <summary>
     /// Returns the Max range of the current ability
@@ -221,6 +234,8 @@ public class AbilityController : MonoBehaviour {
             _currentAbility = _clone;
             _abilityIndex = 2;
         }
+
+        _hudController.ChangeImage(tmp);
     }
 
     /// <summary>
@@ -256,33 +271,4 @@ public class AbilityController : MonoBehaviour {
             _rangeCheck.DrawRange(1f, false);       
     }
 
-    private void Update()
-    {
-        DisplayCooldown();        
-    }
-
-    /// <summary>
-    /// Gets current abilitys cooldown and displays it. "Ready" if no cooldown remaining
-    /// </summary>
-    private void DisplayCooldown()
-    {
-        int tmp = (int)_currentAbility.GetRemainingCooldown();
-        string name = "";
-
-        if (_currentAbility == _blink)
-            name = "Blink: ";
-        if (_currentAbility == _vortex)
-            name = "Vortex: ";
-        if (_currentAbility == _clone)
-            name = "Clone: ";
-
-        if (tmp <= 0)
-        {
-            _cooldownDisplay.text = name + "Ready";
-        }
-        else
-        {
-            _cooldownDisplay.text = name + tmp.ToString();
-        }
-    }
 }
