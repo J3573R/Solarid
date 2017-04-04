@@ -122,7 +122,6 @@ public class PlayerMana : MonoBehaviour {
 
     internal void FlashManaBar(bool state)
     {
-        Debug.Log("flashing");
         if (state)
         {
             _manaFlashImage.CrossFadeAlpha(1, _manaBarFlashTime, true);
