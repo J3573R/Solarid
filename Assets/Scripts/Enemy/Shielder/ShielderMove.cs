@@ -37,7 +37,6 @@ public class ShielderMove : EnemyStateBase
         _step = _rotationSpeed * Time.deltaTime;
         _newDirection = Vector3.RotateTowards(transform.forward, _targetDirection, _step, 0.0F);
         transform.rotation = Quaternion.LookRotation(_newDirection);
-        _targetDirection = Parent.Target.transform.position - transform.position;        
 
         // Based on distance, ether attack the player or change to idle state
         _distance = Vector3.Distance(transform.position, Parent.Target.transform.position);
