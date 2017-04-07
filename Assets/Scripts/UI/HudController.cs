@@ -16,6 +16,7 @@ public class HudController : MonoBehaviour {
     private Sprite _cloneSprite;
 
     private GameObject _selectedSkill;
+    private Gun _playerGun;
     private Image _smallBlink;
     private Image _smallVortex;
     private Image _smallClone;
@@ -23,6 +24,7 @@ public class HudController : MonoBehaviour {
     private Image _cooldownImage;
     private Material _cooldownMaterial;
     private bool _initDone = false;
+    private Text _bulletText;
 
     // Use this for initialization
     void Start () {
@@ -39,7 +41,9 @@ public class HudController : MonoBehaviour {
             _smallBlink = GameObject.Find("BlinkSmall").GetComponent<Image>();
             _smallVortex = GameObject.Find("VortexSmall").GetComponent<Image>();
             _smallClone = GameObject.Find("CloneSmall").GetComponent<Image>();
+            _bulletText = GameObject.Find("BulletsRemaining").GetComponent<Text>();
             _selectedSkill = GameObject.Find("SelectedSkill");
+            _playerGun = Globals.Player.GetComponent<Player>().Gun;
 
             _smallBlink.enabled = false;
             _smallClone.enabled = false;
@@ -58,6 +62,20 @@ public class HudController : MonoBehaviour {
         progress = 1 - progress;
 
         _cooldownMaterial.SetFloat("_Progress", progress);
+
+        UpdateBulletCount();
+    }
+
+    private void UpdateBulletCount()
+    {
+        if (!_playerGun.Reloading)
+        {
+            String tmp = (_playerGun.BulletsRemaining + " / " + _playerGun.ClipSize);
+            _bulletText.text = tmp;
+        } else
+        {
+            _bulletText.text = "Reloading";
+        }
     }
 
     /// <summary>

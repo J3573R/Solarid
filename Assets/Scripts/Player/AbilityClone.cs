@@ -33,7 +33,7 @@ public class AbilityClone : AbilityBase {
 
         foreach(var clone in Clones)
         {
-            if (!clone.activeInHierarchy)
+            if (clone != null && !clone.activeInHierarchy)
             {
                 _targetPosition.y = 0;
                 clone.transform.position = _targetPosition;

@@ -222,7 +222,7 @@ public class EnemyBase : MonoBehaviour
 
         foreach (var clone in _player.Clones)
         {
-            if (clone.activeInHierarchy)
+            if (clone != null && clone.activeInHierarchy)
             {
                 float distance = Vector3.Distance(transform.position, clone.transform.position);
                 if (distance < targetDistance)
