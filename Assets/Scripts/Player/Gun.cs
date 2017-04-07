@@ -77,13 +77,10 @@ public class Gun : MonoBehaviour
             _reload -= Time.deltaTime * 1;
         }
 
-        if (Shooting)
+        if (!Shooting && _recoil > 0)
         {
-            ShootingTime += Time.deltaTime;
-           if (_recoil < MaxRecoil)
-            {
-                _recoil += RecoilBuildUp;
-            }
+            _recoil -= Time.deltaTime / 2;
+           
         }        
     }
 
@@ -101,18 +98,23 @@ public class Gun : MonoBehaviour
                     _target = GetTargetPosition();
                     _bullets[i].transform.position = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);                    
                     _target.y = 1.5f;
-                    //Debug.Log(_target);
                     _bullets[i].transform.LookAt(_target);
                     _bullets[i].SetActive(true);
                     break;
                 }
             }
             _reload = Reload;
+
+            if (_recoil < MaxRecoil)
+            {
+                Debug.Log("Moar recoil");
+                _recoil += RecoilBuildUp;
+            }
         }        
     }
 
     /// <summary>
-    /// Searches object pool for inactive bullet and fires it
+    /// Shoot function for the clone. Shoots the direction of the vector from transform.
     /// </summary>
     public void ShootDirection(Vector3 direction)
     {
@@ -149,11 +151,24 @@ public class Gun : MonoBehaviour
 
         Vector3 direction = (tmpVec - PlayerPos).normalized;
         //Debug.Log(direction);
-
-        //float tmp = UnityEngine.Random.Range(-_recoil, _recoil);
-        //Debug.Log(tmp);
+        
+        float tmp = UnityEngine.Random.Range(-_recoil, _recoil);
+        Debug.Log(tmp);
         //Vector3 vec = Quaternion.AngleAxis(tmp, Vector3.forward) * direction;
+        Vector3 tmpPos = transform.position + direction * TargetDistance;
+        Vector3 recoilPos = tmpPos;
+        recoilPos.x += tmp;
+        tmp = UnityEngine.Random.Range(-_recoil, _recoil);
+        recoilPos.z += tmp;
+        Vector3 tmpGun = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);
+        Debug.DrawLine(tmpGun, recoilPos, Color.green, 2);
 
-        return transform.position + direction * TargetDistance;
+        
+
+        //Vector3 tmpDebug = tmpPos.
+
+        
+
+        return recoilPos;
     }
 }
