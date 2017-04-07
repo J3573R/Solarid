@@ -5,33 +5,39 @@ using UnityEngine;
 public class ManaGlobe : MonoBehaviour {
 
     public float MaxSpeed;
+    public float Speed;
 
     private Vector3 _moveDirection;
-    private float _speed = -2;
+    private float _speed = -5;
+    private Vector3 _moveToPoint;
 
     void Awake()
     {
-        _moveDirection = new Vector3(Random.Range(0, 100), Random.Range(0, 100), Random.Range(0, 100)).normalized;
+        _moveDirection = new Vector3(Random.Range(-100, 100), Random.Range(0, 100), Random.Range(-100, 100)).normalized;
     }
 	
 	void FixedUpdate () {
+
         if(_speed < 0)
         {
-            transform.position = Vector3.Lerp(transform.position, transform.position + -_moveDirection * _speed, Time.deltaTime);
+            _moveToPoint = transform.position + -_moveDirection * _speed;
         } else
         {
-            transform.position = Vector3.Lerp(transform.position, transform.position + _moveDirection * _speed, Time.deltaTime);
-        }        
+            _moveToPoint = transform.position + _moveDirection * _speed;
+            _moveToPoint.y = 0.5f;            
+        }
 
-        if(_speed > 0)
+        transform.position = Vector3.Lerp(transform.position, _moveToPoint, Time.deltaTime);
+
+        if (_speed > 0)
         {
             _moveDirection = Globals.Player.transform.position - transform.position;
-            _moveDirection = _moveDirection.normalized;
+            _moveDirection = _moveDirection.normalized;            
         }
 
         if(_speed < MaxSpeed)
         {
-            _speed += Time.deltaTime;
+            _speed += Time.deltaTime * Speed;
         }
 	}
 
