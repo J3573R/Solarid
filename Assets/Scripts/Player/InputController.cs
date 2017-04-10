@@ -25,6 +25,7 @@ public class InputController : MonoBehaviour
         {
             _player = GetComponent<Player>();
             _camera = FindObjectOfType<Camera>();
+            //Globals.CameraScript.Init();
             PlayerAnimation = FindObjectOfType<PlayerAnimation>();
             Globals.InputController = this;
             Initialized = true;

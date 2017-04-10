@@ -16,6 +16,7 @@ public class StateOptions : GameStateBase
         _buttonBack = GameObject.Find("ButtonBack").GetComponent<Button>();
 
         _buttonBack.onClick.AddListener(PressBack);
+        GameStateManager.Instance.FadeScreenToVisible(1);
 
     }
 

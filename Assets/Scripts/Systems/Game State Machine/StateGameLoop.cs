@@ -20,6 +20,7 @@ public class StateGameLoop : GameStateBase
 
     protected override void Awake()
     {
+        Globals.CameraScript = FindObjectOfType<CameraFollow>();
         base.Awake();
         LevelName = SceneManager.GetActiveScene().name;
         GitGud = GameObject.Find("UI/Git_gud").GetComponent<Text>();
@@ -39,7 +40,6 @@ public class StateGameLoop : GameStateBase
     void Start()
     {
         Player = Globals.Player.GetComponent<Player>();
-        _hud.FadeScreenToVisible();
     }
 
     protected override void Update()
@@ -54,10 +54,9 @@ public class StateGameLoop : GameStateBase
 
         if (CameraReady && PlayerReady && CameraReady && !_gameInitialized)
         {
-            _hud.FadeScreenToVisible();
+            GameStateManager.Instance.FadeScreenToVisible(2);
             Globals.Paused = false;
             _gameInitialized = true;
-            Debug.Log("AllReady");
         }
     }
 

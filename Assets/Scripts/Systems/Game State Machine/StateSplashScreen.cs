@@ -11,7 +11,8 @@ public class StateSplashScreen : GameStateBase {
     protected override void Awake()
     {
         base.Awake();
-        LevelName = "SplashScreen";        
+        LevelName = "SplashScreen";
+        GameStateManager.Instance.FadeScreenToVisible(1);
     }
 
 

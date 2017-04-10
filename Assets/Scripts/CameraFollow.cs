@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour
     public Vector3 CameraOffset = new Vector3(0, 10, -5);
 
     public Vector3 MouseOffset = Vector3.zero;
+    public bool Initialized = false;
 
     // Players gameobject
     private GameObject _player;
@@ -19,37 +20,61 @@ public class CameraFollow : MonoBehaviour
     private float shakeDuration = 0;
     private float originalShakeDuration;
 
-    void Awake()
+
+    public void Init()
     {
-        _player = GameObject.Find("Player");
-        Globals.CameraScript = this;
-    }
+        if (!Initialized)
+        {           
+            _player = GameObject.Find("Player");
+            Globals.CameraScript = this;
+            transform.position = _player.transform.position + CameraOffset;
+            Initialized = true;
+            if (Globals.GameLoop == null)
+            {
+                Debug.Log("Null");
+            }
+            Globals.GameLoop.CameraReady = true;
+        }
+        
+    } 
 
     void Update()
     {
-        if (shake)
+        if (!Initialized && Globals.GameLoop != null)
         {
-            if(shakeDuration > 0)
-            {
-                _vCurPos = _player.transform.position + CameraOffset;
-                var time = Time.smoothDeltaTime * CameraDelay;
-                _vCurPos = Vector3.Lerp(transform.position, _vCurPos + MouseOffset, time);
-                transform.position = _vCurPos + Random.insideUnitSphere * Mathf.Lerp(0, shakeAmount, shakeDuration / originalShakeDuration);                
-            }
-            else
-            {
-                shake = false;
-            }
-            shakeDuration -= Time.deltaTime;
+            Init();
         }
+
+        if (Initialized) {
+            if (shake)
+            {
+                if (shakeDuration > 0)
+                {
+                    _vCurPos = _player.transform.position + CameraOffset;
+                    var time = Time.smoothDeltaTime * CameraDelay;
+                    _vCurPos = Vector3.Lerp(transform.position, _vCurPos + MouseOffset, time);
+                    transform.position = _vCurPos + Random.insideUnitSphere * Mathf.Lerp(0, shakeAmount, shakeDuration / originalShakeDuration);
+                }
+                else
+                {
+                    shake = false;
+                }
+                shakeDuration -= Time.deltaTime;
+            }
+        }
+        
     }
 
     void FixedUpdate()
     {
-        _vCurPos = _player.transform.position + CameraOffset;
-        var time = Time.smoothDeltaTime * CameraDelay * 2;
-        _vCurPos = Vector3.Lerp(transform.position, _vCurPos + MouseOffset, time);
-        transform.position = _vCurPos;
+        if (Initialized)
+        {
+            _vCurPos = _player.transform.position + CameraOffset;
+            var time = Time.smoothDeltaTime * CameraDelay * 2;
+            _vCurPos = Vector3.Lerp(transform.position, _vCurPos + MouseOffset, time);
+            transform.position = _vCurPos;
+        }
+        
         /*if(MouseOffset == Vector3.zero)
         {
             _vCurPos = _player.transform.position + CameraOffset;

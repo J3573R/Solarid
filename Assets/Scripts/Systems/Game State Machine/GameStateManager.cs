@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
@@ -36,6 +38,7 @@ public class GameStateManager : MonoBehaviour
         GameLoop
     }
 
+    private Image _blackScreen;
     public GameStateBase CurrentState;
 
     // Current game state
@@ -62,14 +65,21 @@ public class GameStateManager : MonoBehaviour
         Destroy(_gameStateObj);
         if (scene != null)
         {
-            _gameState = state;
-            SceneManager.sceneLoaded += sceneLoaded;
-            SceneManager.LoadScene(scene);
+            FadeScreenToBlack(1);
+            StartCoroutine(SceneDelay(1, state, scene));            
         }
         else
         {
             SetState(state);
         }
+    }
+
+    private IEnumerator SceneDelay(float howLong, GameState state, string scene = null)
+    {
+        yield return new WaitForSeconds(howLong);
+        _gameState = state;
+        SceneManager.sceneLoaded += sceneLoaded;
+        SceneManager.LoadScene(scene);
     }
 
     /// <summary>
@@ -81,6 +91,9 @@ public class GameStateManager : MonoBehaviour
         {
             SetState(_gameState);
         }
+
+        _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+        _blackScreen.enabled = true;
     }
 
     /// <summary>
@@ -121,5 +134,40 @@ public class GameStateManager : MonoBehaviour
     {
         SetState(_gameState);
         SceneManager.sceneLoaded -= sceneLoaded;
+    }
+
+    /// <summary>
+    /// Fades the screen to black
+    /// </summary>
+    public void FadeScreenToBlack(float time)
+    {        
+        if (_blackScreen != null)
+        {
+            _blackScreen.CrossFadeAlpha(1, time, true);
+        }
+        else
+        {
+            _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+            _blackScreen.enabled = true;
+        }
+
+    }
+
+    /// <summary>
+    /// Fades the screen to visible
+    /// </summary>
+    public void FadeScreenToVisible(float time)
+    {
+        if (_blackScreen != null)
+        {
+            Debug.Log("Feidaa");
+            _blackScreen.CrossFadeAlpha(0, time, true);
+        }
+        else
+        {
+            _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+            _blackScreen.enabled = true;
+            _blackScreen.CrossFadeAlpha(0, time, true);
+        }
     }
 }
