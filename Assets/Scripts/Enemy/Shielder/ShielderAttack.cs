@@ -12,6 +12,7 @@ public class ShielderAttack : EnemyStateBase
     protected override void Start()
     {
         base.Start();
+        Parent.AttackTarget = Parent.Target;
         eState = EnemyBase.State.Idle;
         _charger = (Shielder)Parent;
     }

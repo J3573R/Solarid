@@ -15,6 +15,7 @@ public class EnemyBase : MonoBehaviour
     public float RangeToAlert = 1;
     public float ChaseTime = 3;
     public GameObject Target;
+    public GameObject AttackTarget;
 
     // Changes enemy state to alert when distance is smaller than this
     public int AlertDistance = 5;
@@ -258,6 +259,9 @@ public class EnemyBase : MonoBehaviour
 
     public void InflictDirectDamage()
     {
-        Target.GetComponent<Health>().TakeDamage(Damage);
+        if (Target.Equals(AttackTarget))
+        {
+            Target.GetComponent<Health>().TakeDamage(Damage);
+        }
     }
 }
