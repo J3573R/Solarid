@@ -24,6 +24,7 @@ public class RangerMove : EnemyStateBase {
 
     protected override void Update()
     {
+        base.Update();
         if (IsNavMeshMoving())
         {
             Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);

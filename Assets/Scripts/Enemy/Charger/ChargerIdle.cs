@@ -29,6 +29,7 @@ public class ChargerIdle : EnemyStateBase
 
     protected override void Update()
     {
+        base.Update();
         Patrol();
         ChangeToAlert();
         if(Parent.IsNavMeshMoving() && !Idling)

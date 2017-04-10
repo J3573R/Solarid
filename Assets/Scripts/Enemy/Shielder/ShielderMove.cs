@@ -30,6 +30,7 @@ public class ShielderMove : EnemyStateBase
 
     protected override void Update()
     {
+        base.Update();
         _followTime += Time.deltaTime;
         
         Agent.destination = Parent.Target.transform.position;

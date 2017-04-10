@@ -18,6 +18,7 @@ public class RangerAlert : EnemyStateBase {
 
     protected override void Update()
     {
+        base.Update();
         LookTarget();
         ChangeToMove();
     }

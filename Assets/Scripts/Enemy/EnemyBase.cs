@@ -23,7 +23,7 @@ public class EnemyBase : MonoBehaviour
     // Changes enemy state to idle when distance is bigger than this
     public int DisengageDistance = 7;
 
-    protected bool Initialized = false;
+    public bool Initialized = false;
 
     protected NavMeshAgent Agent;
 
@@ -84,6 +84,7 @@ public class EnemyBase : MonoBehaviour
         _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         _healthBar.maxValue = Health.CurrentHealth;
         _healthBar.gameObject.SetActive(false);
+        Target = GetClosestTarget();
     }
 
     protected virtual void Update()
@@ -118,7 +119,6 @@ public class EnemyBase : MonoBehaviour
             _pullActive = false;
             Agent.enabled = true;
         }
-        
     }
 
     /// <summary>
@@ -173,6 +173,7 @@ public class EnemyBase : MonoBehaviour
         }
         _healthBar.gameObject.SetActive(false);
         Globals.ManaExplosion.Explode(transform.position);
+        CurrentStateObject.gameObject.SetActive(false);
         Destroy(gameObject);
     }
 

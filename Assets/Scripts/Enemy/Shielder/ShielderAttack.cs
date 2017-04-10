@@ -19,6 +19,7 @@ public class ShielderAttack : EnemyStateBase
 
     protected override void Update()
     {
+        base.Update();
         _distance = Vector3.Distance(transform.position, Parent.Target.transform.position);
 
         // If distance is bigger than 2 change back to move, else attack
