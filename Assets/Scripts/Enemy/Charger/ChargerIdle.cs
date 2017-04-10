@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 public class ChargerIdle : EnemyStateBase
 {
-
-    private Charger _parent;
     private float _timeToWalk;
     private bool Idling;
 
@@ -15,16 +13,6 @@ public class ChargerIdle : EnemyStateBase
         eState = EnemyBase.State.Idle;
         _timeToWalk = 0;
         Agent.speed = 3.5f;
-
-        try
-        {
-            _parent = (Charger) Parent;
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Parent was not Charger in ChargerIdle: " + e.Message);
-        }
-        
     }
 
     protected override void Update()

@@ -8,10 +8,13 @@ public class StateGameLoop : GameStateBase
 {
     public Text GitGud;
     public Player Player;
+    public GameLoopReferences References = new GameLoopReferences();
     public bool EnemiesReady;
     public bool PlayerReady;
     public bool CameraReady;
+    public bool Paused;
 
+    private InputController InputController;
     private bool _gameInitialized;
     private Camera _camera;
     private HudController _hud;
@@ -38,8 +41,10 @@ public class StateGameLoop : GameStateBase
 
     void Start()
     {
-        Player = Globals.Player.GetComponent<Player>();
+        Player = GameObject.FindObjectOfType<Player>();
+        InputController = Player.GetComponent<InputController>();
         _hud.FadeScreenToVisible();
+        References.Init();
     }
 
     protected override void Update()
@@ -48,14 +53,14 @@ public class StateGameLoop : GameStateBase
         {                        
             _dying = true;
             GitGud.gameObject.SetActive(true);
-            Globals.InputController.ListenInput = false;
+            InputController.ListenInput = false;
             StartCoroutine(Die());
         }
 
         if (CameraReady && PlayerReady && CameraReady && !_gameInitialized)
         {
             _hud.FadeScreenToVisible();
-            Globals.Paused = false;
+            Paused = true;
             _gameInitialized = true;
             Debug.Log("AllReady");
         }

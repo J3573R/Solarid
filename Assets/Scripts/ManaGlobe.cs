@@ -32,7 +32,7 @@ public class ManaGlobe : MonoBehaviour {
 
         if (_speed > 0)
         {
-            _moveDirection = Globals.Player.transform.position - transform.position;
+            _moveDirection = GameStateManager.Instance.GameLoop.Player.gameObject.transform.position - transform.position;
             _moveDirection = _moveDirection.normalized;            
         }
 
@@ -44,7 +44,7 @@ public class ManaGlobe : MonoBehaviour {
     
     void ReturnToPool()
     {
-        Globals.ManaExplosion.AddToPool(gameObject);
+        GameStateManager.Instance.GameLoop.References.ManaExplosion.AddToPool(gameObject);
     }
 
     void OnTriggerEnter(Collider other)

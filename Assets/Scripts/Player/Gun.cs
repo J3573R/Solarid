@@ -26,8 +26,7 @@ public class Gun : MonoBehaviour
     public float MaxRecoil;
     public bool Shooting;
     public bool Reloading;
-
-    private float ShootingTime;
+    
     private float _recoil;
     private Player _player;
     private Vector3 _target;
@@ -80,7 +79,6 @@ public class Gun : MonoBehaviour
         if (state)
         {
             Shooting = state;
-            ShootingTime = 0;
         }
         else
         {

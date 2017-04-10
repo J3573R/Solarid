@@ -16,15 +16,12 @@ public class PlayerMana : MonoBehaviour {
     private float _manaBarFlashDuration;
     [SerializeField]
     private float _manaBarFlashTime;
-
-    private Player _player;
+    
     private int _currentMana;
     private float _rechargeTimer = 0;
     private HudBarController _controller;
-    private Image _manabar;
     private Image _manaFlashImage;
     private bool _flashManaBar;
-    private Color _manaBarOriginalColor;
 
     private float _lerpTarget;
     private float _lerpStart;
@@ -46,14 +43,11 @@ public class PlayerMana : MonoBehaviour {
     {
         if (!Initialized)
         {
-            _player = GetComponent<Player>();
             _controller = GameObject.Find("HudMana").GetComponent<HudBarController>();
-            _manabar = GameObject.Find("HudMana").GetComponent<Image>();
             _manaFlashImage = GameObject.Find("HudNoMana").GetComponent<Image>();
-            _manaBarOriginalColor = _manabar.color;
             AddMana(_maxMana);
             _manaFlashImage.CrossFadeAlpha(0, 0, true);
-            Initialized = true;
+            Initialized = true; 
         }
     }
 

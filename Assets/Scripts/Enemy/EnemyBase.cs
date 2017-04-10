@@ -76,8 +76,8 @@ public class EnemyBase : MonoBehaviour
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
-        if (Globals.Player != null)
-            _player = Globals.Player.GetComponent<Player>();
+        if (GameStateManager.Instance.GameLoop.Player.gameObject != null)
+            _player = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<Player>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
@@ -91,7 +91,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (!Initialized)
         {
-            if (Globals.GameLoop.PlayerReady)
+            if (GameStateManager.Instance.GameLoop.PlayerReady)
             {
                 Init();
             }
@@ -153,10 +153,9 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == "PlayerBullet")
         {
-            TakeDamage(Globals.PlayerDamage);            
+            TakeDamage(_player.Damage);            
         }
     }
 
@@ -172,7 +171,7 @@ public class EnemyBase : MonoBehaviour
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
         _healthBar.gameObject.SetActive(false);
-        Globals.ManaExplosion.Explode(transform.position);
+        GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position);
         CurrentStateObject.gameObject.SetActive(false);
         Destroy(gameObject);
     }
@@ -239,7 +238,7 @@ public class EnemyBase : MonoBehaviour
 
     public GameObject GetClosestTarget()
     {
-        GameObject target = Globals.Player;
+        GameObject target = GameStateManager.Instance.GameLoop.Player.gameObject.gameObject;
         float targetDistance = Vector3.Distance(transform.position, target.transform.position);
 
         foreach (var clone in _player.Clones)

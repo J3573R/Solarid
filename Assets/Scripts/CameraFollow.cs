@@ -22,7 +22,6 @@ public class CameraFollow : MonoBehaviour
     void Awake()
     {
         _player = GameObject.Find("Player");
-        Globals.CameraScript = this;
     }
 
     void Update()

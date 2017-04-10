@@ -30,7 +30,7 @@ public class AbilityLightning : AbilityBase
             EnemyBase tmp = enemy.gameObject.GetComponent<EnemyBase>();
             if (tmp != null)
             {
-                var dist = Vector3.Distance(Globals.Player.transform.position, tmp.gameObject.transform.position);
+                var dist = Vector3.Distance(GameStateManager.Instance.GameLoop.Player.gameObject.transform.position, tmp.gameObject.transform.position);
                 if (dist < distance)
                 {
                     closestEnemy = tmp;

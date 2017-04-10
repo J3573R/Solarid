@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class ShielderAttack : EnemyStateBase
 {
-    // Time between damage ticks to player
-    
     private float _distance;
-    private Shielder _charger;
 
     protected override void Start()
     {
         base.Start();
         Parent.AttackTarget = Parent.Target;
         eState = EnemyBase.State.Idle;
-        _charger = (Shielder)Parent;
     }
 
     protected override void Update()

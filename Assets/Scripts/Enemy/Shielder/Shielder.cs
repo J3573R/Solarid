@@ -12,8 +12,7 @@ public class Shielder : EnemyBase
     public float AttackTimer = 0;
 
     public GameObject Shield;
-
-    private Vector3 _shieldOffset;
+    
     private Vector3 _positionAtLastFrame;
 
     protected override void Init()
@@ -21,7 +20,6 @@ public class Shielder : EnemyBase
         base.Init();
         SetState(EnemyBase.State.Idle);
         StartPosition = transform.position;
-        _shieldOffset = Shield.transform.position - transform.position;
         Initialized = true;
     }
 

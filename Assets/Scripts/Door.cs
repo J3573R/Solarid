@@ -40,7 +40,7 @@ public class Door : MonoBehaviour
             _startPosition = transform.position;
             _open = !_open;
             _state = 0;
-            Globals.CameraScript.Harlem(0.2f, 2f);
+            GameStateManager.Instance.GameLoop.References.CameraScript.Harlem(0.2f, 2f);
             _moving = true;
             return true;
         }
