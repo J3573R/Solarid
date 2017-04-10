@@ -34,19 +34,22 @@ public class EnemyStateBase : MonoBehaviour
     /// </summary>
     protected void ChangeToAlert()
     {
-        _distance = Vector3.Distance(transform.position, Parent.Target.transform.position);
+        if(Parent.Target != null)
+        {
+            _distance = Vector3.Distance(transform.position, Parent.Target.transform.position);
 
-        if (_distance < Parent.AlertDistance)
-        {
-            _transitionToAlert += Time.deltaTime;
-            if (_transitionToAlert >= 0.5f)
+            if (_distance < Parent.AlertDistance)
             {
-                Parent.SetState(EnemyBase.State.Alert);
+                _transitionToAlert += Time.deltaTime;
+                if (_transitionToAlert >= 0.5f)
+                {
+                    Parent.SetState(EnemyBase.State.Alert);
+                }
             }
-        }
-        else
-        {
-            _transitionToAlert = 0;
-        }
+            else
+            {
+                _transitionToAlert = 0;
+            }
+        }        
     }
 }

@@ -116,6 +116,11 @@ public class InputController : MonoBehaviour
     /// </summary>
     private void GetKeyBoardInput()
     {
+        if (Input.GetButtonDown("Reload"))
+        {
+            _player.Gun.InitiateReload();
+        }
+
         if (Input.GetButtonDown("Interact"))
         {
             Globals.Interact = true;
