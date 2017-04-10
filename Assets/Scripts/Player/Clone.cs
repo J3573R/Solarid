@@ -12,7 +12,7 @@ public class Clone : MonoBehaviour {
 
     protected Health Health;
 
-    private Gun _gun;
+    private CloneGun _gun;
     private float _targetDistance = Mathf.Infinity;
     private GameObject _target;
     private Animator _animator;
@@ -25,7 +25,7 @@ public class Clone : MonoBehaviour {
     void Awake()
     {
         Health = GetComponent<Health>();
-        _gun = GetComponentInChildren<Gun>();
+        _gun = GetComponentInChildren<CloneGun>();
         _animator = GetComponentInChildren<Animator>();
         _destroyEffect = GetComponent<ParticleSystem>();
         GameObject bar = Instantiate(HealthBar);

@@ -116,6 +116,7 @@ public class EnemyBase : MonoBehaviour
     /// <returns>If dead true, otherwise false</returns>
     public virtual bool TakeDamage(int damage)
     {
+        Debug.Log("DAMAGE:" + damage);
         if (Health.TakeDamage(damage))
         {
             Die();
