@@ -16,6 +16,10 @@ public static class Globals
     public static bool Paused;
 
     public static CameraFollow CameraScript;
+<<<<<<< HEAD
     // Mana explosion controller
     public static ManaExplosion ManaExplosion;
+=======
+
+>>>>>>> Teemun_uusi_branchi
 }
