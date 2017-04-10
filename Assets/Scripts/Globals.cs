@@ -16,4 +16,5 @@ public static class Globals
     public static bool Paused;
 
     public static CameraFollow CameraScript;
+
 }
