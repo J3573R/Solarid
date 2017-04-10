@@ -16,7 +16,7 @@ public class ChargerMove : EnemyStateBase
     {
         base.Start();
         eState = EnemyBase.State.Move;
-        Agent.speed = 5;
+        Agent.speed = 7f;
 
         try
         {

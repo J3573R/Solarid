@@ -14,4 +14,6 @@ public static class Globals
     public static bool Interact;
 
     public static CameraFollow CameraScript;
+    // Mana explosion controller
+    public static ManaExplosion ManaExplosion;
 }
