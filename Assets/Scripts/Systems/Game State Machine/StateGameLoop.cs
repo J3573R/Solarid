@@ -57,6 +57,7 @@ public class StateGameLoop : GameStateBase
             _hud.FadeScreenToVisible();
             Globals.Paused = false;
             _gameInitialized = true;
+            Debug.Log("AllReady");
         }
     }
 

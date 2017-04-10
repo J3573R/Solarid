@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 {
     [HideInInspector] public InputController Input;
     [HideInInspector] public AbilityController AbilityController;
-    [HideInInspector] public Health Health;
+    [HideInInspector] public PlayerHealth Health;
     [HideInInspector] public PlayerMovement Movement;
     [HideInInspector] public PlayerAnimation Animation;
     [HideInInspector] public Gun Gun;
@@ -20,18 +20,29 @@ public class Player : MonoBehaviour
     public bool ShootingEnabled = true;
     
     public bool Dead { get; set; }
+    public bool Initialized;
+    private bool _playerReady;
 
     void Awake()
     {
-        Globals.Player = gameObject;
-        Gun = GetComponentInChildren<Gun>();
-        Input = GetComponent<InputController>();
-        AbilityController = GetComponent<AbilityController>();
-        Movement = GetComponent<PlayerMovement>();
-        Animation = GetComponent<PlayerAnimation>();        
-        Health = GetComponent<Health>();
-        Mana = GetComponent<PlayerMana>();
-        Dead = false;
+        init();
+    }
+
+    public void init()
+    {
+        if (!Initialized)
+        {
+            Globals.Player = gameObject;
+            Gun = GetComponentInChildren<Gun>();
+            Input = GetComponent<InputController>();
+            AbilityController = GetComponent<AbilityController>();
+            Movement = GetComponent<PlayerMovement>();
+            Animation = GetComponent<PlayerAnimation>();
+            Health = GetComponent<PlayerHealth>();
+            Mana = GetComponent<PlayerMana>();
+            Dead = false;
+            Initialized = true;
+        }
     }
 
     /// <summary>
@@ -53,4 +64,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!_playerReady)
+        {
+            if (Gun.Initialized && Input.Initialized && AbilityController.Initialized && Movement.Initialized
+                && Animation.Initialized && Health.Initialized && Mana.Initialized)
+            {
+                Globals.GameLoop.PlayerReady = true;
+                _playerReady = true;
+            }
+        }
+    }
 }

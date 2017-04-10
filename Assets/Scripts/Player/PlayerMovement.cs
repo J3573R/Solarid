@@ -21,11 +21,21 @@ public class PlayerMovement : MonoBehaviour {
     private float _horizontalDirection;
     private float _verticalDirection;
     private bool _goingRight;
+    public bool Initialized;
 
     // Use this for initialization
     void Start () {
-        _player = GetComponent<Player>();
-        _rigidbody = GetComponent<Rigidbody>();
+        Init();
+    }
+
+    public void Init()
+    {
+        if (!Initialized)
+        {
+            _player = GetComponent<Player>();
+            _rigidbody = GetComponent<Rigidbody>();
+            Initialized = true;
+        }
     }
 	
 	// Update is called once per frame

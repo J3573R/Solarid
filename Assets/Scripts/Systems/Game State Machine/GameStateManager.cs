@@ -36,6 +36,8 @@ public class GameStateManager : MonoBehaviour
         GameLoop
     }
 
+    public GameStateBase CurrentState;
+
     // Current game state
     [SerializeField] private GameState _gameState = GameState.SplashScreen;
     // Gameobject including game state script
@@ -93,7 +95,7 @@ public class GameStateManager : MonoBehaviour
         {
             case GameState.SplashScreen:
                 _gameStateObj.AddComponent<StateSplashScreen>();
-                _gameStateObj.name = "Game State: SplashScreen";
+                _gameStateObj.name = "Game State: SplashScreen";                
                 break;
             case GameState.MainMenu:
                 _gameStateObj.AddComponent<StateMainMenu>();
@@ -104,11 +106,11 @@ public class GameStateManager : MonoBehaviour
                 _gameStateObj.name = "Game State: Options";
                 break;
             case GameState.GameLoop:
-                _gameStateObj.AddComponent<StateGameLoop>();
+                Globals.GameLoop = _gameStateObj.AddComponent<StateGameLoop>();
                 _gameStateObj.name = "Game State: GameLoop";
                 break;
         }
-
+        CurrentState = _gameStateObj.GetComponent<GameStateBase>();
         DontDestroyOnLoad(_gameStateObj);
     }
 

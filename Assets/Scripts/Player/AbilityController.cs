@@ -22,29 +22,38 @@ public class AbilityController : MonoBehaviour {
     public bool _allAbilitiesDisabled;
     public float CastDelayInSeconds;
     public Dictionary<Ability, bool> AbilityArray;
+    public bool Initialized;
 
     // Use this for initialization
     void Start()
     {
-        _player = GetComponent<Player>();
-        _blink = GetComponent<AbilityBlink>();
-        _vortex = GetComponent<AbilityVortex>();
-        _clone = GetComponent<AbilityClone>();
-        _currentAbility = _blink;
-        _hudController = FindObjectOfType<HudController>();
-        _hudController.init();
-        _rangeCheck = FindObjectOfType<RangeCheck>();
+        Init();
+    }
 
-        if (SaveSystem.Instance.SaveData != null)
-            AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
-        else
+    public void Init()
+    {
+        if (!Initialized)
         {
-            GameStateManager.Instance.SetupSaveSystem();
-            AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
-        }  
+            _player = GetComponent<Player>();
+            _blink = GetComponent<AbilityBlink>();
+            _vortex = GetComponent<AbilityVortex>();
+            _clone = GetComponent<AbilityClone>();
+            _currentAbility = _blink;
+            _hudController = FindObjectOfType<HudController>();
+            _hudController.init();
+            _rangeCheck = FindObjectOfType<RangeCheck>();
 
-        SetupAbilites();
+            if (SaveSystem.Instance.SaveData != null)
+                AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
+            else
+            {
+                GameStateManager.Instance.SetupSaveSystem();
+                AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
+            }
 
+            SetupAbilites();
+            Initialized = true;
+        }
     }
 
     /// <summary>

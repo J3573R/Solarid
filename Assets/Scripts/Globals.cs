@@ -18,4 +18,5 @@ public static class Globals
     public static CameraFollow CameraScript;
     // Mana explosion controller
     public static ManaExplosion ManaExplosion;
+    public static StateGameLoop GameLoop;
 }

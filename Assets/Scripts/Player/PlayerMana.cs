@@ -28,7 +28,8 @@ public class PlayerMana : MonoBehaviour {
 
     private float _lerpTarget;
     private float _lerpStart;
-    private float _lerpTime;    
+    private float _lerpTime;
+    public bool Initialized;
 
     public int CurrentMana
     {
@@ -38,18 +39,26 @@ public class PlayerMana : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        _player = GetComponent<Player>();
-        _controller = GameObject.Find("HudMana").GetComponent<HudBarController>();
-        _manabar = GameObject.Find("HudMana").GetComponent<Image>();
-        _manaFlashImage = GameObject.Find("HudNoMana").GetComponent<Image>();
-        _manaBarOriginalColor = _manabar.color;
-        AddMana(_maxMana);
-
-        _manaFlashImage.CrossFadeAlpha(0, 0, true);
+        Init();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void Init()
+    {
+        if (!Initialized)
+        {
+            _player = GetComponent<Player>();
+            _controller = GameObject.Find("HudMana").GetComponent<HudBarController>();
+            _manabar = GameObject.Find("HudMana").GetComponent<Image>();
+            _manaFlashImage = GameObject.Find("HudNoMana").GetComponent<Image>();
+            _manaBarOriginalColor = _manabar.color;
+            AddMana(_maxMana);
+            _manaFlashImage.CrossFadeAlpha(0, 0, true);
+            Initialized = true;
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (_currentMana < _maxMana)
         {
             PassiveManaRecharge();

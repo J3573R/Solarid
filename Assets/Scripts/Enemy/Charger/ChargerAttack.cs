@@ -16,6 +16,7 @@ public class ChargerAttack : EnemyStateBase
     protected override void Start()
     {
         base.Start();
+        Parent.AttackTarget = Parent.Target;
         eState = EnemyBase.State.Idle;
         _charger = (Charger)Parent;
         Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
@@ -34,12 +35,6 @@ public class ChargerAttack : EnemyStateBase
         else
         {
             Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
-            /*if (_charger.AttackTimer >= _charger.TimeBetweenAttacks)
-            {
-                //Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
-                Parent.Target.GetComponent<Health>().TakeDamage(Parent.Damage);
-                _charger.AttackTimer = 0;
-            }*/
         }
 
         if (_charger.AttackTimer < _charger.TimeBetweenAttacks)

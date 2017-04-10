@@ -68,7 +68,7 @@ public class RangerMove : EnemyStateBase {
     {
         if (!Agent.pathPending)
         {
-            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            if (Agent.isActiveAndEnabled && Agent.remainingDistance <= Agent.stoppingDistance)
             {
                 if (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f)
                 {

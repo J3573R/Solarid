@@ -12,12 +12,13 @@ public class Ranger : EnemyBase
     private Vector3 _positionAtLastFrame;
     private float _distanceAtLastFrame;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         SetState(EnemyBase.State.Idle);
         RangerBulletPool = GetComponent<RangerBulletPool>();
         StartPosition = transform.position;
+        Initialized = true;
     }
 
     protected override void Update()
