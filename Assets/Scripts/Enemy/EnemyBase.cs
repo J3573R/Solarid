@@ -22,6 +22,8 @@ public class EnemyBase : MonoBehaviour
     // Changes enemy state to idle when distance is bigger than this
     public int DisengageDistance = 7;
 
+    protected bool Initialized = false;
+
     protected NavMeshAgent Agent;
 
     private Slider _healthBar;
@@ -32,6 +34,8 @@ public class EnemyBase : MonoBehaviour
     private Vector3 _pullPoint;
     private float _pullDuration;
     private bool _pullActive = false;
+
+    
     
     public enum State
     {
@@ -48,8 +52,7 @@ public class EnemyBase : MonoBehaviour
         Walk = 1,
         Attack = 2,
         WalkBack = 3,
-        Death = 4
-        
+        Death = 4        
     }
 
     protected EnemyBase.State CurrentState;
@@ -61,10 +64,18 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        if (!Initialized)
+        {
+            return;
+        }
+    }
+
+    protected virtual void Init()
+    {
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
-        if(Globals.Player != null)
+        if (Globals.Player != null)
             _player = Globals.Player.GetComponent<Player>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
@@ -76,6 +87,15 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (!Initialized)
+        {
+            if (Globals.GameLoop.PlayerReady)
+            {
+                Init();
+            }
+            return;
+        }
+
         Target = GetClosestTarget();
         _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + _healthBarOffset);
 
@@ -116,7 +136,6 @@ public class EnemyBase : MonoBehaviour
     /// <returns>If dead true, otherwise false</returns>
     public virtual bool TakeDamage(int damage)
     {
-        Debug.Log("DAMAGE:" + damage);
         if (Health.TakeDamage(damage))
         {
             Die();
@@ -129,7 +148,6 @@ public class EnemyBase : MonoBehaviour
             _healthBar.value = Health.CurrentHealth;
             return false;
         }
-
     }
 
     protected virtual void OnTriggerEnter(Collider other)

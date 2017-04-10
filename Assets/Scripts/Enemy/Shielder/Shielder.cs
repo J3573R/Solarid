@@ -16,12 +16,13 @@ public class Shielder : EnemyBase
     private Vector3 _shieldOffset;
     private Vector3 _positionAtLastFrame;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         SetState(EnemyBase.State.Idle);
         StartPosition = transform.position;
         _shieldOffset = Shield.transform.position - transform.position;
+        Initialized = true;
     }
 
     protected override void Update()
