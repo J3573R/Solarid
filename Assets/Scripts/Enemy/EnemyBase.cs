@@ -152,6 +152,7 @@ public class EnemyBase : MonoBehaviour
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
         _healthBar.gameObject.SetActive(false);
+        Globals.ManaExplosion.Explode(transform.position);
         Destroy(gameObject);
     }
 

@@ -11,8 +11,9 @@ public class ManaGlobe : MonoBehaviour {
     private float _speed = -5;
     private Vector3 _moveToPoint;
 
-    void Awake()
+    void OnEnable()
     {
+        _speed = -5;
         _moveDirection = new Vector3(Random.Range(-100, 100), Random.Range(0, 100), Random.Range(-100, 100)).normalized;
     }
 	
@@ -40,11 +41,10 @@ public class ManaGlobe : MonoBehaviour {
             _speed += Time.deltaTime * Speed;
         }
 	}
-
-    // TODO: Return me correctly to pool
+    
     void ReturnToPool()
     {
-        Destroy(gameObject);
+        Globals.ManaExplosion.AddToPool(gameObject);
     }
 
     void OnTriggerEnter(Collider other)
