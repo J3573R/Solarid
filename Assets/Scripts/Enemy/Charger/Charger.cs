@@ -15,9 +15,9 @@ public class Charger : EnemyBase
 
     private Vector3 _positionAtLastFrame;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         if (CurrentState == State.None)
         {
             SetState(EnemyBase.State.Idle);
@@ -25,6 +25,7 @@ public class Charger : EnemyBase
         StartPosition = transform.position;
 
         animTracker = GetComponentInChildren<ChargerAnimationTracker>();
+        Initialized = true;
     }
 
     protected override void Update()
