@@ -38,16 +38,25 @@ public class Gun : MonoBehaviour
     private Collider _collider;
     // Current status of reload
     private float _intervalTimer = 0;
-    
+    public bool Initialized;
 
     void Awake()
     {
-        BulletsRemaining = ClipSize;
-        _collider = GetComponent<Collider>();
-        _player = FindObjectOfType<Player>();
-        _aimPoint = GameObject.Find("AimPoint").transform;
-        SetupBulletPool();
+        Init();
     }
+
+    public void Init()
+    {
+        if (!Initialized)
+        {
+            BulletsRemaining = ClipSize;
+            _collider = GetComponent<Collider>();
+            _player = FindObjectOfType<Player>();
+            _aimPoint = GameObject.Find("AimPoint").transform;
+            SetupBulletPool();
+            Initialized = true;
+        }
+    } 
 
     /// <summary>
     /// Sets up the object pool of bullets

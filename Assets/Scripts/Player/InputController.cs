@@ -11,15 +11,25 @@ public class InputController : MonoBehaviour
     public bool ListenInput = true;
     
     private Player _player;
-    private Camera _camera;   
+    private Camera _camera;
+    public bool Initialized;
 
     void Awake()
     {
-        _player = GetComponent<Player>();        
-        _camera = FindObjectOfType<Camera>();
-        PlayerAnimation = FindObjectOfType<PlayerAnimation>();
-        Globals.InputController = this;
+        Init();
     }
+
+    public void Init()
+    {
+        if (!Initialized)
+        {
+            _player = GetComponent<Player>();
+            _camera = FindObjectOfType<Camera>();
+            PlayerAnimation = FindObjectOfType<PlayerAnimation>();
+            Globals.InputController = this;
+            Initialized = true;
+        }        
+    } 
 
     private void FixedUpdate()
     {

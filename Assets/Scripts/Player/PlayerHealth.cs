@@ -6,12 +6,22 @@ public class PlayerHealth : Health {
 
     private HudBarController _controller;
     private int _originalHP;
+    public bool Initialized;
 
-	// Use this for initialization
-	void Start () {
-        _originalHP = _health;
-        _controller = GameObject.Find("HudHealth").GetComponent<HudBarController>();
+    // Use this for initialization
+    void Start () {
+        Init();
 	}
+
+    public void Init()
+    {
+        if (!Initialized)
+        {
+            _originalHP = _health;
+            _controller = GameObject.Find("HudHealth").GetComponent<HudBarController>();
+            Initialized = true;
+        }
+    }
 
     public override bool TakeDamage(int damage)
     {

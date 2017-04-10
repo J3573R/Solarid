@@ -15,6 +15,7 @@ public class PlayerAnimation : MonoBehaviour {
 
     private AnimationState _currentState;
     private AnimationStance _currentStance;
+    public bool Initialized;
 
     /// <summary>
     /// Current animation state, within current stance
@@ -47,8 +48,17 @@ public class PlayerAnimation : MonoBehaviour {
 
 	void Awake()
     {
-        Animator = GetComponentInChildren<Animator>();
-        _player = GetComponent<Player>();          
+        Init(); 
+    }
+
+    public void Init()
+    {
+        if (!Initialized)
+        {
+            Animator = GetComponentInChildren<Animator>();
+            _player = GetComponent<Player>();
+            Initialized = true;
+        }
     }
 
     private void Update()
