@@ -222,7 +222,7 @@ public class EnemyBase : MonoBehaviour
     /// <returns>False if nav mesh is reached target, otherwise true</returns>
     public bool IsNavMeshMoving()
     {
-        if (!Agent.pathPending)
+        if (Agent.isActiveAndEnabled && !Agent.pathPending)
         {
             if (Agent.remainingDistance <= Agent.stoppingDistance)
             {

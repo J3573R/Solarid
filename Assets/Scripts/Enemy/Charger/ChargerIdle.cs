@@ -49,7 +49,7 @@ public class ChargerIdle : EnemyStateBase
             randomDirection += Parent.StartPosition;
 
             NavMeshHit navHit;
-            if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
+            if (Agent.isActiveAndEnabled && NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
             {
                 Agent.destination = navHit.position;
                 _timeToWalk = UnityEngine.Random.Range(1, 3);

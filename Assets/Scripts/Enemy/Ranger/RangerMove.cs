@@ -66,9 +66,9 @@ public class RangerMove : EnemyStateBase {
 
     private bool IsNavMeshMoving()
     {
-        if (Agent != null && !Agent.pathPending)
+        if (!Agent.pathPending)
         {
-            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            if (Agent.isActiveAndEnabled && Agent.remainingDistance <= Agent.stoppingDistance)
             {
                 if (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f)
                 {
