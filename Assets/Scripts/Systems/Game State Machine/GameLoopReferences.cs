@@ -7,7 +7,6 @@ using UnityEngine;
 public class GameLoopReferences
 {
     public Player Player;
-    public StateGameLoop GameLoop;
     public ManaExplosion ManaExplosion;
     public CameraFollow CameraScript;
 
