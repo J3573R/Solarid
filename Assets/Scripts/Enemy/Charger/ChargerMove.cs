@@ -31,6 +31,7 @@ public class ChargerMove : EnemyStateBase
     protected override void Update()
     {
         _followTime += Time.deltaTime;
+        if(Agent != null)
         Agent.destination = Parent.Target.transform.position;
         _targetDirection = Parent.Target.transform.position - transform.position;
         _step = _rotationSpeed * Time.deltaTime;
