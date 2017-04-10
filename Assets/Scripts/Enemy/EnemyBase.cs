@@ -116,6 +116,7 @@ public class EnemyBase : MonoBehaviour
     /// <returns>If dead true, otherwise false</returns>
     public virtual bool TakeDamage(int damage)
     {
+        Debug.Log("DAMAGE:" + damage);
         if (Health.TakeDamage(damage))
         {
             Die();
@@ -152,6 +153,7 @@ public class EnemyBase : MonoBehaviour
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
         _healthBar.gameObject.SetActive(false);
+        Globals.ManaExplosion.Explode(transform.position);
         Destroy(gameObject);
     }
 

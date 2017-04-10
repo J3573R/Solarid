@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public List<GameObject> Clones;
     public bool ShootingEnabled = true;
     
-    public bool Dead { get; set; }    
+    public bool Dead { get; set; }
 
     void Awake()
     {
@@ -42,6 +42,14 @@ public class Player : MonoBehaviour
         if (ShootingEnabled && !Movement.Casting)
         {
             Gun.Shoot();
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "ManaGlobe")
+        {
+            Mana.AddMana(10);
         }
     }
 

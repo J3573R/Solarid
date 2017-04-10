@@ -22,6 +22,7 @@ public class HudController : MonoBehaviour {
     private Image _smallClone;
     private AbilityController _abilityController;
     private Image _cooldownImage;
+    private Image _blackScreen;
     private Material _cooldownMaterial;
     private bool _initDone = false;
     private Text _bulletText;
@@ -42,17 +43,38 @@ public class HudController : MonoBehaviour {
             _smallVortex = GameObject.Find("VortexSmall").GetComponent<Image>();
             _smallClone = GameObject.Find("CloneSmall").GetComponent<Image>();
             _bulletText = GameObject.Find("BulletsRemaining").GetComponent<Text>();
+            _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+            _blackScreen.enabled = true;
+
+            if (_blackScreen == null)
+                Debug.Log("Null saatana");
+
             _selectedSkill = GameObject.Find("SelectedSkill");
-            _playerGun = Globals.Player.GetComponent<Player>().Gun;
+            _playerGun = FindObjectOfType<Player>().Gun;
 
             _smallBlink.enabled = false;
             _smallClone.enabled = false;
             _smallVortex.enabled = false;
 
-            _abilityController = Globals.Player.GetComponent<AbilityController>();
+            _abilityController = FindObjectOfType<Player>().AbilityController;
             _initDone = true;
-        }
-        
+        }        
+    }
+
+    /// <summary>
+    /// Fades the screen to black
+    /// </summary>
+    public void FadeScreenToBlack()
+    {
+
+    }
+
+    /// <summary>
+    /// Fades the screen to visible
+    /// </summary>
+    public void FadeScreenToVisible()
+    {
+        _blackScreen.CrossFadeAlpha(0, 2, true);
     }
 
     // Update is called once per frame

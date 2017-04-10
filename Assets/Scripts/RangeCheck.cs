@@ -18,7 +18,7 @@ public class RangeCheck : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Vector3 tmp = _player.transform.position;
-        tmp.y = 0f;
+        tmp.y = 0.2f;
         transform.position = tmp;
 	}
 

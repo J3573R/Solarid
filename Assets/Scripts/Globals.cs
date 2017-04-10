@@ -13,5 +13,9 @@ public static class Globals
     // Interact button is or is not pressed
     public static bool Interact;
 
+    public static bool Paused;
+
     public static CameraFollow CameraScript;
+    // Mana explosion controller
+    public static ManaExplosion ManaExplosion;
 }
