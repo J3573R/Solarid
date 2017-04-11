@@ -10,11 +10,23 @@ public class ManaGlobe : MonoBehaviour {
     private Vector3 _moveDirection;
     private float _speed = -5;
     private Vector3 _moveToPoint;
+    private AudioSource _audio;
+    private bool _returnToPool;
 
     void OnEnable()
     {
         _speed = -5;
         _moveDirection = new Vector3(Random.Range(-100, 100), Random.Range(0, 100), Random.Range(-100, 100)).normalized;
+        _audio = GetComponent<AudioSource>();
+        _returnToPool = false;
+    }
+
+    void Update()
+    {
+        if (!_audio.isPlaying && _returnToPool)
+        {
+            GameStateManager.Instance.GameLoop.References.ManaExplosion.AddToPool(gameObject);
+        }
     }
 	
 	void FixedUpdate () {
@@ -41,17 +53,13 @@ public class ManaGlobe : MonoBehaviour {
             _speed += Time.deltaTime * Speed;
         }
 	}
-    
-    void ReturnToPool()
-    {
-        GameStateManager.Instance.GameLoop.References.ManaExplosion.AddToPool(gameObject);
-    }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
-            ReturnToPool();
+            _audio.Play();
+            _returnToPool = true;
         }
     }
 

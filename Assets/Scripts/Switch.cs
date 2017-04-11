@@ -25,6 +25,7 @@ public class Switch : MonoBehaviour
 
     private RotateConstantly _obeliskRotation;
     private Collider[] _platformColliders;
+    private AudioSource _audio;
     
 
     public void Awake()
@@ -38,6 +39,7 @@ public class Switch : MonoBehaviour
         _sliderBar.SetActive(false);
         _platformColliders = TargetDoor.gameObject.GetComponentsInChildren<Collider>();
         ToggleDoorColliders(TargetDoor.Open);
+        _audio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -80,6 +82,7 @@ public class Switch : MonoBehaviour
                     }
                     TargetDoor.ToggleDoor();
                     ToggleDoorColliders(TargetDoor.Open);
+                    _audio.Play();
                 }
             }
             else if (_switchValue > 0)
