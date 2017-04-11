@@ -40,7 +40,7 @@ public class Clone : MonoBehaviour {
     {
         Health.CurrentHealth = (int)_healthBar.maxValue;
         _showHealth = false;
-        _lifetime = Lifetime;        
+        _lifetime = Lifetime;
         _destroyEffect.Stop();
         Hero.SetActive(true);
         _dying = false;

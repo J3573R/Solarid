@@ -20,12 +20,14 @@ public class CloneGun : MonoBehaviour
     private Collider _collider;
     // Current status of reload
     private float _intervalTimer = 0;
+    private AudioSource _audio;
     
 
     void Awake()
     {
         _collider = GetComponent<Collider>();
         SetupBulletPool();
+        _audio = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -66,6 +68,7 @@ public class CloneGun : MonoBehaviour
                     _target.y = 1.5f;
                     _bullets[i].transform.LookAt(_target);
                     _bullets[i].SetActive(true);
+                    _audio.Play();
                     break;
                 }
             }
