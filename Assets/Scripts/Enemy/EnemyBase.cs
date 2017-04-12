@@ -176,7 +176,23 @@ public class EnemyBase : MonoBehaviour
         CurrentStateObject.gameObject.SetActive(false);
         if(Ragdoll != null)
         {
-            GameObject ragdoll = Instantiate(Ragdoll, transform.position, transform.rotation);
+            Collider[] colliders = GetComponentsInChildren<Collider>();
+            Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
+
+            Agent.enabled = false;
+            Animator.enabled = false;
+
+            foreach(var collider in colliders)
+            {
+                collider.enabled = true;
+            }
+
+            foreach(var body in bodies)
+            {
+                body.useGravity = true;
+                body.isKinematic = false;
+            }
+            /*GameObject ragdoll = Instantiate(Ragdoll, transform.position, transform.rotation);
 
             Vector3 force = Vector3.zero;
             Rigidbody[] bodies = ragdoll.GetComponentsInChildren<Rigidbody>();
@@ -186,7 +202,7 @@ public class EnemyBase : MonoBehaviour
                 Debug.Log(momentum);
                 body.AddForce(momentum * 5, ForceMode.Impulse);
                 break;
-            }
+            }*/
         }
         Destroy(gameObject);
     }
