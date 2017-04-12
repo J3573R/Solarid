@@ -23,7 +23,7 @@ public class StateGameLoop : GameStateBase
 
     protected override void Awake()
     {
-        GameStateManager.Instance.GameLoop.References.CameraScript = FindObjectOfType<CameraFollow>();
+        References.CameraScript = FindObjectOfType<CameraFollow>();
         base.Awake();
         LevelName = SceneManager.GetActiveScene().name;
         GitGud = GameObject.Find("UI/Git_gud").GetComponent<Text>();

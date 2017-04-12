@@ -160,7 +160,6 @@ public class GameStateManager : MonoBehaviour
     {
         if (_blackScreen != null)
         {
-            Debug.Log("Feidaa");
             _blackScreen.CrossFadeAlpha(0, time, true);
         }
         else
