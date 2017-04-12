@@ -16,7 +16,6 @@ public class EnemyBase : MonoBehaviour
     public float ChaseTime = 3;
     public GameObject Target;
     public GameObject AttackTarget;
-    public GameObject Ragdoll;
 
     // Changes enemy state to alert when distance is smaller than this
     public int AlertDistance = 5;
@@ -136,11 +135,11 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     /// <param name="damage">Amount of damage caused to enemy.</param>
     /// <returns>If dead true, otherwise false</returns>
-    public virtual bool TakeDamage(int damage, Vector3 momentum)
+    public virtual bool TakeDamage(int damage)
     {
         if (Health.TakeDamage(damage))
         {
-            Die(momentum);
+            Die();
             _healthBar.value = Health.CurrentHealth;
             return true;
         } else
@@ -152,11 +151,11 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    protected virtual void OnCollisionEnter(Collision other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.collider.tag == "PlayerBullet")
+        if (other.tag == "PlayerBullet")
         {
-            TakeDamage(_player.Damage, other.contacts[0].normal);
+            TakeDamage(_player.Damage);            
         }
     }
 
@@ -164,8 +163,8 @@ public class EnemyBase : MonoBehaviour
     /// Kills player.
     /// TODO: Death animation, level restart, disable controls.
     /// </summary>
-    protected virtual void Die(Vector3 momentum)
-    {        
+    protected virtual void Die()
+    {
         if (DeathEffect != null)
         {
             Instantiate(DeathEffect, transform.position, Quaternion.identity);
@@ -174,6 +173,7 @@ public class EnemyBase : MonoBehaviour
         _healthBar.gameObject.SetActive(false);
         GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position);
         CurrentStateObject.gameObject.SetActive(false);
+<<<<<<< HEAD
         if(Ragdoll != null)
         {
             Collider[] colliders = GetComponentsInChildren<Collider>();
@@ -204,6 +204,8 @@ public class EnemyBase : MonoBehaviour
                 break;
             }*/
         }
+=======
+>>>>>>> parent of 881bc95... Ragdoll test.
         Destroy(gameObject);
     }
 

@@ -12,7 +12,6 @@ public class Bullet : MonoBehaviour
     public float Range = 1f;
     // How long the hit effect is displayed, set in editor
     public float HitEffectTime;
-    public Vector3 MovementDirection;
 
     // Maximium travelled distance
     private float _fMaxDist;
@@ -82,14 +81,12 @@ public class Bullet : MonoBehaviour
         _bulletPart.transform.gameObject.SetActive(true);
         _active = true;
         _time = 0;
-        MovementDirection = transform.position - Vector3.forward;
     }
 
     void FixedUpdate()
     {
         if (_active)
         {
-
             if (_time > _fMaxDist)
             {
                 gameObject.SetActive(false);
