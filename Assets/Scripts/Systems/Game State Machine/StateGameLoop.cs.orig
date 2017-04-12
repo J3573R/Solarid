@@ -23,7 +23,7 @@ public class StateGameLoop : GameStateBase
 
     protected override void Awake()
     {
-        References.CameraScript = FindObjectOfType<CameraFollow>();
+        Globals.CameraScript = FindObjectOfType<CameraFollow>();
         base.Awake();
         LevelName = SceneManager.GetActiveScene().name;
         GitGud = GameObject.Find("UI/Git_gud").GetComponent<Text>();
@@ -42,14 +42,14 @@ public class StateGameLoop : GameStateBase
 
     void Start()
     {
-
-        Player = GameStateManager.Instance.GameLoop.Player;
-
+<<<<<<< HEAD
+        Player = Globals.Player.GetComponent<Player>();
+=======
         Player = GameObject.FindObjectOfType<Player>();
         InputController = Player.GetComponent<InputController>();
-        //_hud.FadeScreenToVisible();
+        _hud.FadeScreenToVisible();
         References.Init();
-
+>>>>>>> master
     }
 
     protected override void Update()
@@ -64,12 +64,13 @@ public class StateGameLoop : GameStateBase
 
         if (CameraReady && PlayerReady && CameraReady && !_gameInitialized)
         {
+<<<<<<< HEAD
             GameStateManager.Instance.FadeScreenToVisible(2);
-            GameStateManager.Instance.GameLoop.Paused = false;
-
-            //_hud.FadeScreenToVisible();
+            Globals.Paused = false;
+=======
+            _hud.FadeScreenToVisible();
             Paused = true;
-
+>>>>>>> master
             _gameInitialized = true;
         }
     }

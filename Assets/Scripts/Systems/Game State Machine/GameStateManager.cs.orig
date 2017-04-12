@@ -37,11 +37,13 @@ public class GameStateManager : MonoBehaviour
         GameLoop
     }
 
+<<<<<<< HEAD
     private Image _blackScreen;
     public GameStateBase CurrentState;
 
+=======
     public StateGameLoop GameLoop;
-
+>>>>>>> master
     // Current game state
     [SerializeField] private GameState _gameState = GameState.SplashScreen;
     // Gameobject including game state script
@@ -160,6 +162,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (_blackScreen != null)
         {
+            Debug.Log("Feidaa");
             _blackScreen.CrossFadeAlpha(0, time, true);
         }
         else

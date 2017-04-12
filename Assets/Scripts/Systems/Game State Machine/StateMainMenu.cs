@@ -52,6 +52,8 @@ public class StateMainMenu : GameStateBase {
             _buttonContinue.onClick.AddListener(PressContinue);
             _saveExists = true;
         }
+
+        GameStateManager.Instance.FadeScreenToVisible(1);
     }
 
     private void PressReset()

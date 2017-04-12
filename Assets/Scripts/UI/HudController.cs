@@ -46,9 +46,6 @@ public class HudController : MonoBehaviour {
             _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
             _blackScreen.enabled = true;
 
-            if (_blackScreen == null)
-                Debug.Log("Null saatana");
-
             _selectedSkill = GameObject.Find("SelectedSkill");
             _playerGun = FindObjectOfType<Player>().Gun;
 
@@ -59,22 +56,6 @@ public class HudController : MonoBehaviour {
             _abilityController = FindObjectOfType<Player>().AbilityController;
             _initDone = true;
         }        
-    }
-
-    /// <summary>
-    /// Fades the screen to black
-    /// </summary>
-    public void FadeScreenToBlack()
-    {
-
-    }
-
-    /// <summary>
-    /// Fades the screen to visible
-    /// </summary>
-    public void FadeScreenToVisible()
-    {
-        _blackScreen.CrossFadeAlpha(0, 2, true);
     }
 
     // Update is called once per frame
