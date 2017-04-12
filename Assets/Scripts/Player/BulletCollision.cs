@@ -11,9 +11,18 @@ public class BulletCollision : MonoBehaviour {
         _bullet = GetComponentInParent<Bullet>();
 	}
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("Enemy") || other.tag.Equals("Prop"))
+        {
+            _bullet.BulletHit();
+        }
+
+    }*/
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag.Equals("Enemy") || other.collider.tag.Equals("Prop"))
         {
             _bullet.BulletHit();
         }

@@ -29,7 +29,7 @@ public class Vortex : MonoBehaviour
                 
                 if (_damageTickTime <= 0)
                 {
-                    tmp.TakeDamage(DamagePerSecond);
+                    tmp.TakeDamage(DamagePerSecond, Vector3.zero);
                 }
             }
         }

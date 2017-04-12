@@ -131,7 +131,7 @@ public class GrenadeScript : MonoBehaviour {
             if(c.tag.Equals("Enemy"))
             {
                 EnemyBase e = c.gameObject.GetComponent<EnemyBase>();
-                e.TakeDamage(Damage);
+                //e.TakeDamage(Damage);
             }
             
         }

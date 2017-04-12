@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour
     public float ChaseTime = 3;
     public GameObject Target;
     public GameObject AttackTarget;
+    public GameObject Ragdoll;
 
     // Changes enemy state to alert when distance is smaller than this
     public int AlertDistance = 5;
@@ -135,11 +136,11 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     /// <param name="damage">Amount of damage caused to enemy.</param>
     /// <returns>If dead true, otherwise false</returns>
-    public virtual bool TakeDamage(int damage)
+    public virtual bool TakeDamage(int damage, Vector3 momentum)
     {
         if (Health.TakeDamage(damage))
         {
-            Die();
+            Die(momentum);
             _healthBar.value = Health.CurrentHealth;
             return true;
         } else
@@ -151,11 +152,11 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
-        if (other.tag == "PlayerBullet")
+        if (other.collider.tag == "PlayerBullet")
         {
-            TakeDamage(_player.Damage);            
+            TakeDamage(_player.Damage, other.contacts[0].normal);
         }
     }
 
@@ -163,8 +164,8 @@ public class EnemyBase : MonoBehaviour
     /// Kills player.
     /// TODO: Death animation, level restart, disable controls.
     /// </summary>
-    protected virtual void Die()
-    {
+    protected virtual void Die(Vector3 momentum)
+    {        
         if (DeathEffect != null)
         {
             Instantiate(DeathEffect, transform.position, Quaternion.identity);
@@ -173,6 +174,20 @@ public class EnemyBase : MonoBehaviour
         _healthBar.gameObject.SetActive(false);
         GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position);
         CurrentStateObject.gameObject.SetActive(false);
+        if(Ragdoll != null)
+        {
+            GameObject ragdoll = Instantiate(Ragdoll, transform.position, transform.rotation);
+
+            Vector3 force = Vector3.zero;
+            Rigidbody[] bodies = ragdoll.GetComponentsInChildren<Rigidbody>();
+
+            foreach(var body in bodies)
+            {
+                Debug.Log(momentum);
+                body.AddForce(momentum * 5, ForceMode.Impulse);
+                break;
+            }
+        }
         Destroy(gameObject);
     }
 
