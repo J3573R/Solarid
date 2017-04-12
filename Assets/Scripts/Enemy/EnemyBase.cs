@@ -25,6 +25,8 @@ public class EnemyBase : MonoBehaviour
 
     public bool Initialized = false;
 
+    public GameObject Staff;
+
     protected NavMeshAgent Agent;
 
     private Slider _healthBar;
@@ -159,6 +161,14 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    protected virtual void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag == "PlayerBullet")
+        {
+            TakeDamage(_player.Damage);
+        }
+    }
+
     /// <summary>
     /// Kills player.
     /// TODO: Death animation, level restart, disable controls.
@@ -172,8 +182,35 @@ public class EnemyBase : MonoBehaviour
         }
         _healthBar.gameObject.SetActive(false);
         GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position);
-        CurrentStateObject.gameObject.SetActive(false);
-        Destroy(gameObject);
+        //CurrentStateObject.gameObject.SetActive(false);        
+
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
+
+        Agent.enabled = false;
+        Animator.enabled = false;
+        
+        foreach (var collider in colliders)
+        {
+            collider.enabled = true;
+        }
+
+        Collider myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
+
+        foreach (var body in bodies)
+        {
+            body.useGravity = true;
+            body.isKinematic = false;
+            body.AddForce(-transform.forward / 20, ForceMode.Impulse);
+        }
+        
+        if(Staff != null)
+        {
+            Staff.transform.parent = null;
+        }
+
+        CurrentStateObject.enabled = false;
     }
 
     /// <summary>
