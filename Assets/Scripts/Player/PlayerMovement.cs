@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour {
             _moveSpeed = 3;
 
         }
-        else
+        else if (!state && state != Shooting)
         {
             Shooting = false;
             _player.Animation.Casting = state;
@@ -77,12 +77,13 @@ public class PlayerMovement : MonoBehaviour {
         {
             Casting = state;
             _moveSpeed = 3;
-
+            _player.AbilityController._currentCharge.Play();                
         }
-        else
+        else if (!state)
         {
             Casting = false;
             _moveSpeed = 5;
+            _player.AbilityController._currentCharge.Stop();  
         }
     }
 

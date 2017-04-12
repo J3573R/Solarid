@@ -18,7 +18,11 @@ public class AbilityController : MonoBehaviour {
     private RangeCheck _rangeCheck;    
     private int _maxAbilityIndex;
     private HudController _hudController;
+    private ParticleSystem _blinkCharge;
+    private ParticleSystem _vortexCharge;
+    private ParticleSystem _cloneCharge;
 
+    public ParticleSystem _currentCharge;
     public bool _allAbilitiesDisabled;
     public float CastDelayInSeconds;
     public Dictionary<Ability, bool> AbilityArray;
@@ -42,6 +46,12 @@ public class AbilityController : MonoBehaviour {
             _hudController = FindObjectOfType<HudController>();
             _hudController.init();
             _rangeCheck = FindObjectOfType<RangeCheck>();
+            _blinkCharge = GameObject.Find("BlinkCharge").GetComponent<ParticleSystem>();
+            _vortexCharge = GameObject.Find("VortexCharge").GetComponent<ParticleSystem>();
+            _cloneCharge = GameObject.Find("CloneCharge").GetComponent<ParticleSystem>();
+            _blinkCharge.Stop();
+            _vortexCharge.Stop();
+            _cloneCharge.Stop();
 
             if (SaveSystem.Instance.SaveData != null)
                 AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
@@ -52,6 +62,8 @@ public class AbilityController : MonoBehaviour {
             }
 
             SetupAbilites();
+            _currentCharge = _blinkCharge;
+            
             Initialized = true;
         }
     }
@@ -228,22 +240,35 @@ public class AbilityController : MonoBehaviour {
     /// <param name="tmp">Ability to set</param>
     public void SetAbility(Ability tmp)
     {
+        bool chargeState = _currentCharge.isPlaying;
+
+        if (_currentCharge.isPlaying)
+            _currentCharge.Stop();     
+
         if (tmp == Ability.Blink && _blink.enabled)
         {
             _currentAbility = _blink;
             _abilityIndex = 0;
+            _currentCharge = _blinkCharge;
         }            
         if (tmp == Ability.Vortex && _vortex.enabled)
         {
             _currentAbility = _vortex;
             _abilityIndex = 1;
+            _currentCharge = _vortexCharge;
         }
         if (tmp == Ability.Clone && _clone.enabled)
         {
             _currentAbility = _clone;
             _abilityIndex = 2;
+            _currentCharge = _cloneCharge;
         }
 
+        if (chargeState)
+        {
+            _currentCharge.Play();
+        }
+        _rangeCheck.UpdateRange(_currentAbility.GetRange());
         _hudController.ChangeImage(tmp);
     }
 

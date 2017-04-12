@@ -67,10 +67,10 @@ public class InputController : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Ability") && !_player.AbilityController._allAbilitiesDisabled)
-        {            
+        {
             _player.Movement.SetCasting(true);
             _player.AbilityController.DrawRange(true);                        
-        }         
+        }   
         else if (!Input.GetButton("Ability"))
         {            
             _player.Movement.SetCasting(false);

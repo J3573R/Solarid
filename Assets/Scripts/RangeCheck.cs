@@ -46,6 +46,12 @@ public class RangeCheck : MonoBehaviour {
         }
     }
 
+    public void UpdateRange(float range)
+    {
+        Vector3 tmp = new Vector3(range * 2, 0.1f, range * 2);
+        transform.localScale = tmp;
+    }
+
     /// <summary>
     /// Gets the distance between player and cast point
     /// </summary>

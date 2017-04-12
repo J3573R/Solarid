@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,8 @@ public class Clone : MonoBehaviour {
     private Animator _animator;
     private float _lifetime;
     private ParticleSystem _destroyEffect;
+    private ParticleSystem _circleParticle;
+    
     private bool _dying;
     private Slider _healthBar;
     private bool _showHealth = false;
@@ -29,6 +32,7 @@ public class Clone : MonoBehaviour {
         _animator = GetComponentInChildren<Animator>();
         _destroyEffect = GetComponent<ParticleSystem>();
         GameObject bar = Instantiate(HealthBar);
+        _circleParticle = transform.FindChild("CloneLight/CloneAura").GetComponent<ParticleSystem>();  
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
         _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -43,6 +47,7 @@ public class Clone : MonoBehaviour {
         _lifetime = Lifetime;
         _destroyEffect.Stop();
         Hero.SetActive(true);
+        
         _dying = false;
     }
 		
@@ -50,6 +55,8 @@ public class Clone : MonoBehaviour {
 
         _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + HealthBarOffset);
 	    _healthBar.value = Health.CurrentHealth;
+
+        UpdateLifeTimeCircle();        
 
         if (!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
         {
@@ -107,6 +114,20 @@ public class Clone : MonoBehaviour {
                 gameObject.SetActive(false);
             }            
         }
+    }
+
+    private void UpdateLifeTimeCircle()
+    {
+        float timeLeftPercent = (_lifetime - 0.9f) / (Lifetime - 0.9f);
+
+        if (timeLeftPercent < 0)
+        {
+            timeLeftPercent = 0;
+            _circleParticle.Stop();
+        }
+
+        var tmp = _circleParticle.shape;
+        tmp.arc = 360 * (timeLeftPercent);
     }
 
     void OnTriggerEnter(Collider other)
