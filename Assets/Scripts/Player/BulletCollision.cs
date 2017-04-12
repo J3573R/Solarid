@@ -19,4 +19,13 @@ public class BulletCollision : MonoBehaviour {
         }
 
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag.Equals("Enemy") || other.collider.tag.Equals("Prop"))
+        {
+            _bullet.BulletHit();
+        }
+
+    }
 }
