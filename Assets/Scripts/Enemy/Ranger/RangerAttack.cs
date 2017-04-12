@@ -11,6 +11,7 @@ public class RangerAttack : EnemyStateBase
 
     protected override void Update()
     {
+        base.Update();
         Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Attack);
     }
 }

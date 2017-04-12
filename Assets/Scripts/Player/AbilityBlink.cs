@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityBlink : AbilityBase {
+public class AbilityBlink : AbilityBase
+{
+
+    public AudioClip AudioBlink;
 
     [SerializeField]
     private ParticleSystem _particle;
@@ -16,6 +19,7 @@ public class AbilityBlink : AbilityBase {
     private SkinnedMeshRenderer _playerRender;
     private Vector3 _targetPosition;
     private Player _player;
+    private AudioSource _audio;
 
 	// Use this for initialization
 	void Awake () {
@@ -27,6 +31,7 @@ public class AbilityBlink : AbilityBase {
         _renderers = GetComponentsInChildren<MeshRenderer>();
         _playerRender = GetComponentInChildren<SkinnedMeshRenderer>();
         _player = GetComponent<Player>();
+	    _audio = GetComponent<AudioSource>();
 	}
 
     /// <summary>
@@ -38,7 +43,9 @@ public class AbilityBlink : AbilityBase {
         _player.Animation.CastOnce = true;
         StartCoroutine(CastDelay());
         _targetPosition.y = 0;
-        _startParticle.transform.position = transform.position;                          
+        _startParticle.transform.position = transform.position;
+        _audio.clip = AudioBlink;
+        _audio.Play();
     }
 
     /// <summary>

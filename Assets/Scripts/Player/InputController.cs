@@ -27,7 +27,6 @@ public class InputController : MonoBehaviour
             _camera = FindObjectOfType<Camera>();
             //Globals.CameraScript.Init();
             PlayerAnimation = FindObjectOfType<PlayerAnimation>();
-            Globals.InputController = this;
             Initialized = true;
         }        
     } 
@@ -61,10 +60,10 @@ public class InputController : MonoBehaviour
 
         if (Input.GetButton("Ability") && !_player.AbilityController._allAbilitiesDisabled)
         {
-            Globals.CameraScript.AddMouseOffset(GetMousePosition());
+            GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
         } else
         {
-            Globals.CameraScript.MouseOffset = Vector3.zero;
+            GameStateManager.Instance.GameLoop.References.CameraScript.MouseOffset = Vector3.zero;
         }
 
         if (Input.GetButtonDown("Ability") && !_player.AbilityController._allAbilitiesDisabled)
@@ -88,7 +87,7 @@ public class InputController : MonoBehaviour
         {                                           
             if (!_player.Movement.Casting)
             {
-                Globals.CameraScript.AddMouseOffset(GetMousePosition());
+                GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
                 _player.Movement.SetShooting(true);                
                 _player.Shoot();
             }           
@@ -134,12 +133,12 @@ public class InputController : MonoBehaviour
 
         if (Input.GetButtonDown("Interact"))
         {
-            Globals.Interact = true;
+            _player.Interact = true;
         }
 
         if (Input.GetButtonUp("Interact"))
         {
-            Globals.Interact = false;
+            _player.Interact = false;
         }
 
         if (Input.GetKey(KeyCode.P))

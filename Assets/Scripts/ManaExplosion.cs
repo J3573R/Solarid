@@ -20,7 +20,6 @@ public class ManaExplosion : MonoBehaviour {
             _poolObject = Instantiate(ManaGlobePrefab, transform.position, Quaternion.identity);
             AddToPool(_poolObject);
         }
-        Globals.ManaExplosion = this;
     }
 
     public void AddToPool(GameObject gameobject)

@@ -20,14 +20,16 @@ public class Gun : MonoBehaviour
     public int BulletsRemaining;
     // Reload time of the gun
     public float ReloadTime;
+    public AudioClip AudioShot;
+    public AudioClip AudioReload;
+
 
     public float TargetDistance;    
     public float RecoilBuildUp;
     public float MaxRecoil;
     public bool Shooting;
     public bool Reloading;
-
-    private float ShootingTime;
+    
     private float _recoil;
     private Player _player;
     private Vector3 _target;
@@ -38,6 +40,7 @@ public class Gun : MonoBehaviour
     private Collider _collider;
     // Current status of reload
     private float _intervalTimer = 0;
+    private AudioSource _audio;
     public bool Initialized;
 
     void Awake()
@@ -53,6 +56,7 @@ public class Gun : MonoBehaviour
             _collider = GetComponent<Collider>();
             _player = FindObjectOfType<Player>();
             _aimPoint = GameObject.Find("AimPoint").transform;
+            _audio = GetComponent<AudioSource>();
             SetupBulletPool();
             Initialized = true;
         }
@@ -80,7 +84,6 @@ public class Gun : MonoBehaviour
         if (state)
         {
             Shooting = state;
-            ShootingTime = 0;
         }
         else
         {
@@ -106,6 +109,9 @@ public class Gun : MonoBehaviour
         if (BulletsRemaining <= 0 && !Reloading)
         {
             Reloading = true;
+            _audio.clip = AudioReload;
+            _audio.loop = true;
+            _audio.Play();
             StartCoroutine(Reload());
         }
     }
@@ -115,6 +121,9 @@ public class Gun : MonoBehaviour
         if (!Reloading)
         {
             Reloading = true;
+            _audio.clip = AudioReload;
+            _audio.loop = true;
+            _audio.Play();
             StartCoroutine(Reload());
         }        
     }
@@ -122,6 +131,7 @@ public class Gun : MonoBehaviour
     private IEnumerator Reload()
     {
         yield return new WaitForSeconds(ReloadTime);
+        _audio.Stop();
         Reloading = false;
         BulletsRemaining = ClipSize;
     }
@@ -143,6 +153,9 @@ public class Gun : MonoBehaviour
                     _bullets[i].transform.LookAt(_target);
                     _bullets[i].SetActive(true);
                     BulletsRemaining -= 1;
+                    _audio.clip = AudioShot;
+                    _audio.loop = false;
+                    _audio.Play();
                     break;
                 }
             }

@@ -6,6 +6,7 @@ public class PlayerHealth : Health {
 
     private HudBarController _controller;
     private int _originalHP;
+    private Player _player;
     public bool Initialized;
 
     // Use this for initialization
@@ -19,13 +20,14 @@ public class PlayerHealth : Health {
         {
             _originalHP = _health;
             _controller = GameObject.Find("HudHealth").GetComponent<HudBarController>();
+            _player = GetComponent<Player>();
             Initialized = true;
         }
     }
 
     public override bool TakeDamage(int damage)
     {
-        Globals.Interact = false;
+        _player.Interact = false;
         if (!IsDead())
         {            
             float secondary = ((float)damage) / ((float)_originalHP);
@@ -55,7 +57,7 @@ public class PlayerHealth : Health {
     /// </summary>
     private void Die()
     {
-        Globals.Player.GetComponent<Player>().Dead = true;
+        GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<Player>().Dead = true;
         
         //TODO: Implement dying
     }

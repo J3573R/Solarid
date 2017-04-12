@@ -17,6 +17,7 @@ public class ShielderIdle : EnemyStateBase
 
     protected override void Update()
     {
+        base.Update();
         Patrol();
         ChangeToAlert();
         if(Parent.IsNavMeshMoving() && !Idling)

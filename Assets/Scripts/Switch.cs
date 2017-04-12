@@ -25,6 +25,7 @@ public class Switch : MonoBehaviour
 
     private RotateConstantly _obeliskRotation;
     private Collider[] _platformColliders;
+    private AudioSource _audio;
     
 
     public void Awake()
@@ -38,6 +39,7 @@ public class Switch : MonoBehaviour
         _sliderBar.SetActive(false);
         _platformColliders = TargetDoor.gameObject.GetComponentsInChildren<Collider>();
         ToggleDoorColliders(TargetDoor.Open);
+        _audio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -50,7 +52,7 @@ public class Switch : MonoBehaviour
             _obeliskRotation.ChangeRotationSpeed = new Vector3(0, 0, 30);
         }
 
-        _distance = Vector3.Distance(Globals.Player.transform.position, transform.position);
+        _distance = Vector3.Distance(GameStateManager.Instance.GameLoop.Player.gameObject.transform.position, transform.position);
 
         // If player is close enought and door is not moving, show meter and response to interaction
         if (_distance <= 2 && !TargetDoor.Moving && !TargetDoor.Open)
@@ -63,7 +65,7 @@ public class Switch : MonoBehaviour
             _sliderBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + _offset);
 
             // If Interact button is pressed
-            if (Globals.Interact)
+            if (GameStateManager.Instance.GameLoop.References.Player.Interact)
             {
                 _switchValue += Time.deltaTime * 1f;
                 _slider.value = _switchValue;
@@ -80,6 +82,7 @@ public class Switch : MonoBehaviour
                     }
                     TargetDoor.ToggleDoor();
                     ToggleDoorColliders(TargetDoor.Open);
+                    _audio.Play();
                 }
             }
             else if (_switchValue > 0)

@@ -24,6 +24,7 @@ public class ChargerAttack : EnemyStateBase
 
     protected override void Update()
     {
+        base.Update();
         LookTarget();
         _distance = Vector3.Distance(transform.position, Parent.Target.transform.position);
 

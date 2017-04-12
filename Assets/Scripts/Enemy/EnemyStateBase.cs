@@ -25,7 +25,13 @@ public class EnemyStateBase : MonoBehaviour
         _transitionToAlert = 0;
     }
 
-    protected virtual void Update(){}
+    protected virtual void Update()
+    {
+        if (!Parent.Initialized)
+        {
+            return;
+        }
+    }
     protected virtual void OnEnable(){}
     protected virtual void OnDisable(){}
 

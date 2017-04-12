@@ -5,16 +5,7 @@ using UnityEngine;
 
 public class AbilityVortex : AbilityBase
 {
-
-    private Player _player;
-    [SerializeField]
-    private GameObject _blast;
-
-    // Use this for initialization
-    void Start()
-    {
-        _player = GetComponent<Player>();
-    }
+    [SerializeField] private GameObject _blast;
 
     /// <summary>
     /// Gets the mouseposition and throws the grenade to it

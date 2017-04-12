@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerMana Mana;
     [HideInInspector] public List<GameObject> Clones;
     public bool ShootingEnabled = true;
+    public int Damage;
+    public bool Interact = false;
     
     public bool Dead { get; set; }
     public bool Initialized;
@@ -32,7 +34,6 @@ public class Player : MonoBehaviour
     {
         if (!Initialized)
         {
-            Globals.Player = gameObject;
             Gun = GetComponentInChildren<Gun>();
             Input = GetComponent<InputController>();
             AbilityController = GetComponent<AbilityController>();
@@ -71,7 +72,8 @@ public class Player : MonoBehaviour
             if (Gun.Initialized && Input.Initialized && AbilityController.Initialized && Movement.Initialized
                 && Animation.Initialized && Health.Initialized && Mana.Initialized)
             {
-                Globals.GameLoop.PlayerReady = true;
+
+                GameStateManager.Instance.GameLoop.PlayerReady = true;
                 _playerReady = true;
             }
         }

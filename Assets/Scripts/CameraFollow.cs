@@ -23,29 +23,36 @@ public class CameraFollow : MonoBehaviour
 
     public void Init()
     {
+
         if (!Initialized)
         {           
             _player = GameObject.Find("Player");
-            Globals.CameraScript = this;
+            GameStateManager.Instance.GameLoop.References.CameraScript = this;
             transform.position = _player.transform.position + CameraOffset;
             Initialized = true;
-            if (Globals.GameLoop == null)
+            if (GameStateManager.Instance.GameLoop == null)
             {
                 Debug.Log("Null");
             }
-            Globals.GameLoop.CameraReady = true;
+            GameStateManager.Instance.GameLoop.CameraReady = true;
+            _player = GameObject.Find("Player");
         }
         
     } 
 
+        
+    
+
+
     void Update()
     {
-        if (!Initialized && Globals.GameLoop != null)
+        if (!Initialized && GameStateManager.Instance.GameLoop != null)
         {
             Init();
         }
 
-        if (Initialized) {
+        if (Initialized)
+        {
             if (shake)
             {
                 if (shakeDuration > 0)

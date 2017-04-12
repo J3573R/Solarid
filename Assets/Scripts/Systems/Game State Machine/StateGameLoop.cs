@@ -8,10 +8,13 @@ public class StateGameLoop : GameStateBase
 {
     public Text GitGud;
     public Player Player;
+    public GameLoopReferences References = new GameLoopReferences();
     public bool EnemiesReady;
     public bool PlayerReady;
     public bool CameraReady;
+    public bool Paused;
 
+    private InputController InputController;
     private bool _gameInitialized;
     private Camera _camera;
     private HudController _hud;
@@ -20,7 +23,7 @@ public class StateGameLoop : GameStateBase
 
     protected override void Awake()
     {
-        Globals.CameraScript = FindObjectOfType<CameraFollow>();
+        GameStateManager.Instance.GameLoop.References.CameraScript = FindObjectOfType<CameraFollow>();
         base.Awake();
         LevelName = SceneManager.GetActiveScene().name;
         GitGud = GameObject.Find("UI/Git_gud").GetComponent<Text>();
@@ -39,7 +42,14 @@ public class StateGameLoop : GameStateBase
 
     void Start()
     {
-        Player = Globals.Player.GetComponent<Player>();
+
+        Player = GameStateManager.Instance.GameLoop.Player;
+
+        Player = GameObject.FindObjectOfType<Player>();
+        InputController = Player.GetComponent<InputController>();
+        //_hud.FadeScreenToVisible();
+        References.Init();
+
     }
 
     protected override void Update()
@@ -48,14 +58,18 @@ public class StateGameLoop : GameStateBase
         {                        
             _dying = true;
             GitGud.gameObject.SetActive(true);
-            Globals.InputController.ListenInput = false;
+            InputController.ListenInput = false;
             StartCoroutine(Die());
         }
 
         if (CameraReady && PlayerReady && CameraReady && !_gameInitialized)
         {
             GameStateManager.Instance.FadeScreenToVisible(2);
-            Globals.Paused = false;
+            GameStateManager.Instance.GameLoop.Paused = false;
+
+            //_hud.FadeScreenToVisible();
+            Paused = true;
+
             _gameInitialized = true;
         }
     }

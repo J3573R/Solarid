@@ -7,13 +7,14 @@ public class Charger : EnemyBase
 {
     // Attack speed of the enemy
     public float TimeBetweenAttacks = 0.2f;
-
     // Time after last attack
     public float AttackTimer = 0;
+    public AudioClip AudioWalk;
 
     public ChargerAnimationTracker animTracker;
 
     private Vector3 _positionAtLastFrame;
+    private AudioSource _audio;
 
     protected override void Init()
     {
@@ -23,7 +24,7 @@ public class Charger : EnemyBase
             SetState(EnemyBase.State.Idle);
         }
         StartPosition = transform.position;
-
+        _audio = GetComponent<AudioSource>();
         animTracker = GetComponentInChildren<ChargerAnimationTracker>();
         Initialized = true;
     }
@@ -40,6 +41,12 @@ public class Charger : EnemyBase
             }
             else
             {
+                if (!_audio.isPlaying)
+                {
+                    _audio.clip = AudioWalk;
+                    _audio.loop = false;
+                    _audio.Play();
+                }
                 Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
             }
 

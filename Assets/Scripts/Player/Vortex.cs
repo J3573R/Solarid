@@ -26,7 +26,7 @@ public class Vortex : MonoBehaviour
             if (tmp != null)
             {
                 tmp.PullToPoint(transform.position, 0.1f);
-                tmp.AlertOthers();
+                
                 if (_damageTickTime <= 0)
                 {
                     tmp.TakeDamage(DamagePerSecond);

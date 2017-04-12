@@ -19,6 +19,7 @@ public class ChargerAlert : EnemyStateBase {
 
     protected override void Update()
     {
+        base.Update();
         LookTarget();
         ChangeToMove();
     }

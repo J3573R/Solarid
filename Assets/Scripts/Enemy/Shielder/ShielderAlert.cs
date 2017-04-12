@@ -19,6 +19,7 @@ public class ShielderAlert : EnemyStateBase {
 
     protected override void Update()
     {
+        base.Update();
         LookPlayer();
         ChangeToMove();
     }

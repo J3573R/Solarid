@@ -23,7 +23,7 @@ public class EnemyBase : MonoBehaviour
     // Changes enemy state to idle when distance is bigger than this
     public int DisengageDistance = 7;
 
-    protected bool Initialized = false;
+    public bool Initialized = false;
 
     protected NavMeshAgent Agent;
 
@@ -76,21 +76,22 @@ public class EnemyBase : MonoBehaviour
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
-        if (Globals.Player != null)
-            _player = Globals.Player.GetComponent<Player>();
+        if (GameStateManager.Instance.GameLoop.Player.gameObject != null)
+            _player = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<Player>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI").transform);
         _healthBar = bar.GetComponent<Slider>();
         _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         _healthBar.maxValue = Health.CurrentHealth;
         _healthBar.gameObject.SetActive(false);
+        Target = GetClosestTarget();
     }
 
     protected virtual void Update()
     {
         if (!Initialized)
         {
-            if (Globals.GameLoop.PlayerReady)
+            if (GameStateManager.Instance.GameLoop.PlayerReady)
             {
                 Init();
             }
@@ -118,7 +119,6 @@ public class EnemyBase : MonoBehaviour
             _pullActive = false;
             Agent.enabled = true;
         }
-        
     }
 
     /// <summary>
@@ -153,10 +153,9 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == "PlayerBullet")
         {
-            TakeDamage(Globals.PlayerDamage);            
+            TakeDamage(_player.Damage);            
         }
     }
 
@@ -172,7 +171,8 @@ public class EnemyBase : MonoBehaviour
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
         _healthBar.gameObject.SetActive(false);
-        Globals.ManaExplosion.Explode(transform.position);
+        GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position);
+        CurrentStateObject.gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
@@ -222,7 +222,7 @@ public class EnemyBase : MonoBehaviour
     /// <returns>False if nav mesh is reached target, otherwise true</returns>
     public bool IsNavMeshMoving()
     {
-        if (!Agent.pathPending)
+        if (Agent.isActiveAndEnabled && !Agent.pathPending)
         {
             if (Agent.remainingDistance <= Agent.stoppingDistance)
             {
@@ -238,7 +238,7 @@ public class EnemyBase : MonoBehaviour
 
     public GameObject GetClosestTarget()
     {
-        GameObject target = Globals.Player;
+        GameObject target = GameStateManager.Instance.GameLoop.Player.gameObject.gameObject;
         float targetDistance = Vector3.Distance(transform.position, target.transform.position);
 
         foreach (var clone in _player.Clones)

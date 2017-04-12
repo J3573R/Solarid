@@ -63,7 +63,7 @@ public class SaveSystem : MonoBehaviour
     /// </summary>
     public void SaveAbilities()
     {
-        SaveData.SetAbilityArray(Globals.Player.GetComponent<AbilityController>().AbilityArray);
+        SaveData.SetAbilityArray(GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<AbilityController>().AbilityArray);
         SaveStats();
     }
 

@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 public class ChargerIdle : EnemyStateBase
 {
-
-    private Charger _parent;
     private float _timeToWalk;
     private bool Idling;
 
@@ -15,20 +13,11 @@ public class ChargerIdle : EnemyStateBase
         eState = EnemyBase.State.Idle;
         _timeToWalk = 0;
         Agent.speed = 3.5f;
-
-        try
-        {
-            _parent = (Charger) Parent;
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Parent was not Charger in ChargerIdle: " + e.Message);
-        }
-        
     }
 
     protected override void Update()
     {
+        base.Update();
         Patrol();
         ChangeToAlert();
         if(Parent.IsNavMeshMoving() && !Idling)
@@ -49,7 +38,7 @@ public class ChargerIdle : EnemyStateBase
             randomDirection += Parent.StartPosition;
 
             NavMeshHit navHit;
-            if (NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
+            if (Agent.isActiveAndEnabled && NavMesh.SamplePosition(randomDirection, out navHit, 1.0f, NavMesh.AllAreas))
             {
                 Agent.destination = navHit.position;
                 _timeToWalk = UnityEngine.Random.Range(1, 3);

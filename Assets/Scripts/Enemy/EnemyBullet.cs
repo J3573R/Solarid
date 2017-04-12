@@ -55,7 +55,7 @@ public class EnemyBullet : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                PlayerHealth hp = Globals.Player.GetComponent<PlayerHealth>();
+                PlayerHealth hp = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<PlayerHealth>();
                 hp.TakeDamage(Damage);
                 MyPool.ReturnBullet(gameObject);
             }

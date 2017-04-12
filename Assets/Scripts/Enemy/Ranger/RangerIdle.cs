@@ -20,6 +20,7 @@ public class RangerIdle : EnemyStateBase
 
     protected override void Update()
     {
+        base.Update();
         Patrol();
         ChangeToAlert();
         if(IsNavMeshMoving() && !Idling)

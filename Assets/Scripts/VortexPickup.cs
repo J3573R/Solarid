@@ -9,7 +9,7 @@ public class VortexPickup : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        _abilitycontroller = Globals.Player.GetComponent<AbilityController>();
+        _abilitycontroller = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<AbilityController>();
     }
 
     private void OnTriggerEnter(Collider other)

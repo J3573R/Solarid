@@ -24,6 +24,7 @@ public class RangerMove : EnemyStateBase {
 
     protected override void Update()
     {
+        base.Update();
         if (IsNavMeshMoving())
         {
             Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
@@ -44,13 +45,13 @@ public class RangerMove : EnemyStateBase {
         {
             Parent.SetState(EnemyBase.State.Attack);
             
-        } else if (_distance > _maxDistance)
+        } else if (_distance > _maxDistance && Agent.isActiveAndEnabled)
         {
             Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.Walk);
             Agent.stoppingDistance = _maxDistance;
             Agent.destination = Parent.Target.transform.position;
             
-        }  else if(_distance < _minDistance)
+        }  else if(_distance < _minDistance && Agent.isActiveAndEnabled)
         {
             Parent.Animator.SetInteger("animState", (int)EnemyBase.AnimationState.WalkBack);
             _direction = (Parent.Target.transform.position - transform.position).normalized;
@@ -68,7 +69,7 @@ public class RangerMove : EnemyStateBase {
     {
         if (!Agent.pathPending)
         {
-            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            if (Agent.isActiveAndEnabled && Agent.remainingDistance <= Agent.stoppingDistance)
             {
                 if (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f)
                 {

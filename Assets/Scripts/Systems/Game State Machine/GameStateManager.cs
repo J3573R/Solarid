@@ -10,8 +10,7 @@ public class GameStateManager : MonoBehaviour
     #region Singleton
     // Single instance of singleton
     public static GameStateManager Instance;
-    [SerializeField]
-    private GameObject _saveSystemPrefab;
+    [SerializeField] private GameObject _saveSystemPrefab;
 
     void Awake()
     {
@@ -40,6 +39,8 @@ public class GameStateManager : MonoBehaviour
 
     private Image _blackScreen;
     public GameStateBase CurrentState;
+
+    public StateGameLoop GameLoop;
 
     // Current game state
     [SerializeField] private GameState _gameState = GameState.SplashScreen;
@@ -119,11 +120,10 @@ public class GameStateManager : MonoBehaviour
                 _gameStateObj.name = "Game State: Options";
                 break;
             case GameState.GameLoop:
-                Globals.GameLoop = _gameStateObj.AddComponent<StateGameLoop>();
+                GameLoop = _gameStateObj.AddComponent<StateGameLoop>();
                 _gameStateObj.name = "Game State: GameLoop";
                 break;
         }
-        CurrentState = _gameStateObj.GetComponent<GameStateBase>();
         DontDestroyOnLoad(_gameStateObj);
     }
 
