@@ -8,6 +8,7 @@ public class PlayerHealth : Health {
     private int _originalHP;
     private Player _player;
     public bool Initialized;
+    public bool Invulnerable;
 
     // Use this for initialization
     void Start () {
@@ -21,35 +22,39 @@ public class PlayerHealth : Health {
             _originalHP = _health;
             _controller = GameObject.Find("HudHealth").GetComponent<HudBarController>();
             _player = GetComponent<Player>();
+            Invulnerable = false;
             Initialized = true;
         }
     }
 
     public override bool TakeDamage(int damage)
     {
-        _player.Interact = false;
-        if (!IsDead())
-        {            
-            float secondary = ((float)damage) / ((float)_originalHP);
-            float progress = ((float)_health) / ((float)_originalHP);
-
-            CurrentHealth -= damage;
-
-            if (secondary > progress)
-                secondary = progress;
-
-            progress = ((float)_health) / ((float)_originalHP);
-            _controller.SecondaryProgress += secondary;
-            _controller.Progress = progress;
-        }
-
-        if (IsDead())
+        if (!Invulnerable)
         {
-            Die();
-        }
-        return IsDead();
+            _player.Interact = false;
+            if (!IsDead())
+            {
+                float secondary = ((float)damage) / ((float)_originalHP);
+                float progress = ((float)_health) / ((float)_originalHP);
 
-        
+                CurrentHealth -= damage;
+
+                if (secondary > progress)
+                    secondary = progress;
+
+                progress = ((float)_health) / ((float)_originalHP);
+                _controller.SecondaryProgress += secondary;
+                _controller.Progress = progress;
+            }
+
+            if (IsDead())
+            {
+                Die();
+            }
+            return IsDead();
+        }
+
+        return IsDead();        
     }
 
     /// <summary>
@@ -61,9 +66,4 @@ public class PlayerHealth : Health {
         
         //TODO: Implement dying
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

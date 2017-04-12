@@ -5,14 +5,17 @@ using UnityEngine;
 public class RangeCheck : MonoBehaviour {
 
     private MeshRenderer _renderer;
+    private SpriteRenderer _edgeRenderer;
     private Player _player;
     public float PositionCheckInterval;
 
 	// Use this for initialization
 	void Start () {
         _renderer = GetComponent<MeshRenderer>();
+        _edgeRenderer = GetComponentInChildren<SpriteRenderer>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _renderer.enabled = false;
+        _edgeRenderer.enabled = false;
     }
 	
 	// Update is called once per frame
@@ -35,9 +38,11 @@ public class RangeCheck : MonoBehaviour {
         if (draw)
         {
             _renderer.enabled = true;
+            _edgeRenderer.enabled = true;
         } else
         {
             _renderer.enabled = false;
+            _edgeRenderer.enabled = false;
         }
     }
 
