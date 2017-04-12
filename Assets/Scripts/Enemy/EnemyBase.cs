@@ -209,6 +209,8 @@ public class EnemyBase : MonoBehaviour
         {
             Staff.transform.parent = null;
         }
+
+        CurrentStateObject.enabled = false;
     }
 
     /// <summary>
