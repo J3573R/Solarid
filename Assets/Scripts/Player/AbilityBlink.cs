@@ -46,6 +46,7 @@ public class AbilityBlink : AbilityBase
         _startParticle.transform.position = transform.position;
         _audio.clip = AudioBlink;
         _audio.Play();
+        _player.Health.Invulnerable = true;
     }
 
     /// <summary>
@@ -83,5 +84,6 @@ public class AbilityBlink : AbilityBase
         _player.ShootingEnabled = true;
         _playerRender.enabled = true;
         _player.Input.ListenInput = true;
+        _player.Health.Invulnerable = false;
     }
 }
