@@ -20,9 +20,9 @@ public class Player : MonoBehaviour
     public bool ShootingEnabled = true;
     public int Damage;
     public bool Interact = false;
-    
     public bool Dead { get; set; }
     public bool Initialized;
+
     private bool _playerReady;
 
     void Awake()

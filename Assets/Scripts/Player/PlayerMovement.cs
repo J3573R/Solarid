@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    private Player _player;
-    private Rigidbody _rigidbody;
+    
     public bool Shooting;
     public bool Casting;
     public float AimingRotationSpeed = 20f;
+    public bool Initialized;
+    public AudioClip AudioRun;
+
+    private Player _player;
+    private Rigidbody _rigidbody;
     private Vector2 _vMousePos;
     private Vector2 _fPlayerPosInScreen;
     private Vector2 _fDiff;
@@ -21,7 +25,7 @@ public class PlayerMovement : MonoBehaviour {
     private float _horizontalDirection;
     private float _verticalDirection;
     private bool _goingRight;
-    public bool Initialized;
+    private AudioSource _audio;
 
     // Use this for initialization
     void Start () {
@@ -34,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             _player = GetComponent<Player>();
             _rigidbody = GetComponent<Rigidbody>();
+            _audio = GetComponent<AudioSource>();
             Initialized = true;
         }
     }
@@ -106,6 +111,11 @@ public class PlayerMovement : MonoBehaviour {
                     Time.fixedDeltaTime * rotationSpeed);
 
             _moveDirection = MovementBounds(_moveDirection);
+            if (!_audio.isPlaying)
+            {
+                _audio.clip = AudioRun;
+                _audio.Play();
+            }
 
             _rigidbody.velocity = _moveDirection.normalized * _moveSpeed;
             CheckDirection(_moveDirection);
