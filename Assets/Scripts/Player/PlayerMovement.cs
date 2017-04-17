@@ -40,10 +40,13 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Shooting || Casting && !_player.AbilityController._allAbilitiesDisabled)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            ListenMouse();
-        }
+            if (Shooting || Casting && !_player.AbilityController._allAbilitiesDisabled)
+            {
+                ListenMouse();
+            }
+        }        
     }
 
     /// <summary>

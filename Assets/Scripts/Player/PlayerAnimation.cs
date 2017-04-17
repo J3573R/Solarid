@@ -63,14 +63,17 @@ public class PlayerAnimation : MonoBehaviour {
 
     private void Update()
     {
-        CheckAnimationStance();
+        if (!GameStateManager.Instance.GameLoop.Paused)
+        {
+            CheckAnimationStance();
 
-        if (_currentStance == AnimationStance.Aiming)
-            CheckAimAnimation();
-        else if (_currentStance == AnimationStance.Casting)
-            CheckCastAnimation();
-        else if (_currentStance == AnimationStance.Idle)
-            CheckIdleAnimation();
+            if (_currentStance == AnimationStance.Aiming)
+                CheckAimAnimation();
+            else if (_currentStance == AnimationStance.Casting)
+                CheckCastAnimation();
+            else if (_currentStance == AnimationStance.Idle)
+                CheckIdleAnimation();
+        }        
     }
 
     /// <summary>

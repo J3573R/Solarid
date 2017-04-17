@@ -53,12 +53,15 @@ public class PlayerMana : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		if (_currentMana < _maxMana)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            PassiveManaRecharge();
-        }
+            if (_currentMana < _maxMana)
+            {
+                PassiveManaRecharge();
+            }
 
-        UpdateManaDisplay();
+            UpdateManaDisplay();
+        }		
 	}
 
     /// <summary>

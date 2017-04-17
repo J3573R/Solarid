@@ -33,18 +33,22 @@ public class InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (ListenInput)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        } else
-        {
-            _player.Movement.Move(0, 0);
-        }        
+            if (ListenInput)
+            {
+                _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            }
+            else
+            {
+                _player.Movement.Move(0, 0);
+            }
+        }           
     }
 
     void Update()
     {
-        if (ListenInput)
+        if (ListenInput && !GameStateManager.Instance.GameLoop.Paused)
         {
             GetMouseInput();
             GetKeyBoardInput();
@@ -90,8 +94,12 @@ public class InputController : MonoBehaviour
                 GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
                 _player.Movement.SetShooting(true);                
                 _player.Shoot();
-            }           
-        } 
+            }    
+        } else
+        {
+            if (!_player.Movement.Casting)
+                _player.Movement.SetShooting(false);
+        }
 
         if (Input.GetButtonUp("Fire1"))
         {

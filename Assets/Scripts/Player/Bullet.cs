@@ -85,18 +85,21 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_active)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            if (_time > _fMaxDist)
+            if (_active)
             {
-                gameObject.SetActive(false);
-                _time = 0;
+                if (_time > _fMaxDist)
+                {
+                    gameObject.SetActive(false);
+                    _time = 0;
+                }
+                else
+                {
+                    transform.Translate(Vector3.forward * Speed * Time.deltaTime);
+                    _time += Time.deltaTime;
+                }
             }
-            else
-            {
-                transform.Translate(Vector3.forward * Speed * Time.deltaTime);
-                _time += Time.deltaTime;
-            }
-        }      
+        }             
     }  
 }

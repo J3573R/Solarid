@@ -53,67 +53,73 @@ public class Clone : MonoBehaviour {
 		
 	void Update () {
 
-        _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + HealthBarOffset);
-	    _healthBar.value = Health.CurrentHealth;
-
-        UpdateLifeTimeCircle();        
-
-        if (!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            _healthBar.gameObject.SetActive(true);
-            _showHealth = true;
-        }
+            _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + HealthBarOffset);
+            _healthBar.value = Health.CurrentHealth;
 
-        if (!_dying)
-        {
-            if (_target == null)
+            UpdateLifeTimeCircle();
+
+            if (!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
             {
-                _animator.SetInteger("animState", 0);
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 10);
-                foreach (var collider in colliders)
+                _healthBar.gameObject.SetActive(true);
+                _showHealth = true;
+            }
+
+            if (!_dying)
+            {
+                if (_target == null)
                 {
-                    if (collider.tag == "Enemy")
+                    _animator.SetInteger("animState", 0);
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10);
+                    foreach (var collider in colliders)
                     {
-                        if (_target == null)
+                        if (collider.tag == "Enemy")
                         {
-                            _target = collider.gameObject;
-                        }
-                        else
-                        {
-                            float distance = Vector3.Distance(transform.position, collider.transform.position);
-                            if (_targetDistance < distance)
+                            if (_target == null)
                             {
                                 _target = collider.gameObject;
-                                _targetDistance = distance;
+                            }
+                            else
+                            {
+                                float distance = Vector3.Distance(transform.position, collider.transform.position);
+                                if (_targetDistance < distance)
+                                {
+                                    _target = collider.gameObject;
+                                    _targetDistance = distance;
+                                }
                             }
                         }
                     }
                 }
+                else
+                {
+                    _animator.SetInteger("animState", 1);
+                    Vector3 direction = _target.transform.position - transform.position;
+                    direction.y = 0;
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = lookRotation;//Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
+                    _gun.ShootDirection(_target.transform.position);
+                }
+                _lifetime -= Time.deltaTime;
+                if (_lifetime <= 0 || Health.CurrentHealth <= 0)
+                {
+                    _dying = true;
+                    _healthBar.gameObject.SetActive(false);
+                    Hero.SetActive(false);
+                    _destroyEffect.Play();
+                }
             }
             else
             {
-                _animator.SetInteger("animState", 1);
-                Vector3 direction = _target.transform.position - transform.position;
-                direction.y = 0;
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = lookRotation;//Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
-                _gun.ShootDirection(_target.transform.position);
+                if (!_destroyEffect.IsAlive())
+                {
+                    gameObject.SetActive(false);
+                }
             }
-            _lifetime -= Time.deltaTime;
-            if (_lifetime <= 0 || Health.CurrentHealth <= 0)
-            {
-                _dying = true;
-                _healthBar.gameObject.SetActive(false);
-                Hero.SetActive(false);
-                _destroyEffect.Play();
-            }
-        } else
-        {
-            if (!_destroyEffect.IsAlive())
-            {
-                gameObject.SetActive(false);
-            }            
         }
+
+        
     }
 
     private void UpdateLifeTimeCircle()

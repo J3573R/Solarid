@@ -94,26 +94,28 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(transform.position.y);
-        if (_intervalTimer > 0)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            _intervalTimer -= Time.deltaTime * 1;
-        }
+            if (_intervalTimer > 0)
+            {
+                _intervalTimer -= Time.deltaTime * 1;
+            }
 
-        if (!Shooting && _recoil > 0)
-        {
-            _recoil -= Time.deltaTime / 2;
-           
-        }
+            if (!Shooting && _recoil > 0)
+            {
+                _recoil -= Time.deltaTime / 2;
 
-        if (BulletsRemaining <= 0 && !Reloading)
-        {
-            Reloading = true;
-            _audio.clip = AudioReload;
-            _audio.loop = true;
-            _audio.Play();
-            StartCoroutine(Reload());
-        }
+            }
+
+            if (BulletsRemaining <= 0 && !Reloading)
+            {
+                Reloading = true;
+                _audio.clip = AudioReload;
+                _audio.loop = true;
+                _audio.Play();
+                StartCoroutine(Reload());
+            }
+        }        
     }
 
     public void InitiateReload()

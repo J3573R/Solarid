@@ -80,10 +80,13 @@ public class AbilityController : MonoBehaviour {
 
     private void Update()
     {
-        if (_currentCooldown > 0)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            _currentCooldown -= Time.deltaTime;
-        }
+            if (_currentCooldown > 0)
+            {
+                _currentCooldown -= Time.deltaTime;
+            }
+        }        
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,8 @@ public class StateGameLoop : GameStateBase
     private InputController InputController;
     private bool _gameInitialized;
     private Camera _camera;
+    private Image _blackScreen;
+    private GameObject _pauseMenu;
     private HudController _hud;
     private bool _dying = false;
 
@@ -30,6 +33,9 @@ public class StateGameLoop : GameStateBase
         GitGud.gameObject.SetActive(false);
         _hud = GameObject.Find("HUD").GetComponent<HudController>();
         _hud.init();
+        _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+        _pauseMenu = GameObject.Find("PauseMenu");
+        _pauseMenu.SetActive(false);
         
         if (SaveSystem.Instance != null)
             SaveSystem.Instance.SaveCurrentLevel();
@@ -47,13 +53,17 @@ public class StateGameLoop : GameStateBase
 
         Player = GameObject.FindObjectOfType<Player>();
         InputController = Player.GetComponent<InputController>();
-        //_hud.FadeScreenToVisible();
         References.Init();
 
     }
 
     protected override void Update()
     {
+        if (!Paused && Input.GetButtonDown("Pause"))        
+            Pause();           
+        else if (Paused && Input.GetButtonDown("Pause"))        
+            UnPause();  
+        
         if (!_dying && Player.Dead)
         {                        
             _dying = true;
@@ -65,13 +75,25 @@ public class StateGameLoop : GameStateBase
         if (CameraReady && PlayerReady && CameraReady && !_gameInitialized)
         {
             GameStateManager.Instance.FadeScreenToVisible(2);
-            GameStateManager.Instance.GameLoop.Paused = false;
-
-            //_hud.FadeScreenToVisible();
-            Paused = true;
+            
+            Paused = false;
 
             _gameInitialized = true;
         }
+    }
+
+    private void UnPause()
+    {
+        Paused = false;
+        _blackScreen.CrossFadeAlpha(0, 0, true);
+        _pauseMenu.SetActive(false);
+    }
+
+    private void Pause()
+    {
+        Paused = true;
+        _blackScreen.CrossFadeAlpha(0.5f, 0, true);
+        _pauseMenu.SetActive(true);
     }
 
     public IEnumerator Die()

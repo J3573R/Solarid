@@ -45,10 +45,14 @@ public class CloneGun : MonoBehaviour
 
     void Update()
     {
-        if (_intervalTimer > 0)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            _intervalTimer -= Time.deltaTime * 1;
+            if (_intervalTimer > 0)
+            {
+                _intervalTimer -= Time.deltaTime * 1;
+            }
         }
+        
     }    
 
     /// <summary>

@@ -13,31 +13,34 @@ public class Vortex : MonoBehaviour
 
 	void Update () {
 
-        if (_damageTickTime <= 0)
+        if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            _damageTickTime = 1;
-        }
-
-        _damageTickTime -= Time.deltaTime;
-        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, 5);
-        foreach (Collider enemy in enemyColliders)
-        {
-            EnemyBase tmp = enemy.gameObject.GetComponent<EnemyBase>();
-            if (tmp != null)
+            if (_damageTickTime <= 0)
             {
-                tmp.PullToPoint(transform.position, 0.1f);
-                
-                if (_damageTickTime <= 0)
+                _damageTickTime = 1;
+            }
+
+            _damageTickTime -= Time.deltaTime;
+            Collider[] enemyColliders = Physics.OverlapSphere(transform.position, 5);
+            foreach (Collider enemy in enemyColliders)
+            {
+                EnemyBase tmp = enemy.gameObject.GetComponent<EnemyBase>();
+                if (tmp != null)
                 {
-                    tmp.TakeDamage(DamagePerSecond);
+                    tmp.PullToPoint(transform.position, 0.1f);
+
+                    if (_damageTickTime <= 0)
+                    {
+                        tmp.TakeDamage(DamagePerSecond);
+                    }
                 }
             }
-        }
-        
-        if (Lifetime <= 0)
-        {
-            Destroy(gameObject);
-        }
-        Lifetime -= Time.deltaTime;
+
+            if (Lifetime <= 0)
+            {
+                Destroy(gameObject);
+            }
+            Lifetime -= Time.deltaTime;
+        }        
     }
 }
