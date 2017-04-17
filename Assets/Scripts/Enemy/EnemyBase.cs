@@ -10,12 +10,14 @@ public class EnemyBase : MonoBehaviour
     public int Damage;
     public GameObject DeathEffect;
     public GameObject HealthBar;
+    public Health Health;
     public Vector3 StartPosition;
     public Animator Animator;
     public float RangeToAlert = 1;
     public float ChaseTime = 3;
     public GameObject Target;
     public GameObject AttackTarget;
+    [HideInInspector] public bool Dead = false;
 
     // Changes enemy state to alert when distance is smaller than this
     public int AlertDistance = 5;
@@ -60,7 +62,6 @@ public class EnemyBase : MonoBehaviour
 
     protected EnemyBase.State CurrentState;
     protected EnemyStateBase CurrentStateObject;
-    protected Health Health;
 
     [SerializeField]
     private Vector3 _healthBarOffset = Vector3.zero;
@@ -91,6 +92,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
+
         if (!Initialized)
         {
             if (GameStateManager.Instance.GameLoop.PlayerReady)
@@ -180,8 +182,10 @@ public class EnemyBase : MonoBehaviour
             Instantiate(DeathEffect, transform.position, Quaternion.identity);
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
-        _healthBar.gameObject.SetActive(false);
+
         GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position);
+
+        _healthBar.gameObject.SetActive(false);
         //CurrentStateObject.gameObject.SetActive(false);        
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
@@ -210,7 +214,9 @@ public class EnemyBase : MonoBehaviour
             Staff.transform.parent = null;
         }
 
-        CurrentStateObject.enabled = false;
+        Dead = true;
+        Destroy(CurrentStateObject);
+        CurrentState = State.None;
     }
 
     /// <summary>

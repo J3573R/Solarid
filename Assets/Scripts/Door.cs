@@ -49,9 +49,13 @@ public class Door : MonoBehaviour
             _state = 0;
             GameStateManager.Instance.GameLoop.References.CameraScript.Harlem(0.2f, 2f);
             _moving = true;
-            _audio.clip = AudioRising;
-            _audio.volume = 0;
-            _audio.Play();
+            if (_audio != null)
+            {
+                _audio.clip = AudioRising;
+                _audio.volume = 0;
+                _audio.Play();
+            }
+            
             return true;
         }
 
@@ -64,25 +68,37 @@ public class Door : MonoBehaviour
         {
             _state += Time.deltaTime / _speed;
             
-            // Audio fade effect by Tommi
-            if (_state / 0.5f <= 1)
-            {
-                //_audio.volume += Mathf.Lerp(0, 1, Easing.EaseIn(_state / 0.5f, EasingType.Quadratic));
-                _audio.volume += Time.deltaTime;
-            }
-            else
-            {
-                //_audio.volume -= Mathf.Lerp(1, 0, Easing.EaseOut(_state / 0.5f - 1 / 0.5f, EasingType.Quadratic));
-                _audio.volume -= Time.deltaTime;
-            }
+            AudioFade();
             
             transform.position = Vector3.Lerp(_startPosition, _endPosition, Easing.EaseInOut(_state, EasingType.Quartic, EasingType.Quartic));
             if (_state >= 1)
             {
-                _audio.Stop();
+                if (_audio != null)
+                {
+                    _audio.Stop();
+                }
+                    
                 _moving = false;
                 _state = 1;
             }
+        }
+    }
+
+    void AudioFade()
+    {
+        if(_audio == null)
+            return;
+
+        // Audio fade effect by Tommi
+        if (_state / 0.5f <= 1)
+        {
+            //_audio.volume += Mathf.Lerp(0, 1, Easing.EaseIn(_state / 0.5f, EasingType.Quadratic));
+            _audio.volume += Time.deltaTime;
+        }
+        else
+        {
+            //_audio.volume -= Mathf.Lerp(1, 0, Easing.EaseOut(_state / 0.5f - 1 / 0.5f, EasingType.Quadratic));
+            _audio.volume -= Time.deltaTime;
         }
     }
 

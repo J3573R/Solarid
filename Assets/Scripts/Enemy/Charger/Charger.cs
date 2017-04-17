@@ -59,8 +59,8 @@ public class Charger : EnemyBase
     /// </summary>
     /// <param name="state">State to change</param>
     public override void SetState(EnemyBase.State state)
-    {        
-        if (CurrentState != state)
+    {
+        if (CurrentState != state && !Dead)
         {
             if (CurrentStateObject != null)
             {

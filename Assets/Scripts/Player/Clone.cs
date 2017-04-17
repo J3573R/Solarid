@@ -16,6 +16,7 @@ public class Clone : MonoBehaviour {
     private CloneGun _gun;
     private float _targetDistance = Mathf.Infinity;
     private GameObject _target;
+    private EnemyBase _targetEnemyBase;
     private Animator _animator;
     private float _lifetime;
     private ParticleSystem _destroyEffect;
@@ -47,7 +48,6 @@ public class Clone : MonoBehaviour {
         _lifetime = Lifetime;
         _destroyEffect.Stop();
         Hero.SetActive(true);
-        
         _dying = false;
     }
 		
@@ -58,6 +58,7 @@ public class Clone : MonoBehaviour {
 
         UpdateLifeTimeCircle();        
 
+        // Activates health bar when damage is dealt.
         if (!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
         {
             _healthBar.gameObject.SetActive(true);
@@ -66,29 +67,17 @@ public class Clone : MonoBehaviour {
 
         if (!_dying)
         {
+            // When target dies
+            if (_targetEnemyBase != null && _targetEnemyBase.Dead)
+            {
+                ResetTarget();
+            }
+
+            // Default behaviour
             if (_target == null)
             {
                 _animator.SetInteger("animState", 0);
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 10);
-                foreach (var collider in colliders)
-                {
-                    if (collider.tag == "Enemy")
-                    {
-                        if (_target == null)
-                        {
-                            _target = collider.gameObject;
-                        }
-                        else
-                        {
-                            float distance = Vector3.Distance(transform.position, collider.transform.position);
-                            if (_targetDistance < distance)
-                            {
-                                _target = collider.gameObject;
-                                _targetDistance = distance;
-                            }
-                        }
-                    }
-                }
+                SearchTarget();
             }
             else
             {
@@ -96,18 +85,19 @@ public class Clone : MonoBehaviour {
                 Vector3 direction = _target.transform.position - transform.position;
                 direction.y = 0;
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = lookRotation;//Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
+                transform.rotation = lookRotation;
                 _gun.ShootDirection(_target.transform.position);
             }
-            _lifetime -= Time.deltaTime;
+            
+            // If health depletes or time runs out
             if (_lifetime <= 0 || Health.CurrentHealth <= 0)
             {
-                _dying = true;
-                _healthBar.gameObject.SetActive(false);
-                Hero.SetActive(false);
-                _destroyEffect.Play();
+                Die();
             }
-        } else
+
+            _lifetime -= Time.deltaTime;
+        }
+        else
         {
             if (!_destroyEffect.IsAlive())
             {
@@ -136,6 +126,69 @@ public class Clone : MonoBehaviour {
         {
             EnemyBullet bullet = other.gameObject.GetComponent<EnemyBullet>();
             Health.TakeDamage(bullet.Damage);
+        }
+    }
+
+    /// <summary>
+    /// Resets clone target.
+    /// </summary>
+    void ResetTarget()
+    {
+        _target = null;
+        _targetEnemyBase = null;
+        _targetDistance = 0;
+    }
+
+    /// <summary>
+    /// Sets clone target.
+    /// </summary>
+    /// <param name="target">Gameobject with enemy tag and EnemyBase component.</param>
+    void SetTarget(GameObject target)
+    {
+        _target = target;
+        _targetEnemyBase = target.GetComponent<EnemyBase>();
+        _targetDistance = Vector3.Distance(transform.position, target.transform.position);
+    }
+
+    /// <summary>
+    /// Starts destruction sequence for clone.
+    /// </summary>
+    void Die()
+    {
+        _dying = true;
+        _healthBar.gameObject.SetActive(false);
+        Hero.SetActive(false);
+        _destroyEffect.Play();
+    }
+
+    /// <summary>
+    /// Searches nearest enemy in range.
+    /// </summary>
+    void SearchTarget()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10);
+        foreach (var collider in colliders)
+        {
+            if (collider.tag == "Enemy")
+            {
+                EnemyBase enemy = collider.gameObject.GetComponent<EnemyBase>();
+                if (enemy.Dead)
+                    continue;
+
+
+                if (_target == null)
+                {
+                    SetTarget(collider.gameObject);
+                }
+                else
+                {
+                    float distance = Vector3.Distance(transform.position, collider.transform.position);
+                    if (_targetDistance < distance)
+                    {
+                        SetTarget(collider.gameObject);
+                    }
+                }
+            }
         }
     }
 }
