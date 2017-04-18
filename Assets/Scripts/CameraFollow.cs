@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
     public float CameraDelay = 5f;
     // Camera offset from player
     public Vector3 CameraOffset = new Vector3(0, 10, -5);
-
+    public MonoBehaviour AnimationComponent;
     public Vector3 MouseOffset = Vector3.zero;
     public bool Initialized = false;
 
@@ -14,12 +14,15 @@ public class CameraFollow : MonoBehaviour
     private GameObject _player;
     // Cameras current position
     private Vector3 _vCurPos;
+    
 
+    private Quaternion _originalRotation;
     private bool shake = false;
     private float shakeAmount = 0;
     private float shakeDuration = 0;
     private float originalShakeDuration;
 
+    public bool StopNormalCameraMovement { get; set; }
 
     public void Init()
     {
@@ -30,19 +33,28 @@ public class CameraFollow : MonoBehaviour
             GameStateManager.Instance.GameLoop.References.CameraScript = this;
             transform.position = _player.transform.position + CameraOffset;
             Initialized = true;
-            if (GameStateManager.Instance.GameLoop == null)
-            {
-                Debug.Log("Null");
-            }
+            _originalRotation = transform.rotation;
+            
             GameStateManager.Instance.GameLoop.CameraReady = true;
             _player = GameObject.Find("Player");
         }
         
-    } 
+    }
 
-        
+    public void ResetCamera(bool toPlayerPos = true)
+    {
+        StopNormalCameraMovement = false;
+        transform.rotation = _originalRotation;
+
+        if (toPlayerPos)
+            transform.position = _player.transform.position + CameraOffset;
+    }
     
-
+    public void AnimationCompleted()
+    {
+        if (AnimationComponent != null)
+            AnimationComponent.SendMessage("AnimationCompleted");
+    }
 
     void Update()
     {
@@ -74,13 +86,17 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Initialized)
+        if (!StopNormalCameraMovement)
         {
-            _vCurPos = _player.transform.position + CameraOffset;
-            var time = Time.smoothDeltaTime * CameraDelay * 2;
-            _vCurPos = Vector3.Lerp(transform.position, _vCurPos + MouseOffset, time);
-            transform.position = _vCurPos;
+            if (Initialized)
+            {
+                _vCurPos = _player.transform.position + CameraOffset;
+                var time = Time.smoothDeltaTime * CameraDelay * 2;
+                _vCurPos = Vector3.Lerp(transform.position, _vCurPos + MouseOffset, time);
+                transform.position = _vCurPos;
+            }
         }
+        
         
         /*if(MouseOffset == Vector3.zero)
         {

@@ -55,7 +55,7 @@ public class AbilityBlink : AbilityBase
     /// <returns></returns>
     private IEnumerator CastDelay()
     {
-        yield return new WaitForSeconds(_castDelayInSeconds);
+        yield return new WaitForSeconds(_player.AbilityController.CastDelayInSeconds);
         foreach (MeshRenderer rend in _renderers)
         {
             rend.enabled = false;

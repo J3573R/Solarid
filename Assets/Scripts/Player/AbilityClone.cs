@@ -29,9 +29,19 @@ public class AbilityClone : AbilityBase {
     /// </summary>
     public override void Execute(Vector3 targetPos)
     {
-        _targetPosition = targetPos;        
+        _targetPosition = targetPos;
+        _player.Animation.CastOnce = true;
+        StartCoroutine(CastDelay());        
+    }
 
-        foreach(var clone in Clones)
+    /// <summary>
+    /// Delay before the actual execution so animation can complete
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CastDelay()
+    {
+        yield return new WaitForSeconds(_player.AbilityController.CastDelayInSeconds);
+        foreach (var clone in Clones)
         {
             if (clone != null && !clone.activeInHierarchy)
             {

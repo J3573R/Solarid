@@ -28,6 +28,7 @@ public class StateGameLoop : GameStateBase
     {
         References.CameraScript = FindObjectOfType<CameraFollow>();
         base.Awake();
+        
         LevelName = SceneManager.GetActiveScene().name;
         GitGud = GameObject.Find("UI/Git_gud").GetComponent<Text>();
         GitGud.gameObject.SetActive(false);
@@ -74,10 +75,20 @@ public class StateGameLoop : GameStateBase
 
         if (CameraReady && PlayerReady && CameraReady && !_gameInitialized)
         {
-            GameStateManager.Instance.FadeScreenToVisible(2);
-            
-            Paused = false;
+            GameObject tmp = GameObject.Find("LevelStartSequence");
 
+            if (tmp == null)
+            {
+                GameStateManager.Instance.FadeScreenToVisible(2);
+                Paused = false;
+            } else
+            {
+                MonoBehaviour[] components = tmp.GetComponents<MonoBehaviour>();
+                foreach (MonoBehaviour co in components)
+                {
+                    co.enabled = true;
+                }
+            }
             _gameInitialized = true;
         }
     }
@@ -91,7 +102,7 @@ public class StateGameLoop : GameStateBase
 
     public void Pause(bool ActivatePauseMenu = true, bool FadeScreen = true)
     {
-        Paused = true;
+        Paused = true;               
 
         if (FadeScreen)
             _blackScreen.CrossFadeAlpha(0.5f, 0, true);

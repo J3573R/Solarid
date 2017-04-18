@@ -15,6 +15,7 @@ public class PlayerAnimation : MonoBehaviour {
 
     private AnimationState _currentState;
     private AnimationStance _currentStance;
+    private bool _stillCasting;
     public bool Initialized;
 
     /// <summary>
@@ -65,14 +66,17 @@ public class PlayerAnimation : MonoBehaviour {
     {
         if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            CheckAnimationStance();
+            if (!_stillCasting)
+            {
+                CheckAnimationStance();
 
-            if (_currentStance == AnimationStance.Aiming)
-                CheckAimAnimation();
-            else if (_currentStance == AnimationStance.Casting)
-                CheckCastAnimation();
-            else if (_currentStance == AnimationStance.Idle)
-                CheckIdleAnimation();
+                if (_currentStance == AnimationStance.Aiming)
+                    CheckAimAnimation();
+                else if (_currentStance == AnimationStance.Casting)
+                    CheckCastAnimation();
+                else if (_currentStance == AnimationStance.Idle)
+                    CheckIdleAnimation();
+            }
         }        
     }
 
@@ -123,6 +127,7 @@ public class PlayerAnimation : MonoBehaviour {
             {
                 SetAnimation(AnimationState.Cast);
                 CastOnce = false;
+                _stillCasting = true;
                 StartCoroutine(ResetCastIdle());
             }
             else if (!Moving)
@@ -163,6 +168,7 @@ public class PlayerAnimation : MonoBehaviour {
     private IEnumerator ResetCastIdle()
     {
         yield return new WaitForSeconds(CastTime);
+        _stillCasting = false;
         SetAnimation(AnimationState.Idle);                
     }
 

@@ -91,7 +91,6 @@ public class RangeCheck : MonoBehaviour {
                     if (col.transform.tag.Equals("Prop"))
                     {
                         areaClear = false;
-                        Debug.Log("Löyty proppi");
                     }
                 }
                 if (areaClear)

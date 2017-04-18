@@ -33,9 +33,8 @@ public class InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!GameStateManager.Instance.GameLoop.Paused)
-        {
-            if (ListenInput)
+        
+            if (ListenInput && !GameStateManager.Instance.GameLoop.Paused)            
             {
                 _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             }
@@ -43,7 +42,7 @@ public class InputController : MonoBehaviour
             {
                 _player.Movement.Move(0, 0);
             }
-        }           
+                   
     }
 
     void Update()
