@@ -17,7 +17,7 @@ public class EnemyBase : MonoBehaviour
     public float ChaseTime = 3;
     public GameObject Target;
     public GameObject AttackTarget;
-    [HideInInspector] public bool Dead = false;
+    [HideInInspector] public bool Freeze = false;
 
     // Changes enemy state to alert when distance is smaller than this
     public int AlertDistance = 5;
@@ -92,13 +92,33 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-
         if (!Initialized)
         {
             if (GameStateManager.Instance.GameLoop.PlayerReady)
             {
                 Init();
             }
+            return;
+        }
+
+        if (GameStateManager.Instance.GameLoop.Paused && !Freeze)
+        {
+            CurrentStateObject.enabled = false;
+            _healthBar.gameObject.SetActive(false);
+            Agent.enabled = false;
+            Animator.speed = 0;
+            Freeze = true;
+        } else if (!GameStateManager.Instance.GameLoop.Paused && Freeze && !Health.IsDead())
+        {
+            CurrentStateObject.enabled = true;
+            _healthBar.gameObject.SetActive(true);
+            Agent.enabled = true;
+            Animator.speed = 1;
+            Freeze = false;
+        }
+
+        if (Freeze)
+        {
             return;
         }
 
@@ -172,8 +192,7 @@ public class EnemyBase : MonoBehaviour
     }
 
     /// <summary>
-    /// Kills player.
-    /// TODO: Death animation, level restart, disable controls.
+    /// Kills enemy.
     /// </summary>
     protected virtual void Die()
     {
@@ -214,7 +233,7 @@ public class EnemyBase : MonoBehaviour
             Staff.transform.parent = null;
         }
 
-        Dead = true;
+        Freeze = true;
         Destroy(CurrentStateObject);
         CurrentState = State.None;
     }
@@ -307,4 +326,5 @@ public class EnemyBase : MonoBehaviour
             Target.GetComponent<Health>().TakeDamage(Damage);
         }
     }
+
 }
