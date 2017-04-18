@@ -64,7 +64,7 @@ public class Ranger : EnemyBase
 
     public override void SetState(EnemyBase.State state)
     {
-        if (CurrentState != state && !Dead)
+        if (CurrentState != state && !Freeze)
         {
             if (CurrentStateObject != null)
             {

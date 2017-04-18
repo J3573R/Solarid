@@ -25,6 +25,7 @@ public class Clone : MonoBehaviour {
     private bool _dying;
     private Slider _healthBar;
     private bool _showHealth = false;
+    private bool _paused;
 
     void Awake()
     {
@@ -53,6 +54,11 @@ public class Clone : MonoBehaviour {
 		
 	void Update () {
 
+	    if (ListenPause())
+	    {
+	        return;
+	    }
+
         _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + HealthBarOffset);
 	    _healthBar.value = Health.CurrentHealth;
 
@@ -68,7 +74,7 @@ public class Clone : MonoBehaviour {
         if (!_dying)
         {
             // When target dies
-            if (_targetEnemyBase != null && _targetEnemyBase.Dead)
+            if (_targetEnemyBase != null && _targetEnemyBase.Freeze)
             {
                 ResetTarget();
             }
@@ -172,7 +178,7 @@ public class Clone : MonoBehaviour {
             if (collider.tag == "Enemy")
             {
                 EnemyBase enemy = collider.gameObject.GetComponent<EnemyBase>();
-                if (enemy.Dead)
+                if (enemy.Freeze)
                     continue;
 
 
@@ -190,5 +196,23 @@ public class Clone : MonoBehaviour {
                 }
             }
         }
+    }
+
+    bool ListenPause()
+    {
+        if (GameStateManager.Instance.GameLoop.Paused && !_paused)
+        {
+            _animator.speed = 0;
+            _healthBar.gameObject.SetActive(false);
+            _paused = true;
+        }
+        else if (!GameStateManager.Instance.GameLoop.Paused && _paused)
+        {
+            _animator.speed = 1;
+            _healthBar.gameObject.SetActive(true);
+            _paused = false;
+        }
+
+        return _paused;
     }
 }

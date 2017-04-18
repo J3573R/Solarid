@@ -31,6 +31,11 @@ public class ManaGlobe : MonoBehaviour {
 	
 	void FixedUpdate () {
 
+	    if (GameStateManager.Instance.GameLoop.Paused)
+	    {
+	        return;
+	    }
+
         if(_speed < 0)
         {
             _moveToPoint = transform.position + -_moveDirection * _speed;
