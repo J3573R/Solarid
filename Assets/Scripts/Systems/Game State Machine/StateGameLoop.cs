@@ -82,18 +82,22 @@ public class StateGameLoop : GameStateBase
         }
     }
 
-    private void UnPause()
+    public void UnPause()
     {
         Paused = false;
         _blackScreen.CrossFadeAlpha(0, 0, true);
         _pauseMenu.SetActive(false);
     }
 
-    private void Pause()
+    public void Pause(bool ActivatePauseMenu = true, bool FadeScreen = true)
     {
         Paused = true;
-        _blackScreen.CrossFadeAlpha(0.5f, 0, true);
-        _pauseMenu.SetActive(true);
+
+        if (FadeScreen)
+            _blackScreen.CrossFadeAlpha(0.5f, 0, true);
+
+        if (ActivatePauseMenu)
+            _pauseMenu.SetActive(true);
     }
 
     public IEnumerator Die()

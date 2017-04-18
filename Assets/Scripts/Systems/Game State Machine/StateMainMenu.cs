@@ -115,7 +115,6 @@ public class StateMainMenu : GameStateBase {
     private void PressContinue()
     {
         string levelName = SaveSystem.Instance.SaveData.GetCurrentLevel().ToString();
-        Debug.Log(levelName);
         GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, levelName);
     }
 }

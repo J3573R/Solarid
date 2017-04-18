@@ -22,13 +22,17 @@ public class CrossHair : MonoBehaviour {
 
     void OnGUI()
     {
-        GUI.DrawTexture(new Rect(Event.current.mousePosition.x + cursorAdjustX, Event.current.mousePosition.y + cursorAdjustY, W, H), crosshairTexture, ScaleMode.ScaleToFit);
+        if (!GameStateManager.Instance.GameLoop.Paused)
+            GUI.DrawTexture(new Rect(Event.current.mousePosition.x + cursorAdjustX, Event.current.mousePosition.y + cursorAdjustY, W, H), crosshairTexture, ScaleMode.ScaleToFit);
     }
 
 
     void Update()
     {
-        Cursor.visible = false;        
+        if (!GameStateManager.Instance.GameLoop.Paused)
+            Cursor.visible = false;
+        else
+            Cursor.visible = true;  
     }
 
 }
