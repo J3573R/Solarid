@@ -16,6 +16,7 @@ public class Clone : MonoBehaviour {
     private CloneGun _gun;
     private float _targetDistance = Mathf.Infinity;
     private GameObject _target;
+    private EnemyBase _targetEnemyBase;
     private Animator _animator;
     private float _lifetime;
     private ParticleSystem _destroyEffect;
@@ -47,79 +48,62 @@ public class Clone : MonoBehaviour {
         _lifetime = Lifetime;
         _destroyEffect.Stop();
         Hero.SetActive(true);
-        
         _dying = false;
     }
 		
 	void Update () {
 
-        if (!GameStateManager.Instance.GameLoop.Paused)
+        _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + HealthBarOffset);
+	    _healthBar.value = Health.CurrentHealth;
+
+        UpdateLifeTimeCircle();        
+
+        // Activates health bar when damage is dealt.
+        if (!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
         {
-            _healthBar.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + HealthBarOffset);
-            _healthBar.value = Health.CurrentHealth;
+            _healthBar.gameObject.SetActive(true);
+            _showHealth = true;
+        }
 
-            UpdateLifeTimeCircle();
-
-            if (!_showHealth && Health.CurrentHealth < _healthBar.maxValue)
+        if (!_dying)
+        {
+            // When target dies
+            if (_targetEnemyBase != null && _targetEnemyBase.Dead)
             {
-                _healthBar.gameObject.SetActive(true);
-                _showHealth = true;
+                ResetTarget();
             }
 
-            if (!_dying)
+            // Default behaviour
+            if (_target == null)
             {
-                if (_target == null)
-                {
-                    _animator.SetInteger("animState", 0);
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10);
-                    foreach (var collider in colliders)
-                    {
-                        if (collider.tag == "Enemy")
-                        {
-                            if (_target == null)
-                            {
-                                _target = collider.gameObject;
-                            }
-                            else
-                            {
-                                float distance = Vector3.Distance(transform.position, collider.transform.position);
-                                if (_targetDistance < distance)
-                                {
-                                    _target = collider.gameObject;
-                                    _targetDistance = distance;
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    _animator.SetInteger("animState", 1);
-                    Vector3 direction = _target.transform.position - transform.position;
-                    direction.y = 0;
-                    Quaternion lookRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = lookRotation;//Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
-                    _gun.ShootDirection(_target.transform.position);
-                }
-                _lifetime -= Time.deltaTime;
-                if (_lifetime <= 0 || Health.CurrentHealth <= 0)
-                {
-                    _dying = true;
-                    _healthBar.gameObject.SetActive(false);
-                    Hero.SetActive(false);
-                    _destroyEffect.Play();
-                }
+                _animator.SetInteger("animState", 0);
+                SearchTarget();
             }
             else
             {
-                if (!_destroyEffect.IsAlive())
-                {
-                    gameObject.SetActive(false);
-                }
+                _animator.SetInteger("animState", 1);
+                Vector3 direction = _target.transform.position - transform.position;
+                direction.y = 0;
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = lookRotation;
+                _gun.ShootDirection(_target.transform.position);
             }
-        }
+            
+            // If health depletes or time runs out
+            if (_lifetime <= 0 || Health.CurrentHealth <= 0)
+            {
+                Die();
+            }
 
-        
+            _lifetime -= Time.deltaTime;
+        }
+        else
+        {
+            if (!_destroyEffect.IsAlive())
+            {
+                gameObject.SetActive(false);
+            }            
+        }
     }
 
     private void UpdateLifeTimeCircle()
@@ -142,6 +126,69 @@ public class Clone : MonoBehaviour {
         {
             EnemyBullet bullet = other.gameObject.GetComponent<EnemyBullet>();
             Health.TakeDamage(bullet.Damage);
+        }
+    }
+
+    /// <summary>
+    /// Resets clone target.
+    /// </summary>
+    void ResetTarget()
+    {
+        _target = null;
+        _targetEnemyBase = null;
+        _targetDistance = 0;
+    }
+
+    /// <summary>
+    /// Sets clone target.
+    /// </summary>
+    /// <param name="target">Gameobject with enemy tag and EnemyBase component.</param>
+    void SetTarget(GameObject target)
+    {
+        _target = target;
+        _targetEnemyBase = target.GetComponent<EnemyBase>();
+        _targetDistance = Vector3.Distance(transform.position, target.transform.position);
+    }
+
+    /// <summary>
+    /// Starts destruction sequence for clone.
+    /// </summary>
+    void Die()
+    {
+        _dying = true;
+        _healthBar.gameObject.SetActive(false);
+        Hero.SetActive(false);
+        _destroyEffect.Play();
+    }
+
+    /// <summary>
+    /// Searches nearest enemy in range.
+    /// </summary>
+    void SearchTarget()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10);
+        foreach (var collider in colliders)
+        {
+            if (collider.tag == "Enemy")
+            {
+                EnemyBase enemy = collider.gameObject.GetComponent<EnemyBase>();
+                if (enemy.Dead)
+                    continue;
+
+
+                if (_target == null)
+                {
+                    SetTarget(collider.gameObject);
+                }
+                else
+                {
+                    float distance = Vector3.Distance(transform.position, collider.transform.position);
+                    if (_targetDistance < distance)
+                    {
+                        SetTarget(collider.gameObject);
+                    }
+                }
+            }
         }
     }
 }
