@@ -52,7 +52,12 @@ public class ManaExplosion : MonoBehaviour {
     {
         for(int i = 0; i < globeAmount; i++)
         {
-            _poolObject = GetFromPool();
+            _poolObject = null;
+            while(_poolObject == null)
+            {
+                _poolObject = GetFromPool();
+            }
+                        
             _poolObject.transform.position = location;
             _poolObject.SetActive(true);
         }
