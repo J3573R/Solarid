@@ -35,9 +35,7 @@ public class Gun : MonoBehaviour
     private Vector3 _target;
     private Vector3 _aimRotation;
     private Transform _aimPoint;
-
-    // Guns collider location
-    private Collider _collider;
+    
     // Current status of reload
     private float _intervalTimer = 0;
     private AudioSource _audio;
@@ -53,7 +51,6 @@ public class Gun : MonoBehaviour
         if (!Initialized)
         {
             BulletsRemaining = ClipSize;
-            _collider = GetComponent<Collider>();
             _player = FindObjectOfType<Player>();
             _aimPoint = GameObject.Find("AimPoint").transform;
             _audio = GetComponent<AudioSource>();
@@ -69,7 +66,7 @@ public class Gun : MonoBehaviour
     {
         for (int i = 0; i < PooledBullets; i++)
         {
-            GameObject tmpGO = Instantiate(Bullet, _collider.transform.position, Quaternion.identity) as GameObject;            
+            GameObject tmpGO = Instantiate(Bullet, transform.position, Quaternion.identity) as GameObject;            
             tmpGO.SetActive(false);
             _bullets.Add(tmpGO);
         }
@@ -150,7 +147,7 @@ public class Gun : MonoBehaviour
                 if (!_bullets[i].activeInHierarchy)
                 {
                     _target = GetTargetPosition();
-                    _bullets[i].transform.position = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);                    
+                    _bullets[i].transform.position = new Vector3(transform.position.x, 1.5f, transform.position.z);
                     _target.y = 1.5f;
                     _bullets[i].transform.LookAt(_target);
                     _bullets[i].SetActive(true);
@@ -185,7 +182,7 @@ public class Gun : MonoBehaviour
                 if (!_bullets[i].activeInHierarchy)
                 {
                     _target = direction;
-                    _bullets[i].transform.position = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);
+                    _bullets[i].transform.position = new Vector3(transform.position.x, 1.5f, transform.position.z);
                     _target.y = 1.5f;
                     //Debug.Log(_target);
                     _bullets[i].transform.LookAt(_target);
