@@ -61,10 +61,11 @@ public class ManaGlobe : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && !_returnToPool)
         {
             _audio.Play();
             _returnToPool = true;
+            GameStateManager.Instance.GameLoop.Player.Mana.AddMana(10);
         }
     }
 
