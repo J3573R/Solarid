@@ -10,9 +10,9 @@ public class RangerAlert : EnemyStateBase {
     private Vector3 _targetDirection;
     private Vector3 _newDirection;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         eState = EnemyBase.State.Alert;
     }
 

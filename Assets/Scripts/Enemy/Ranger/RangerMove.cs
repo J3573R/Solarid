@@ -13,9 +13,9 @@ public class RangerMove : EnemyStateBase {
     private Vector3 _lookAtTarget;
     private Ranger _parent;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         eState = EnemyBase.State.Move;
         _parent = (Ranger) Parent;
         Agent.updateRotation = false;

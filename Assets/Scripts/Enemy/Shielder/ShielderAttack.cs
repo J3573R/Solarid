@@ -6,9 +6,9 @@ public class ShielderAttack : EnemyStateBase
 {
     private float _distance;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         Parent.AttackTarget = Parent.Target;
         eState = EnemyBase.State.Idle;
     }

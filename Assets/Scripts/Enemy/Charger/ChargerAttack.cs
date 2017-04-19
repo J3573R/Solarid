@@ -13,9 +13,9 @@ public class ChargerAttack : EnemyStateBase
     private Vector3 _targetDirection;
     private Vector3 _newDirection;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         Parent.AttackTarget = Parent.Target;
         eState = EnemyBase.State.Idle;
         _charger = (Charger)Parent;

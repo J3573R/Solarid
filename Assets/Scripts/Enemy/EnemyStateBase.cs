@@ -9,6 +9,7 @@ public class EnemyStateBase : MonoBehaviour
     public EnemyBase.State eState;
 
     protected EnemyBase Parent;
+    protected bool Initialized = false;
 
     private float _distance;
     private float _transitionToAlert;
@@ -18,18 +19,28 @@ public class EnemyStateBase : MonoBehaviour
         get { return eState; }
     }
 
-    protected virtual void Start()
+    void Awake()
     {
         Parent = GetComponent<EnemyBase>();
+    }
+
+    protected virtual void Init()
+    {
         Agent = GetComponent<NavMeshAgent>();
         _transitionToAlert = 0;
+        Initialized = true;
     }
 
     protected virtual void Update()
     {
-        if (!Parent.Initialized)
+        if (Parent == null || !Parent.Initialized)
         {
             return;
+        }
+
+        if (!Initialized)
+        {
+            Init();
         }
     }
     protected virtual void OnEnable(){}

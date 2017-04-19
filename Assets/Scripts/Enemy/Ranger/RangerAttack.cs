@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RangerAttack : EnemyStateBase
 {
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
     }
 
     protected override void Update()
