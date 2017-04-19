@@ -17,6 +17,7 @@ public class Door : MonoBehaviour
     // State of the door
     private bool _open = false;
     private AudioSource _audio;
+    private Collider[] _platformColliders;
 
     public bool Open { get { return _open; } }
     public bool Moving { get { return _moving; } }
@@ -24,6 +25,8 @@ public class Door : MonoBehaviour
     void Awake()
     {
         _audio = GetComponent<AudioSource>();
+        _platformColliders = gameObject.GetComponentsInChildren<Collider>();
+        ToggleDoorColliders(false);
     }
 
 
@@ -79,6 +82,7 @@ public class Door : MonoBehaviour
                 }
                     
                 _moving = false;
+                ToggleDoorColliders(true);
                 _state = 1;
             }
         }
@@ -99,6 +103,14 @@ public class Door : MonoBehaviour
         {
             //_audio.volume -= Mathf.Lerp(1, 0, Easing.EaseOut(_state / 0.5f - 1 / 0.5f, EasingType.Quadratic));
             _audio.volume -= Time.deltaTime;
+        }
+    }
+
+    void ToggleDoorColliders(bool state)
+    {
+        foreach (var collider in _platformColliders)
+        {
+            collider.enabled = state;
         }
     }
 

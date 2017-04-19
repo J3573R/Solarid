@@ -138,11 +138,32 @@ public class Gun : MonoBehaviour
         BulletsRemaining = ClipSize;
     }
 
+    public void ForceShoot()
+    {
+        for (int i = 0; i < _bullets.Count; i++)
+        {
+            if (!_bullets[i].activeInHierarchy)
+            {
+                _target = GetTargetPosition();
+                _bullets[i].transform.position = new Vector3(_collider.transform.position.x, 1.5f, _collider.transform.position.z);
+                _target.y = 1.5f;
+                _bullets[i].transform.LookAt(_target);
+                _bullets[i].SetActive(true);
+                BulletsRemaining -= 1;
+                _audio.clip = AudioShot;
+                _audio.loop = false;
+                _audio.Play();
+                break;
+            }
+        }
+        _intervalTimer = BulletInterval;
+    }
+
     /// <summary>
     /// Searches object pool for inactive bullet and fires it
     /// </summary>
     public void Shoot()
-    {
+    {       
         if (_intervalTimer <= 0 && !Reloading && BulletsRemaining > 0)
         {
             for (int i = 0; i < _bullets.Count; i++)

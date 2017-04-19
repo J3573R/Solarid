@@ -122,6 +122,6 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 direction = (offset - _player.transform.position).normalized;        
         direction.y = 0;
-        MouseOffset = direction * 4;
+        MouseOffset = direction * 2;
     }
 }

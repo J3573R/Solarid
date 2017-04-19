@@ -77,9 +77,16 @@ public class PlayerAnimation : MonoBehaviour {
                 else if (_currentStance == AnimationStance.Idle)
                     CheckIdleAnimation();
             }
-        }        
-    }
+        }
 
+        if (GameStateManager.Instance.GameLoop.Paused)
+        {
+            Animator.speed = 0;
+        } else
+        {
+            Animator.speed = 1;
+        }
+    }
     /// <summary>
     /// Check which animation state machine we shouls use
     /// </summary>

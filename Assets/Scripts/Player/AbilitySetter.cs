@@ -13,6 +13,7 @@ public class AbilitySetter : MonoBehaviour {
     public bool SetAbilities;
 
     private AbilityController _controller;
+    private Player _player;
 
 	// Use this for initialization
 	void Start () {

@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Switch : MonoBehaviour
+public class GeneralActivateSwitch : MonoBehaviour
 {
-    // Door to open
-    public Door TargetDoor;
     // Default slider to use
     public GameObject SliderPrefab;
     //Objects to activate when interacted
     public List<GameObject> ActivateObjects;
 
     // Sliderbar offset from switch
-    [SerializeField] private Vector3 _offset = new Vector3(0, 1, 0);
+    [SerializeField]
+    private Vector3 _offset = new Vector3(0, 1, 0);
     // Gameobject that has slider component
     private GameObject _sliderBar;
     // Slider component to control
@@ -23,9 +22,12 @@ public class Switch : MonoBehaviour
     // Value of slider bar
     private float _switchValue;
 
-    private RotateConstantly _obeliskRotation;    
+    private RotateConstantly _obeliskRotation;
+    private Collider[] _platformColliders;
     private AudioSource _audio;
-    
+    private bool Activated;
+    private bool Rotate;
+
 
     public void Awake()
     {
@@ -35,16 +37,17 @@ public class Switch : MonoBehaviour
         _slider = _sliderBar.GetComponent<Slider>();
         _switchValue = 0;
         _slider.transform.localScale = new Vector3(1f, 1f, 1f);
-        _sliderBar.SetActive(false);                
+        _sliderBar.SetActive(false);
         _audio = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        if (TargetDoor.Moving && _obeliskRotation != null)
+        if (Activated && _obeliskRotation != null)
         {
             _obeliskRotation.ChangeRotationSpeed = new Vector3(0, 0, 500);
-        } else if(_obeliskRotation != null)
+        }
+        else if (_obeliskRotation != null)
         {
             _obeliskRotation.ChangeRotationSpeed = new Vector3(0, 0, 30);
         }
@@ -52,7 +55,7 @@ public class Switch : MonoBehaviour
         _distance = Vector3.Distance(GameStateManager.Instance.GameLoop.Player.gameObject.transform.position, transform.position);
 
         // If player is close enought and door is not moving, show meter and response to interaction
-        if (_distance <= 2 && !TargetDoor.Moving && !TargetDoor.Open)
+        if (_distance <= 2 && Activated)
         {
             if (!_sliderBar.activeInHierarchy)
             {
@@ -77,8 +80,9 @@ public class Switch : MonoBehaviour
                             currentObject.SetActive(true);
                         }
                     }
-                    TargetDoor.ToggleDoor();
-                    //ToggleDoorColliders(TargetDoor.Open);
+                    Activated = true;
+                    Rotate = true;
+              
                     _audio.Play();
                 }
             }
@@ -89,16 +93,23 @@ public class Switch : MonoBehaviour
             }
         }
         else
-        {                  
+        {
             // Reset slider bar
             if (_sliderBar.activeInHierarchy)
             {
                 _switchValue = 0;
                 _slider.value = 0;
-                _sliderBar.SetActive(false);                
+                _sliderBar.SetActive(false);
             }
         }
-        
+
     }
-    
+
+    void ToggleDoorColliders(bool state)
+    {
+        foreach (var collider in _platformColliders)
+        {
+            collider.enabled = state;
+        }
+    }
 }
