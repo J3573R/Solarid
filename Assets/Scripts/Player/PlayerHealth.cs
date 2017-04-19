@@ -63,7 +63,7 @@ public class PlayerHealth : Health {
     private void Die()
     {
         GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<Player>().Dead = true;
-        
+        GameStateManager.Instance.GameLoop.Player.Die();
         //TODO: Implement dying
     }
 }
