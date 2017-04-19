@@ -27,7 +27,7 @@ public class EnemyBase : MonoBehaviour
 
     public bool Initialized = false;
 
-    public GameObject Staff;
+    public GameObject[] Weapons;
 
     protected NavMeshAgent Agent;
 
@@ -228,9 +228,12 @@ public class EnemyBase : MonoBehaviour
             body.AddForce(-transform.forward / 20, ForceMode.Impulse);
         }
         
-        if(Staff != null)
+        if(Weapons != null)
         {
-            Staff.transform.parent = null;
+            foreach(GameObject weapon in Weapons)
+            {
+                weapon.transform.parent = null;
+            }
         }
 
         Freeze = true;
