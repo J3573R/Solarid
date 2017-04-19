@@ -35,7 +35,7 @@ public class Switch : MonoBehaviour
         _slider = _sliderBar.GetComponent<Slider>();
         _switchValue = 0;
         _slider.transform.localScale = new Vector3(1f, 1f, 1f);
-        _sliderBar.SetActive(false);                
+        _sliderBar.SetActive(false);                     
         _audio = GetComponent<AudioSource>();
     }
 

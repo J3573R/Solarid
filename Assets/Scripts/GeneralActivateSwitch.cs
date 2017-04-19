@@ -10,6 +10,8 @@ public class GeneralActivateSwitch : MonoBehaviour
     //Objects to activate when interacted
     public List<GameObject> ActivateObjects;
 
+    public float RotateTime = 2;
+
     // Sliderbar offset from switch
     [SerializeField]
     private Vector3 _offset = new Vector3(0, 1, 0);
@@ -23,7 +25,6 @@ public class GeneralActivateSwitch : MonoBehaviour
     private float _switchValue;
 
     private RotateConstantly _obeliskRotation;
-    private Collider[] _platformColliders;
     private AudioSource _audio;
     private bool Activated;
     private bool Rotate;
@@ -38,12 +39,13 @@ public class GeneralActivateSwitch : MonoBehaviour
         _switchValue = 0;
         _slider.transform.localScale = new Vector3(1f, 1f, 1f);
         _sliderBar.SetActive(false);
+        _sliderBar.name = "Testipalikka";
         _audio = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        if (Activated && _obeliskRotation != null)
+        if (Rotate && Activated && _obeliskRotation != null)
         {
             _obeliskRotation.ChangeRotationSpeed = new Vector3(0, 0, 500);
         }
@@ -55,7 +57,7 @@ public class GeneralActivateSwitch : MonoBehaviour
         _distance = Vector3.Distance(GameStateManager.Instance.GameLoop.Player.gameObject.transform.position, transform.position);
 
         // If player is close enought and door is not moving, show meter and response to interaction
-        if (_distance <= 2 && Activated)
+        if (_distance <= 2 && !Activated)
         {
             if (!_sliderBar.activeInHierarchy)
             {
@@ -82,7 +84,7 @@ public class GeneralActivateSwitch : MonoBehaviour
                     }
                     Activated = true;
                     Rotate = true;
-              
+                    StartCoroutine(RotateDelay());
                     _audio.Play();
                 }
             }
@@ -105,11 +107,10 @@ public class GeneralActivateSwitch : MonoBehaviour
 
     }
 
-    void ToggleDoorColliders(bool state)
+    private IEnumerator RotateDelay()
     {
-        foreach (var collider in _platformColliders)
-        {
-            collider.enabled = state;
-        }
+        yield return new WaitForSeconds(RotateTime);
+        Rotate = false;
     }
+    
 }

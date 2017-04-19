@@ -12,9 +12,9 @@ public class ChargerMove : EnemyStateBase
     private Vector3 _targetDirection;
     private Vector3 _newDirection;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         eState = EnemyBase.State.Move;
         Agent.speed = 7f;
 

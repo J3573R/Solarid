@@ -205,4 +205,14 @@ public class PlayerAnimation : MonoBehaviour {
             Animator.SetInteger("animState", (int)animation);
         }        
     }
+
+    public void OnEnable()
+    {
+        Animator.enabled = true;
+    }
+
+    public void OnDisable()
+    {
+        Animator.enabled = false;
+    }
 }

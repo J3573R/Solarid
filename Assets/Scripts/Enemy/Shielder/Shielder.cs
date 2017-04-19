@@ -85,4 +85,10 @@ public class Shielder : EnemyBase
             }
         }
     }
+
+    protected override void Die()
+    {
+        base.Die();
+        Shield.SetActive(false);
+    }
 }

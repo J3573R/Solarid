@@ -65,7 +65,7 @@ public class Door : MonoBehaviour
         return false;
     }
     
-    void Update()
+    void FixedUpdate()
     {
         if (_moving && _state < 1)
         {

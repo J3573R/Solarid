@@ -78,4 +78,28 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    public void Die()
+    {
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
+
+        //Animator.enabled = false;
+        Animation.enabled = false;
+
+        foreach (var collider in colliders)
+        {
+            collider.enabled = true;
+        }
+
+        Collider myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
+
+        foreach (var body in bodies)
+        {
+            body.useGravity = true;
+            body.isKinematic = false;
+            body.AddForce(-transform.forward / 20, ForceMode.Impulse);
+        }       
+    }
 }

@@ -7,9 +7,9 @@ public class ShielderIdle : EnemyStateBase
     private float _timeToWalk;
     private bool Idling;
 
-    protected override void Start()
+    protected override void Init()
     {
-        base.Start();
+        base.Init();
         eState = EnemyBase.State.Idle;
         _timeToWalk = 0;
         Agent.speed = 1.5f;
