@@ -8,7 +8,7 @@ public class BlinkPickup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _abilitycontroller = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<AbilityController>();
+		_abilitycontroller = FindObjectOfType<AbilityController>();
 	}
 
     private void OnTriggerEnter(Collider other)
