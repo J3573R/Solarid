@@ -275,6 +275,11 @@ public class EnemyBase : MonoBehaviour
     /// <param name="duration">Duration of the pull.</param>
     public virtual void PullToPoint(Vector3 point, float duration)
     {
+        if (!Initialized)
+        {
+            return;
+        }
+
         _pullPoint = point;
         _pullDuration = duration;
         _pullActive = true;

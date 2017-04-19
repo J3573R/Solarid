@@ -57,14 +57,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "ManaGlobe")
-        {
-            Mana.AddMana(10);
-        }
-    }
-
     private void Update()
     {
         if (!_playerReady)
