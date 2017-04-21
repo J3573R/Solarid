@@ -9,10 +9,13 @@ public class InputController : MonoBehaviour
     public PlayerAnimation PlayerAnimation;
     // Should the character face towards mouse?
     public bool ListenInput = true;
-    
+    public bool CinematicMovement { get; set; }
+
     private Player _player;
     private Camera _camera;
     public bool Initialized;
+
+    
 
     void Awake()
     {
@@ -33,8 +36,9 @@ public class InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-            if (ListenInput && !GameStateManager.Instance.GameLoop.Paused)            
+        if (!CinematicMovement)
+        {
+            if (ListenInput && !GameStateManager.Instance.GameLoop.Paused)
             {
                 _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             }
@@ -42,7 +46,9 @@ public class InputController : MonoBehaviour
             {
                 _player.Movement.Move(0, 0);
             }
-                   
+        }
+            
+                 
     }
 
     void Update()

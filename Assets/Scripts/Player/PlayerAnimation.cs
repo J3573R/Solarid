@@ -64,7 +64,7 @@ public class PlayerAnimation : MonoBehaviour {
 
     private void Update()
     {
-        if (!GameStateManager.Instance.GameLoop.Paused)
+        if (!GameStateManager.Instance.GameLoop.Paused || _player.Input.CinematicMovement)
         {
             if (!_stillCasting)
             {
@@ -79,7 +79,7 @@ public class PlayerAnimation : MonoBehaviour {
             }
         }
 
-        if (GameStateManager.Instance.GameLoop.Paused)
+        if (GameStateManager.Instance.GameLoop.Paused && !_player.Input.CinematicMovement)
         {
             Animator.speed = 0;
         } else

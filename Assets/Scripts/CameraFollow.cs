@@ -10,6 +10,8 @@ public class CameraFollow : MonoBehaviour
     public Vector3 MouseOffset = Vector3.zero;
     public bool Initialized = false;
 
+    
+
     // Players gameobject
     private GameObject _player;
     // Cameras current position
@@ -28,7 +30,7 @@ public class CameraFollow : MonoBehaviour
     {
 
         if (!Initialized)
-        {           
+        {
             _player = GameObject.Find("Player");
             GameStateManager.Instance.GameLoop.References.CameraScript = this;
             transform.position = _player.transform.position + CameraOffset;
@@ -44,6 +46,7 @@ public class CameraFollow : MonoBehaviour
     public void ResetCamera(bool toPlayerPos = true)
     {
         StopNormalCameraMovement = false;
+        Debug.Log("jeejee");
         transform.rotation = _originalRotation;
 
         if (toPlayerPos)
