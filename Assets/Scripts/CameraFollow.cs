@@ -46,7 +46,6 @@ public class CameraFollow : MonoBehaviour
     public void ResetCamera(bool toPlayerPos = true)
     {
         StopNormalCameraMovement = false;
-        Debug.Log("jeejee");
         transform.rotation = _originalRotation;
 
         if (toPlayerPos)

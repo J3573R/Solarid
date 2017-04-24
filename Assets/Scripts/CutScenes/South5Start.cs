@@ -20,7 +20,6 @@ public class South5Start : MonoBehaviour {
     {
         _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
         _blackScreen.CrossFadeAlpha(0, 4, true);
-        Debug.Log(_blackScreen.color.a);
         //_blackScreen.CrossFadeAlpha(1, 5, true);
         GameStateManager.Instance.GameLoop.Pause(false, false);
         _cameraScript = FindObjectOfType<CameraFollow>();
@@ -32,7 +31,6 @@ public class South5Start : MonoBehaviour {
         _cameraScript.StopNormalCameraMovement = true;
         _cameraScript.AnimationComponent = this;
         _animation.clip = CameraAnimation;
-        Debug.Log(_blackScreen.color.a);
         _animation.Play();
     }
 
@@ -41,15 +39,11 @@ public class South5Start : MonoBehaviour {
     {
         if (!_animationCompleted)
         {
-            if (_playerTransform.position.z < -2)
-                _playerMovement.Move(0, 1);
-            else if (_playerTransform.position.z < 0 && _playerTransform.position.z > -2)
-                _playerMovement.Move(1, 1);
+            if (_playerTransform.position.z < 0)
+                _playerMovement.Move(0, 1);            
             else
                 _playerMovement.Move(0, 0);
-        }
-        
-
+        }       
     }
 
     public void AnimationCompleted()

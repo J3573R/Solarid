@@ -18,7 +18,6 @@ public class FirstLevelStart : MonoBehaviour {
 	void Start () {
         _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
         _blackScreen.CrossFadeAlpha(0, 5, true);
-        Debug.Log(_blackScreen.color.a);
         GameStateManager.Instance.GameLoop.Pause(false, false);
         _cameraScript = FindObjectOfType<CameraFollow>();
         _animation = _cameraScript.GetComponent<Animation>();
