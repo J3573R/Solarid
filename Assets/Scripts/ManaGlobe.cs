@@ -25,7 +25,7 @@ public class ManaGlobe : MonoBehaviour {
     {
         if (!_audio.isPlaying && _returnToPool)
         {
-            GameStateManager.Instance.GameLoop.References.ManaExplosion.AddToPool(gameObject);
+            GameStateManager.Instance.GameLoop.References.ManaExplosion.ReturnToPool(gameObject);
         }
     }
 	
