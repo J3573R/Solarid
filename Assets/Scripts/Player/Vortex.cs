@@ -9,6 +9,7 @@ public class Vortex : MonoBehaviour
     public int DamagePerSecond = 50;
     public float Lifetime = 5f;
 
+    private AbilityVortex _abilityVortex;
     private float _damageTickTime = 0;
     private ParticleSystem _particleSystem;
     private AudioSource _audio;
@@ -18,6 +19,7 @@ public class Vortex : MonoBehaviour
     {
         _particleSystem = GetComponent<ParticleSystem>();
         _audio = GetComponent<AudioSource>();
+        _abilityVortex = GameStateManager.Instance.GameLoop.References.Player.GetComponent<AbilityVortex>();
     }
 
 	void Update () {
@@ -26,6 +28,16 @@ public class Vortex : MonoBehaviour
 	    {
 	        return;
 	    }
+
+        if (Lifetime <= 0)
+        {
+            if (_particleSystem.isStopped)
+            {
+                _abilityVortex.ReturnToPool(gameObject);
+            }
+
+            return;
+        }
 
         if (_damageTickTime <= 0)
         {
@@ -47,11 +59,7 @@ public class Vortex : MonoBehaviour
                 }
             }
         }
-
-        if (Lifetime <= 0)
-        {
-            Destroy(gameObject);
-        }
+        
         Lifetime -= Time.deltaTime;
     }
 
