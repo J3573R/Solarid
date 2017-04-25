@@ -82,7 +82,7 @@ public class EnemyBase : MonoBehaviour
         if (GameStateManager.Instance.GameLoop.Player.gameObject != null)
             _player = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<Player>();
         GameObject bar = Instantiate(HealthBar);
-        bar.transform.SetParent(GameObject.Find("UI").transform);
+        bar.transform.SetParent(GameObject.Find("UI/EnemyHealthContainer").transform);
         _healthBar = bar.GetComponent<Slider>();
         _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         _healthBar.maxValue = Health.CurrentHealth;
