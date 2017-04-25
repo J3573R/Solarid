@@ -63,5 +63,6 @@ public class South5Start : MonoBehaviour {
         _cameraScript.ResetCamera(true);
         _blackScreen.CrossFadeAlpha(0, 2, true);
         GameStateManager.Instance.GameLoop.Paused = false;
+        _playerTransform.GetComponent<InputController>().CinematicMovement = false;
     }
 }
