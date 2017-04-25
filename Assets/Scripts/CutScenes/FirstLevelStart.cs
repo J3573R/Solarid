@@ -12,6 +12,7 @@ public class FirstLevelStart : MonoBehaviour {
     private Animation _animation;
     private Image _blackScreen;
     private bool _animationCompleted;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -36,14 +37,16 @@ public class FirstLevelStart : MonoBehaviour {
                 GameStateManager.Instance.GameLoop.UnPause();
                 TutorialMessage.enabled = false;
                 Destroy(gameObject);
+                
             }
         }
 	}
 
     public void AnimationCompleted()
     {
+        _animation.Stop();
         _cameraScript.ResetCamera(false);
-
+        Debug.Log(_blackScreen.color.a);
         TutorialMessage.enabled = true;
         _animationCompleted = true;
         

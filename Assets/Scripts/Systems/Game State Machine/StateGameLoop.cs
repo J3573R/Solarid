@@ -78,7 +78,7 @@ public class StateGameLoop : GameStateBase
             GameObject tmp = GameObject.Find("LevelStartSequence");
 
             if (tmp == null)
-            {
+            {                
                 GameStateManager.Instance.FadeScreenToVisible(2);
                 Paused = false;
             } else
