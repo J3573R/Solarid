@@ -5,8 +5,19 @@ using System;
 public class SaveData {
     // Last level 
     private Level _currentLevel;
+    private Crystal _crystalWithPlayer;
+    private Dictionary<Crystal, bool> _hubCrystals;
 
     //TODO: Refactor this class, unnecessary methods which can be combined
+
+    public enum Crystal
+    {
+        Blue,
+        Red,
+        Yellow,
+        Black,
+        none
+    }
 
     // Current level to save
     public enum Level
@@ -42,7 +53,6 @@ public class SaveData {
     public SaveData(Level level)
     {
         _currentLevel = level;
-
     }
 
     /// <summary>
@@ -52,6 +62,35 @@ public class SaveData {
     public void SetCurrentLevel(Level level)
     {
         _currentLevel = level;
+    }
+
+    /// <summary>
+    /// Set Crystal data to save
+    /// </summary>
+    /// <param name="crystalWithPlayer"></param>
+    /// <param name="hubCrystals"></param>
+    public void SetCrystals(Crystal crystalWithPlayer, Dictionary<Crystal, bool> hubCrystals)
+    {
+        _crystalWithPlayer = crystalWithPlayer;
+        _hubCrystals = hubCrystals;
+    }
+
+    /// <summary>
+    /// Get Crystal Player has currently
+    /// </summary>
+    /// <returns></returns>
+    public Crystal GetCrystalWithPlayer()
+    {
+        return _crystalWithPlayer;
+    }
+
+    /// <summary>
+    /// Get hub crystal data
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<Crystal, bool> GetHubCrystals()
+    {
+        return _hubCrystals;
     }
 
     /// <summary>

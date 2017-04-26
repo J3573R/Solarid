@@ -13,6 +13,7 @@ public class SaveSystem : MonoBehaviour
 
     private const string SaveFileName = "Save.dat";
     public SaveData SaveData;
+    private Player _player;
     
     private void Awake()
     {
@@ -41,6 +42,10 @@ public class SaveSystem : MonoBehaviour
         {
             LoadSaveData();
         }
+        _player = FindObjectOfType<Player>();
+        _player.init();
+        _player.HubCrystals = SaveData.GetHubCrystals();
+        _player.CrystalWithPlayer = SaveData.GetCrystalWithPlayer();
     }    
     
     // Path to the save file
@@ -63,11 +68,12 @@ public class SaveSystem : MonoBehaviour
     {
         SaveCurrentLevel();
         SaveCrystals();
+        SaveToFile();
     }
 
     private void SaveCrystals()
     {
-        throw new NotImplementedException();
+        SaveData.SetCrystals(_player.CrystalWithPlayer, _player.HubCrystals);
     }
 
     /// <summary>
@@ -118,9 +124,7 @@ public class SaveSystem : MonoBehaviour
         else if (levelName.Equals("North5"))
             SaveData.SetCurrentLevel(SaveData.Level.North5);
         else if (levelName.Equals("Hub"))
-                SaveData.SetCurrentLevel(SaveData.Level.Hub);
-
-        SaveToFile();
+            SaveData.SetCurrentLevel(SaveData.Level.Hub);
     }
 
     /// <summary>
