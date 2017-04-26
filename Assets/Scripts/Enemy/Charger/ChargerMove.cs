@@ -33,7 +33,10 @@ public class ChargerMove : EnemyStateBase
         base.Update();
         _followTime += Time.deltaTime;
         if (Agent.isActiveAndEnabled)
+        {
             Agent.destination = Parent.Target.transform.position;
+        }
+            
         _targetDirection = Parent.Target.transform.position - transform.position;
         _step = _rotationSpeed * Time.deltaTime;
         _newDirection = Vector3.RotateTowards(transform.forward, _targetDirection, _step, 0.0F);

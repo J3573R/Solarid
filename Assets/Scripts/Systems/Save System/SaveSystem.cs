@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SaveSystem : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class SaveSystem : MonoBehaviour
 
     private const string SaveFileName = "Save.dat";
     public SaveData SaveData;
+    private Player _player;
     
     private void Awake()
     {
@@ -40,6 +42,10 @@ public class SaveSystem : MonoBehaviour
         {
             LoadSaveData();
         }
+        _player = FindObjectOfType<Player>();
+        _player.init();
+        _player.HubCrystals = SaveData.GetHubCrystals();
+        _player.CrystalWithPlayer = SaveData.GetCrystalWithPlayer();
     }    
     
     // Path to the save file
@@ -49,7 +55,7 @@ public class SaveSystem : MonoBehaviour
     /// Saves the current game data
     /// </summary>
     /// <param name="saveData"></param>
-    public void SaveStats()
+    public void SaveToFile()
     {
         BinaryFormatter bf = new BinaryFormatter();
         MemoryStream stream = new MemoryStream();
@@ -58,13 +64,16 @@ public class SaveSystem : MonoBehaviour
         //Debug.Log("Saved Data, CurrentLevel =" + SaveData.GetCurrentLevel());
     }
 
-    /// <summary>
-    /// Sets the current AbilityArray in use to SaveData and saves it to file
-    /// </summary>
-    public void SaveAbilities()
+    public void Save()
     {
-        SaveData.SetAbilityArray(GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<AbilityController>().AbilityArray);
-        SaveStats();
+        SaveCurrentLevel();
+        SaveCrystals();
+        SaveToFile();
+    }
+
+    private void SaveCrystals()
+    {
+        SaveData.SetCrystals(_player.CrystalWithPlayer, _player.HubCrystals);
     }
 
     /// <summary>
@@ -84,10 +93,38 @@ public class SaveSystem : MonoBehaviour
             SaveData.SetCurrentLevel(SaveData.Level.South4);
         else if (levelName.Equals("South5"))
             SaveData.SetCurrentLevel(SaveData.Level.South5);
+        else if (levelName.Equals("West1"))
+            SaveData.SetCurrentLevel(SaveData.Level.West1);
+        else if (levelName.Equals("West2"))
+            SaveData.SetCurrentLevel(SaveData.Level.West2);
+        else if (levelName.Equals("West3"))
+            SaveData.SetCurrentLevel(SaveData.Level.West3);
+        else if (levelName.Equals("West4"))
+            SaveData.SetCurrentLevel(SaveData.Level.West4);
+        else if (levelName.Equals("West5"))
+            SaveData.SetCurrentLevel(SaveData.Level.West5);
+        else if (levelName.Equals("East1"))
+            SaveData.SetCurrentLevel(SaveData.Level.East1);
+        else if (levelName.Equals("East2"))
+            SaveData.SetCurrentLevel(SaveData.Level.East2);
+        else if (levelName.Equals("East3"))
+            SaveData.SetCurrentLevel(SaveData.Level.East3);
+        else if (levelName.Equals("East4"))
+            SaveData.SetCurrentLevel(SaveData.Level.East4);
+        else if (levelName.Equals("East5"))
+            SaveData.SetCurrentLevel(SaveData.Level.East5);
+        else if (levelName.Equals("North1"))
+            SaveData.SetCurrentLevel(SaveData.Level.North1);
+        else if (levelName.Equals("North2"))
+            SaveData.SetCurrentLevel(SaveData.Level.North2);
+        else if (levelName.Equals("North3"))
+            SaveData.SetCurrentLevel(SaveData.Level.North3);
+        else if (levelName.Equals("North4"))
+            SaveData.SetCurrentLevel(SaveData.Level.North4);
+        else if (levelName.Equals("North5"))
+            SaveData.SetCurrentLevel(SaveData.Level.North5);
         else if (levelName.Equals("Hub"))
-                SaveData.SetCurrentLevel(SaveData.Level.Hub);
-
-        SaveStats();
+            SaveData.SetCurrentLevel(SaveData.Level.Hub);
     }
 
     /// <summary>
