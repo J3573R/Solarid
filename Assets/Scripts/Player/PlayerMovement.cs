@@ -108,6 +108,7 @@ public class PlayerMovement : MonoBehaviour {
             Vector3 previousLocation = transform.position;
             _moveDirection.x = inputX / 2;
             _moveDirection.z = inputZ / 2;
+            CheckDirection(_moveDirection);
 
             if (!Shooting)
                 _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
@@ -121,7 +122,7 @@ public class PlayerMovement : MonoBehaviour {
             }
 
             _rigidbody.velocity = _moveDirection.normalized * _moveSpeed;
-            CheckDirection(_moveDirection);
+            
         }
         else
         {            
