@@ -53,15 +53,6 @@ public class AbilityController : MonoBehaviour {
             _vortexCharge.Stop();
             _cloneCharge.Stop();
 
-            if (SaveSystem.Instance.SaveData != null)
-                AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
-            else
-            {
-                GameStateManager.Instance.SetupSaveSystem();
-                AbilityArray = SaveSystem.Instance.SaveData.GetAbilityArray();
-            }
-
-            SetupAbilites();
             _currentCharge = _blinkCharge;
             
             Initialized = true;
