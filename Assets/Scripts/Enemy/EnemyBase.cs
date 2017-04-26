@@ -17,6 +17,7 @@ public class EnemyBase : MonoBehaviour
     public float ChaseTime = 3;
     public GameObject Target;
     public GameObject AttackTarget;
+    public int ManaAmount = 5;
     [HideInInspector] public bool Freeze = false;
 
     // Changes enemy state to alert when distance is smaller than this
@@ -201,10 +202,9 @@ public class EnemyBase : MonoBehaviour
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
 
-        GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position);
+        GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position, ManaAmount);
 
         _healthBar.gameObject.SetActive(false);
-        //CurrentStateObject.gameObject.SetActive(false);        
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
         Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();

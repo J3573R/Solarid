@@ -21,10 +21,11 @@ public class CloneGun : MonoBehaviour
     // Current status of reload
     private float _intervalTimer = 0;
     private AudioSource _audio;
-    
+    private GameObject _container;
 
     void Awake()
     {
+        _container = new GameObject("CloneBulletPool");
         _collider = GetComponent<Collider>();
         SetupBulletPool();
         _audio = GetComponent<AudioSource>();
@@ -37,7 +38,8 @@ public class CloneGun : MonoBehaviour
     {
         for (int i = 0; i < PooledBullets; i++)
         {
-            GameObject tmpGO = Instantiate(Bullet, _collider.transform.position, Quaternion.identity) as GameObject;            
+            GameObject tmpGO = Instantiate(Bullet, _collider.transform.position, Quaternion.identity) as GameObject;
+            tmpGO.transform.parent = _container.transform;         
             tmpGO.SetActive(false);
             _bullets.Add(tmpGO);
         }

@@ -7,13 +7,15 @@ public class ManaExplosion : MonoBehaviour {
     public GameObject ManaGlobePrefab;
 
     // Pool settings
-    private const int _poolStartSize = 30;
+    private const int _poolStartSize = 100;
     private const int _defaultGlobeAmount = 5;
+    private GameObject _container;
 
     private List<GameObject> _pool = new List<GameObject>();
 
     void Awake()
     {
+        _container = new GameObject("ManaPool");        
         for(int i = 0; i < _poolStartSize; i++)
         {
             AddToPool();
@@ -27,6 +29,8 @@ public class ManaExplosion : MonoBehaviour {
 
     public void ReturnToPool(GameObject mana)
     {
+        mana.transform.parent =
+            _container.transform;
         mana.SetActive(false);
         _pool.Add(mana);
     }
@@ -34,21 +38,22 @@ public class ManaExplosion : MonoBehaviour {
     public GameObject GetFromPool()
     {
         GameObject result = null;
-        if(_pool.Count > 0)
-        {
-            result = _pool[0];
-        } else
+        if(_pool.Count == 0)
         {
             for(int i = 0; i < 5; i++)
             {
-                
+                Debug.Log("CREATING NEW");
                 AddToPool();
-            }
-
-            result = _pool[0];            
+            }            
         }
 
-        _pool.RemoveAt(0);
+        foreach (var obj in _pool)
+        {
+            result = obj;
+            _pool.Remove(obj);
+            break;
+        }
+
         return result;
     }
     

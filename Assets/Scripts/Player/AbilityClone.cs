@@ -9,16 +9,19 @@ public class AbilityClone : AbilityBase {
     public int ClonePoolSize;
     public List<GameObject> Clones = new List<GameObject>();
 
+    private GameObject _container;
     private Vector3 _targetPosition;
     private Player _player;
 
 	// Use this for initialization
 	void Awake () {
+        _container = new GameObject("ClonePool");
         _player = GetComponent<Player>();
 	    _player.Clones = Clones;
         for(int i = 0; i < ClonePoolSize; i++)
         {
             GameObject clone = Instantiate(ClonePrefab, transform.position, Quaternion.identity);
+            clone.transform.parent = _container.transform;
             clone.SetActive(false);
             Clones.Add(clone);
         }

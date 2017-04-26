@@ -22,14 +22,15 @@ public class Gun : MonoBehaviour
     public float ReloadTime;
     public AudioClip AudioShot;
     public AudioClip AudioReload;
-
+    public bool Initialized;
 
     public float TargetDistance;    
     public float RecoilBuildUp;
     public float MaxRecoil;
     public bool Shooting;
     public bool Reloading;
-    
+
+    private GameObject _container;
     private float _recoil;
     private Player _player;
     private Vector3 _target;
@@ -38,8 +39,7 @@ public class Gun : MonoBehaviour
     
     // Current status of reload
     private float _intervalTimer = 0;
-    private AudioSource _audio;
-    public bool Initialized;
+    private AudioSource _audio;    
 
     void Awake()
     {
@@ -50,6 +50,7 @@ public class Gun : MonoBehaviour
     {
         if (!Initialized)
         {
+            _container = new GameObject("PlayerBulletPool");
             BulletsRemaining = ClipSize;
             _player = FindObjectOfType<Player>();
             _aimPoint = GameObject.Find("AimPoint").transform;
@@ -66,7 +67,8 @@ public class Gun : MonoBehaviour
     {
         for (int i = 0; i < PooledBullets; i++)
         {
-            GameObject tmpGO = Instantiate(Bullet, transform.position, Quaternion.identity) as GameObject;            
+            GameObject tmpGO = Instantiate(Bullet, transform.position, Quaternion.identity) as GameObject;
+            tmpGO.transform.parent = _container.transform;
             tmpGO.SetActive(false);
             _bullets.Add(tmpGO);
         }

@@ -11,10 +11,12 @@ public class AbilityVortex : AbilityBase
     private GameObject _blast;
     private Player _player;
     private Vector3 _target;
+    private GameObject _container;
     private List<GameObject> _vortexPool = new List<GameObject>();
 
     private void Start()
     {
+        _container = new GameObject("VortexPool");
         _player = GetComponent<Player>();
         InitPool();
     }
@@ -36,6 +38,7 @@ public class AbilityVortex : AbilityBase
     private void AddToPool()
     {
         GameObject temp = Instantiate(_blast, _target, Quaternion.Euler(90, 0, 0));
+        temp.transform.parent = _container.transform;
         temp.SetActive(false);
         _vortexPool.Add(temp);
     }
