@@ -79,12 +79,7 @@ public class EnemyBase : MonoBehaviour
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
-        if (GameStateManager
-			.Instance
-			.GameLoop
-			.Player
-			.gameObject != null)
-            _player = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<Player>();
+        _player = FindObjectOfType<Player>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI/EnemyHealthContainer").transform);
         _healthBar = bar.GetComponent<Slider>();
@@ -312,7 +307,7 @@ public class EnemyBase : MonoBehaviour
 
     public GameObject GetClosestTarget()
     {
-        GameObject target = GameStateManager.Instance.GameLoop.Player.gameObject.gameObject;
+        GameObject target = _player.gameObject;
         float targetDistance = Vector3.Distance(transform.position, target.transform.position);
 
         foreach (var clone in _player.Clones)
