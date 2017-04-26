@@ -46,7 +46,6 @@ public class FirstLevelStart : MonoBehaviour {
     {
         _animation.Stop();
         _cameraScript.ResetCamera(false);
-        Debug.Log(_blackScreen.color.a);
         TutorialMessage.enabled = true;
         _animationCompleted = true;
         

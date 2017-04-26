@@ -53,7 +53,10 @@ public class SaveData {
     public SaveData(Level level)
     {
         _currentLevel = level;
-    }
+
+        _hubCrystals = new Dictionary<Crystal, bool>();
+        
+}
 
     /// <summary>
     /// Set level to savedata
