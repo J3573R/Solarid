@@ -25,6 +25,7 @@ public class South5Crystal : MonoBehaviour {
     private MeshRenderer _crystalRenderer;
     private ParticleSystem _crystalParticle;
     private Light _crystalLight;
+    private Door _door;
 
     private CameraFollow _cameraScript;
     private bool _cutSceneEnabled;
@@ -40,6 +41,7 @@ public class South5Crystal : MonoBehaviour {
         _crystalRenderer = GameObject.Find("CrystalBlue").GetComponent<MeshRenderer>();
         _crystalParticle = GameObject.Find("BluePower").GetComponent<ParticleSystem>();
         _crystalLight = GameObject.Find("BlueLight").GetComponent<Light>();
+        _door = GameObject.Find("Rising Platform Cutscene").GetComponent<Door>();
 
         /*
         _healths = new List<Health>();
@@ -150,6 +152,7 @@ public class South5Crystal : MonoBehaviour {
         GameStateManager.Instance.GameLoop.Paused = false;
         _player.Input.CinematicMovement = false;
         _blackScreen.CrossFadeAlpha(0, 2, true);
+        _door.ToggleDoor();
     }
 
 }

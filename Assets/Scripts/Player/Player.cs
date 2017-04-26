@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     public bool Interact = false;
     public bool Dead { get; set; }
     public bool Initialized;
+    public SaveData.Crystal CrystalWithPlayer = SaveData.Crystal.none;
+    public Dictionary<SaveData.Crystal, bool> HubCrystals;
 
     private bool _playerReady;
 
