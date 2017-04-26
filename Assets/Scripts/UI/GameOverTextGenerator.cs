@@ -17,8 +17,6 @@ public class GameOverTextGenerator : MonoBehaviour {
     void OnEnable()
     {
         int rand = Random.Range(0, text.Count);
-        Debug.Log(rand);
-        Debug.Log(text[rand]);
         _text.text = text[rand];
     }
 }
