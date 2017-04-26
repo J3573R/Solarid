@@ -79,7 +79,11 @@ public class EnemyBase : MonoBehaviour
         Health = GetComponent<Health>();
         Animator = GetComponentInChildren<Animator>();
         Agent = GetComponent<NavMeshAgent>();
-        if (GameStateManager.Instance.GameLoop.Player.gameObject != null)
+        if (GameStateManager
+			.Instance
+			.GameLoop
+			.Player
+			.gameObject != null)
             _player = GameStateManager.Instance.GameLoop.Player.gameObject.GetComponent<Player>();
         GameObject bar = Instantiate(HealthBar);
         bar.transform.SetParent(GameObject.Find("UI/EnemyHealthContainer").transform);

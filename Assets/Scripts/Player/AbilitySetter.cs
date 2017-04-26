@@ -17,6 +17,8 @@ public class AbilitySetter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        _player = FindObjectOfType<Player>();
+        _player.init();
         _controller = FindObjectOfType<AbilityController>();
         SetAbilities = true;
 	}

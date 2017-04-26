@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 928b82bbdea3d1e49becb3d3e5bf3d80
+timeCreated: 1493190989
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Infinium Guardian Caps
+  fontNames:
+  - Infinium Guardian Caps
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

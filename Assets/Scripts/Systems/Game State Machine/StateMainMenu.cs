@@ -59,15 +59,13 @@ public class StateMainMenu : GameStateBase {
     private void PressReset()
     {
         SaveSystem.Instance.SaveData.SetCurrentLevel(SaveData.Level.NoSave);
-        SaveSystem.Instance.SaveData.ResetAbilityData();
-        SaveSystem.Instance.SaveStats();
+        SaveSystem.Instance.SaveToFile();
     }
 
     void PressNewGame()
     {
         if (!_saveExists)
         {
-            SaveSystem.Instance.SaveData.ResetAbilityData();
             GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, "South1");
         }                      
         else
@@ -96,9 +94,8 @@ public class StateMainMenu : GameStateBase {
 
     private void PressYes()
     {
-        SaveSystem.Instance.SaveData.ResetAbilityData();
         SaveSystem.Instance.SaveData.SetCurrentLevel(SaveData.Level.NoSave);
-        SaveSystem.Instance.SaveStats();
+        SaveSystem.Instance.SaveToFile();
         GameStateManager.Instance.ChangeState(GameStateManager.GameState.GameLoop, "South1");
     }
 
