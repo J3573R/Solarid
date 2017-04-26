@@ -7,7 +7,7 @@ public class ManaExplosion : MonoBehaviour {
     public GameObject ManaGlobePrefab;
 
     // Pool settings
-    private const int _poolStartSize = 10;
+    private const int _poolStartSize = 30;
     private const int _defaultGlobeAmount = 5;
 
     private List<GameObject> _pool = new List<GameObject>();
