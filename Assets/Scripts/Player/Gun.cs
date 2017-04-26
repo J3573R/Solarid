@@ -119,7 +119,8 @@ public class Gun : MonoBehaviour
 
     public void InitiateReload()
     {
-        if (!Reloading)
+        
+        if (!Reloading && BulletsRemaining < ClipSize)
         {
             Reloading = true;
             _audio.clip = AudioReload;

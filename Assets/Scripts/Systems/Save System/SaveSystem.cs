@@ -69,16 +69,36 @@ public class SaveSystem : MonoBehaviour
         //Debug.Log("Saved Data, CurrentLevel =" + SaveData.GetCurrentLevel());
     }
 
-    public void Save()
+    public void SaveAll()
     {
         SaveCurrentLevel();
         SaveCrystals();
         SaveToFile();
     }
 
-    private void SaveCrystals()
+    public void SaveOnlyLevel()
     {
-        SaveData.SetCrystals(_player.CrystalWithPlayer, _player.HubCrystals);
+        SaveCurrentLevel();
+        SaveToFile();
+    }
+    
+    public void SaveOnlyCrystals()
+    {
+        SaveCrystals();
+        SaveToFile();
+    }
+
+    private void SaveCrystals()
+    {        
+        _player.init();
+        if (_player.HubCrystals != null)
+        {
+            SaveData.SetCrystals(_player.CrystalWithPlayer, _player.HubCrystals);
+        } else
+        {
+            SaveData.SetCrystals(SaveData.GetCrystalWithPlayer(), SaveData.GetHubCrystals());
+        }
+        
     }
 
     /// <summary>
