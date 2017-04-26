@@ -43,9 +43,14 @@ public class SaveSystem : MonoBehaviour
             LoadSaveData();
         }
         _player = FindObjectOfType<Player>();
-        _player.init();
-        _player.HubCrystals = SaveData.GetHubCrystals();
-        _player.CrystalWithPlayer = SaveData.GetCrystalWithPlayer();
+
+        if (_player != null)
+        {
+            _player.init();
+            _player.HubCrystals = SaveData.GetHubCrystals();
+            _player.CrystalWithPlayer = SaveData.GetCrystalWithPlayer();
+        }
+        
     }    
     
     // Path to the save file
