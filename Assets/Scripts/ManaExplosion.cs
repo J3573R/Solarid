@@ -56,7 +56,11 @@ public class ManaExplosion : MonoBehaviour {
     {
         for(int i = 0; i < globeAmount; i++)
         {
-            GameObject result = GetFromPool();
+            GameObject result = null;
+            while(result == null)
+            {
+                result = GetFromPool();
+            }
             result.transform.position = location;
             result.SetActive(true);
         }
