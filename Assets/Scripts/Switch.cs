@@ -49,7 +49,13 @@ public class Switch : MonoBehaviour
             _obeliskRotation.ChangeRotationSpeed = new Vector3(0, 0, 30);
         }
 
-        _distance = Vector3.Distance(GameStateManager.Instance.GameLoop.Player.gameObject.transform.position, transform.position);
+        _distance = Vector3.Distance(GameStateManager
+			.Instance
+			.GameLoop
+			.Player
+			.gameObject
+			.transform
+			.position, transform.position);
 
         // If player is close enought and door is not moving, show meter and response to interaction
         if (_distance <= 2 && !TargetDoor.Moving && !TargetDoor.Open)
