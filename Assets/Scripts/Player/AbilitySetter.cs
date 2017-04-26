@@ -17,7 +17,10 @@ public class AbilitySetter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        _player = FindObjectOfType<Player>();
+        _player.init();
         _controller = FindObjectOfType<AbilityController>();
+        SetAbilities = true;
 	}
 	
 	// Update is called once per frame
@@ -28,10 +31,16 @@ public class AbilitySetter : MonoBehaviour {
             //Debug.Log("SETTING ABILITIES");
             if (Blink)
                 _controller.EnableOrDisableAbility(AbilityController.Ability.Blink, true);
+            else
+                _controller.EnableOrDisableAbility(AbilityController.Ability.Blink, false);
             if (Vortex)
                 _controller.EnableOrDisableAbility(AbilityController.Ability.Vortex, true);
+            else
+                _controller.EnableOrDisableAbility(AbilityController.Ability.Vortex, false);
             if (Clone)
                 _controller.EnableOrDisableAbility(AbilityController.Ability.Clone, true);
+            else
+                _controller.EnableOrDisableAbility(AbilityController.Ability.Clone, false);
 
             SetAbilities = false;
         }

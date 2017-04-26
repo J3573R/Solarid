@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,11 +53,20 @@ public class AbilityController : MonoBehaviour {
             _blinkCharge.Stop();
             _vortexCharge.Stop();
             _cloneCharge.Stop();
-
+            SetupAbilityArray();
+            
             _currentCharge = _blinkCharge;
             
             Initialized = true;
         }
+    }
+
+    private void SetupAbilityArray()
+    {
+        AbilityArray = new Dictionary<Ability, bool>();
+        AbilityArray.Add(Ability.Blink, false);
+        AbilityArray.Add(Ability.Vortex, false);
+        AbilityArray.Add(Ability.Clone, false);
     }
 
     /// <summary>
@@ -244,18 +254,21 @@ public class AbilityController : MonoBehaviour {
             _currentAbility = _blink;
             _abilityIndex = 0;
             _currentCharge = _blinkCharge;
+            _hudController.ChangeImage(tmp);
         }            
         if (tmp == Ability.Vortex && _vortex.enabled)
         {
             _currentAbility = _vortex;
             _abilityIndex = 1;
             _currentCharge = _vortexCharge;
+            _hudController.ChangeImage(tmp);
         }
         if (tmp == Ability.Clone && _clone.enabled)
         {
             _currentAbility = _clone;
             _abilityIndex = 2;
             _currentCharge = _cloneCharge;
+            _hudController.ChangeImage(tmp);
         }
 
         if (chargeState)
@@ -263,7 +276,7 @@ public class AbilityController : MonoBehaviour {
             _currentCharge.Play();
         }
         _rangeCheck.UpdateRange(_currentAbility.GetRange());
-        _hudController.ChangeImage(tmp);
+        
     }
 
     /// <summary>

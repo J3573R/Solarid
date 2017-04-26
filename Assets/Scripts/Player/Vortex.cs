@@ -18,11 +18,15 @@ public class Vortex : MonoBehaviour
     void Awake()
     {
         _particleSystem = GetComponent<ParticleSystem>();
-        _audio = GetComponent<AudioSource>();
-        _abilityVortex = GameStateManager.Instance.GameLoop.References.Player.GetComponent<AbilityVortex>();
+        _audio = GetComponent<AudioSource>();        
     }
 
 	void Update () {
+
+        if (_abilityVortex == null && GameStateManager.Instance.GameLoop.Player.Initialized)
+        {
+            _abilityVortex = GameStateManager.Instance.GameLoop.References.Player.GetComponent<AbilityVortex>();
+        }
 
 	    if (ListenPause())
 	    {
