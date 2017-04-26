@@ -39,11 +39,11 @@ public class StateGameLoop : GameStateBase
         _pauseMenu.SetActive(false);
         
         if (SaveSystem.Instance != null)
-            SaveSystem.Instance.Save();
+            SaveSystem.Instance.SaveOnlyLevel();
         else
         {
             GameStateManager.Instance.SetupSaveSystem();
-            SaveSystem.Instance.Save();
+            SaveSystem.Instance.SaveOnlyLevel();
         }
     }
 
