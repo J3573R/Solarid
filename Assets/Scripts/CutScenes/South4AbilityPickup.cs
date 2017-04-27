@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class West2AbilityPickup : MonoBehaviour {
+public class South4AbilityPickup : MonoBehaviour {
 
     public Transform PlayerStartPosition;
     public Transform PlayerEndPosition;
@@ -41,12 +41,13 @@ public class West2AbilityPickup : MonoBehaviour {
         {
 
             var dir = transform.position - PlayerEndPosition.position;
-            if(_player.transform.position.z < PlayerEndPosition.position.z)
+            if(_player.transform.position.x < PlayerEndPosition.position.x)
             {
-                _playerMovement.Move(dir.x, dir.z);
+                _playerMovement.Move(1, 0);
             } else
             {
                 _playerMovement.Move(0, 0);
+                _player.transform.LookAt(PlayerEndPosition);
                 _playerStopped = true;
             }
 
@@ -59,7 +60,7 @@ public class West2AbilityPickup : MonoBehaviour {
 
             if (_finished)
             {
-                _abilityController.EnableOrDisableAbility(AbilityController.Ability.Vortex, true);
+                _abilityController.EnableOrDisableAbility(AbilityController.Ability.Blink, true);
                 SetCinematicMode(false);
                 gameObject.SetActive(false);
             }
