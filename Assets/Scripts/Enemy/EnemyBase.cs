@@ -206,11 +206,17 @@ public class EnemyBase : MonoBehaviour
 
         _healthBar.gameObject.SetActive(false);
 
+        Light[] lights = GetComponentsInChildren<Light>();
         Collider[] colliders = GetComponentsInChildren<Collider>();
         Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
 
         Agent.enabled = false;
         Animator.enabled = false;
+
+        foreach(var light in lights)
+        {
+            light.enabled = false;
+        }
         
         foreach (var collider in colliders)
         {

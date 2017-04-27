@@ -21,6 +21,14 @@ public class Vortex : MonoBehaviour
         _audio = GetComponent<AudioSource>();        
     }
 
+    /// <summary>
+    /// Destroy vortex prematurely.
+    /// </summary>
+    public void Kill()
+    {
+        _abilityVortex.ReturnToPool(gameObject);
+    }
+
 	void Update () {
 
         if (_abilityVortex == null && GameStateManager.Instance.GameLoop.Player.Initialized)

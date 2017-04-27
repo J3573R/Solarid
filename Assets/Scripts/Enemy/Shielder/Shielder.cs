@@ -50,6 +50,12 @@ public class Shielder : EnemyBase
         }        
     }
 
+    protected override void Die()
+    {
+        Shield.SetActive(false);
+        base.Die();
+    }
+
     /// <summary>
     /// Creates and changes state for enemy.
     /// </summary>

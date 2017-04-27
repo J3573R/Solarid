@@ -12,6 +12,8 @@ public class EnemySpawner : MonoBehaviour
     public float SpawnInterval;
     // Default state when spawn
     public EnemyBase.State StateOnAwake;
+    // For playing spawn sound while burrow sound is active
+    public AudioSource SpawnAudioController;
     
     // Timer between spawns
     private float _timeBeforeSpawn = 0;
@@ -27,10 +29,16 @@ public class EnemySpawner : MonoBehaviour
 	    if (SpawnableGameObjects.Count > 0)
 	    {
 	        if (_timeBeforeSpawn <= 0)
-	        {
+	        {                
+                if(SpawnableGameObjects[0] == null)
+                {
+                    SpawnableGameObjects.RemoveAt(0);
+                    return;
+                }
 	            GameObject spawn = Instantiate(SpawnableGameObjects[0], transform.position, Quaternion.identity);
 	            SpawnableGameObjects.RemoveAt(0);
 	            _timeBeforeSpawn = SpawnInterval;
+                SpawnAudioController.Play();
 	            if (StateOnAwake != EnemyBase.State.None)
 	            {
 	                EnemyBase temp = spawn.GetComponent<EnemyBase>();
@@ -44,7 +52,8 @@ public class EnemySpawner : MonoBehaviour
 	    }
 	    else
 	    {
-	        gameObject.SetActive(false);
+            if(!SpawnAudioController.isPlaying)
+	            gameObject.SetActive(false);
 	    }
 	}
 }
