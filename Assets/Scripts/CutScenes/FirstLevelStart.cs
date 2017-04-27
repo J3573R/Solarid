@@ -12,6 +12,7 @@ public class FirstLevelStart : MonoBehaviour {
     private Animation _animation;
     private Image _blackScreen;
     private bool _animationCompleted;
+    public float WaitTime;
     
 
 	// Use this for initialization
@@ -21,11 +22,10 @@ public class FirstLevelStart : MonoBehaviour {
         GameStateManager.Instance.GameLoop.Pause(false, false);
         _cameraScript = FindObjectOfType<CameraFollow>();
         _animation = _cameraScript.GetComponent<Animation>();
-        TutorialMessage.enabled = false;
+        TutorialMessage.CrossFadeAlpha(0, 0, true);
         _cameraScript.StopNormalCameraMovement = true;
         _cameraScript.AnimationComponent = this;
         _animation.clip = CameraAnimation;
-
         _animation.Play();
 	}
 	
@@ -33,12 +33,16 @@ public class FirstLevelStart : MonoBehaviour {
 	void Update () {
 		if (_animationCompleted)
         {
-            if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)) {
-                GameStateManager.Instance.GameLoop.UnPause();
-                TutorialMessage.enabled = false;
-                Destroy(gameObject);
-                
+            if (WaitTime <= 0)
+            {
+                if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
+                {
+                    GameStateManager.Instance.GameLoop.UnPause();
+                    TutorialMessage.CrossFadeAlpha(0, 1, true);
+                    Destroy(gameObject);
+                }
             }
+            WaitTime -= Time.deltaTime;
         }
 	}
 
@@ -46,7 +50,7 @@ public class FirstLevelStart : MonoBehaviour {
     {
         _animation.Stop();
         _cameraScript.ResetCamera(false);
-        TutorialMessage.enabled = true;
+        TutorialMessage.CrossFadeAlpha(1, 1, true);
         _animationCompleted = true;
         
     }

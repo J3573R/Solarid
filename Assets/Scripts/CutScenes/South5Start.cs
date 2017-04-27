@@ -20,7 +20,6 @@ public class South5Start : MonoBehaviour {
     {
         _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
         _blackScreen.CrossFadeAlpha(0, 4, true);
-        //_blackScreen.CrossFadeAlpha(1, 5, true);
         GameStateManager.Instance.GameLoop.Pause(false, false);
         _cameraScript = FindObjectOfType<CameraFollow>();
         _cameraScript.Init();
@@ -49,7 +48,7 @@ public class South5Start : MonoBehaviour {
     public void AnimationCompleted()
     {
         _playerMovement.GetComponent<InputController>().CinematicMovement = false;
-        _blackScreen.CrossFadeAlpha(1, 2, true);        
+        _blackScreen.CrossFadeAlpha(1, 2, true);
         _animation.Stop();
         _animationCompleted = true;
         StartCoroutine(ToGameTransition());                        
