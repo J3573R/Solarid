@@ -48,7 +48,7 @@ public class South5Start : MonoBehaviour {
     public void AnimationCompleted()
     {
         _playerMovement.GetComponent<InputController>().CinematicMovement = false;
-        _blackScreen.CrossFadeAlpha(1, 2, true);        
+        _blackScreen.CrossFadeAlpha(1, 2, true);
         _animation.Stop();
         _animationCompleted = true;
         StartCoroutine(ToGameTransition());                        
