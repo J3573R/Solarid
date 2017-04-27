@@ -80,7 +80,10 @@ public class Switch : MonoBehaviour
                     {
                         foreach (var currentObject in ActivateObjects)
                         {
-                            currentObject.SetActive(true);
+                            if(currentObject != null)
+                            {
+                                currentObject.SetActive(true);
+                            }                            
                         }
                     }
                     TargetDoor.ToggleDoor();

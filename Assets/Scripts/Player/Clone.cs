@@ -51,6 +51,14 @@ public class Clone : MonoBehaviour {
         Hero.SetActive(true);
         _dying = false;
     }
+
+    /// <summary>
+    /// Destroy clone prematurely.
+    /// </summary>
+    public void Kill()
+    {
+        Die();
+    }
 		
 	void Update () {
 
