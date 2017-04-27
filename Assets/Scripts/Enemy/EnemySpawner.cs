@@ -52,7 +52,8 @@ public class EnemySpawner : MonoBehaviour
 	    }
 	    else
 	    {
-	        gameObject.SetActive(false);
+            if(!SpawnAudioController.isPlaying)
+	            gameObject.SetActive(false);
 	    }
 	}
 }
