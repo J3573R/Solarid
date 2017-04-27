@@ -49,6 +49,33 @@ public class AbilityBlink : AbilityBase
         _player.Health.Invulnerable = true;
     }
 
+    public void BlinkToNothing()
+    {
+        StartCoroutine(CastDelayToNothing());
+        _player.Animation.CastOnce = true;
+        _startParticle.transform.position = transform.position;
+        _audio.clip = AudioBlink;
+        _audio.Play();
+    }
+
+    /// <summary>
+    /// Delay before the actual execution, doesn't start additional coroutines. Leaves player invisible
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CastDelayToNothing()
+    {
+        yield return new WaitForSeconds(_player.AbilityController.CastDelayInSeconds);
+        foreach (MeshRenderer rend in _renderers)
+        {
+            rend.enabled = false;
+        }
+        _playerRender.enabled = false;
+        transform.position = _targetPosition;
+        _startParticle.Play();
+        
+        _player.Input.ListenInput = false;
+    }
+
     /// <summary>
     /// Delay before the actual execution so animation can complete
     /// </summary>
