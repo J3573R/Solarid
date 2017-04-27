@@ -58,7 +58,7 @@ public class StateMainMenu : GameStateBase {
 
     private void PressReset()
     {
-        SaveSystem.Instance.SaveData.SetCurrentLevel(SaveData.Level.NoSave);
+        SaveSystem.Instance.ResetSave();
         SaveSystem.Instance.SaveToFile();
     }
 

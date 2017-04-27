@@ -152,6 +152,7 @@ public class South5Crystal : MonoBehaviour {
         GameStateManager.Instance.GameLoop.Paused = false;
         _player.Input.CinematicMovement = false;
         _blackScreen.CrossFadeAlpha(0, 2, true);
+        SaveSystem.Instance.SaveData.SetCrystals(SaveData.Crystal.Blue, SaveSystem.Instance.SaveData.GetHubCrystals());        
         _door.ToggleDoor();
     }
 

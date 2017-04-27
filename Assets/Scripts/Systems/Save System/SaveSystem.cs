@@ -49,9 +49,9 @@ public class SaveSystem : MonoBehaviour
             _player.init();
             _player.HubCrystals = SaveData.GetHubCrystals();
             _player.CrystalWithPlayer = SaveData.GetCrystalWithPlayer();
-        }
-        
+        }        
     }    
+
     
     // Path to the save file
     public static string SaveFilePath { get { return Path.Combine(Application.persistentDataPath, SaveFileName); } }
@@ -72,7 +72,20 @@ public class SaveSystem : MonoBehaviour
     public void SaveAll()
     {
         SaveCurrentLevel();
-        SaveCrystals();
+        SaveToFile();
+    }
+
+    internal void ResetSave()
+    {
+        Dictionary<SaveData.Crystal, bool> tmp = new Dictionary<SaveData.Crystal, bool>();
+        tmp.Add(SaveData.Crystal.Blue, false);
+        tmp.Add(SaveData.Crystal.Red, false);
+        tmp.Add(SaveData.Crystal.Yellow, false);
+        tmp.Add(SaveData.Crystal.Black, false);
+        SaveData.SetCrystals(SaveData.Crystal.none, tmp);
+        SaveData.SetCurrentLevel(SaveData.Level.NoSave);
+        SaveData.SetHubState(SaveData.HubState.NothingActivated);
+
         SaveToFile();
     }
 
@@ -82,24 +95,7 @@ public class SaveSystem : MonoBehaviour
         SaveToFile();
     }
     
-    public void SaveOnlyCrystals()
-    {
-        SaveCrystals();
-        SaveToFile();
-    }
 
-    private void SaveCrystals()
-    {        
-        _player.init();
-        if (_player.HubCrystals != null)
-        {
-            SaveData.SetCrystals(_player.CrystalWithPlayer, _player.HubCrystals);
-        } else
-        {
-            SaveData.SetCrystals(SaveData.GetCrystalWithPlayer(), SaveData.GetHubCrystals());
-        }
-        
-    }
 
     /// <summary>
     /// Sets the current level in use to SaveData and saves it to file

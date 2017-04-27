@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 [Serializable]
 public class SaveData {
@@ -7,8 +8,16 @@ public class SaveData {
     private Level _currentLevel;
     private Crystal _crystalWithPlayer;
     private Dictionary<Crystal, bool> _hubCrystals;
+    private HubState _hubState;
 
     //TODO: Refactor this class, unnecessary methods which can be combined
+    public enum HubState
+    {
+        NothingActivated,
+        BlueActivated,
+        BlueRedActivated,
+        BlueRedYellowActivated
+    }
 
     public enum Crystal
     {
@@ -52,11 +61,17 @@ public class SaveData {
     /// <param name="level">level to save</param>
     public SaveData(Level level)
     {
-        _currentLevel = level;
+        Debug.Log("new data");
 
+        _currentLevel = level;
+        _crystalWithPlayer = Crystal.none;
         _hubCrystals = new Dictionary<Crystal, bool>();
-        
-}
+        _hubCrystals.Add(Crystal.Blue, false);
+        _hubCrystals.Add(Crystal.Red, false);
+        _hubCrystals.Add(Crystal.Yellow, false);
+        _hubCrystals.Add(Crystal.Black, false);
+
+    }    
 
     /// <summary>
     /// Set level to savedata
@@ -65,6 +80,16 @@ public class SaveData {
     public void SetCurrentLevel(Level level)
     {
         _currentLevel = level;
+    }
+
+    public HubState GetHubState()
+    {        
+            return _hubState;
+    }
+
+    public void SetHubState(HubState state)
+    {
+        _hubState = state;
     }
 
     /// <summary>
@@ -83,7 +108,7 @@ public class SaveData {
     /// </summary>
     /// <returns></returns>
     public Crystal GetCrystalWithPlayer()
-    {
+    {        
         return _crystalWithPlayer;
     }
 
@@ -93,7 +118,17 @@ public class SaveData {
     /// <returns></returns>
     public Dictionary<Crystal, bool> GetHubCrystals()
     {
-        return _hubCrystals;
+        if (_hubCrystals != null)
+            return _hubCrystals;
+        else
+        {
+            _hubCrystals = new Dictionary<Crystal, bool>();
+            _hubCrystals.Add(Crystal.Blue, false);
+            _hubCrystals.Add(Crystal.Red, false);
+            _hubCrystals.Add(Crystal.Yellow, false);
+            _hubCrystals.Add(Crystal.Black, false);
+            return _hubCrystals;
+        }
     }
 
     /// <summary>
