@@ -27,6 +27,13 @@ public class PlayerHealth : Health {
         }
     }
 
+    public void AddHealth(int amount)
+    {
+        CurrentHealth += amount;
+        float progress = ((float)_health) / ((float)_originalHP);
+        _controller.Progress = progress;
+    }
+
     public override bool TakeDamage(int damage)
     {
         if (!Invulnerable)

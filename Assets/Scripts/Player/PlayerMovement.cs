@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
         if (!GameStateManager.Instance.GameLoop.Paused)
         {
-            if (Shooting || Casting && !_player.AbilityController._allAbilitiesDisabled)
+            if (Shooting || Casting && !_player.AbilityController.AllAbilitiesDisabled)
             {
                 ListenMouse();
             }
