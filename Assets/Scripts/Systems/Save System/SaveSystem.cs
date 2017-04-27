@@ -71,7 +71,7 @@ public class SaveSystem : MonoBehaviour
 
     public void SaveAll()
     {
-        SaveCurrentLevel();
+        SaveCurrentLevel();        
         SaveToFile();
     }
 

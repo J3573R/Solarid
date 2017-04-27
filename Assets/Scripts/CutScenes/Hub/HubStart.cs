@@ -64,7 +64,8 @@ public class HubStart : MonoBehaviour {
             _switchRed.SetActive(false);
             _switchYellow.SetActive(false);
             _player.transform.position = _startBlue.position;
-            _player.transform.rotation = _startBlue.rotation;
+            _player.transform.rotation = _startBlue.rotation;            
+
         } else if (_hubState == SaveData.HubState.BlueActivated)
         {
             _switchBlue.SetActive(false);
@@ -74,6 +75,11 @@ public class HubStart : MonoBehaviour {
             _player.transform.position = _startRed.position;
             _player.transform.rotation = _startRed.rotation;
             _barrierRed.SetActive(false);
+
+            if (SaveSystem.Instance.SaveData.GetCrystalWithPlayer() == SaveData.Crystal.none)
+            {
+                _switchRed.SetActive(false);
+            }
         }
         else if (_hubState == SaveData.HubState.BlueRedActivated)
         {
@@ -86,6 +92,11 @@ public class HubStart : MonoBehaviour {
             _player.transform.rotation = _startYellow.rotation;
             _barrierRed.SetActive(false);
             _barrierYellow.SetActive(false);
+
+            if (SaveSystem.Instance.SaveData.GetCrystalWithPlayer() == SaveData.Crystal.none)
+            {
+                _switchYellow.SetActive(false);
+            }
         }
         else if (_hubState == SaveData.HubState.BlueRedYellowActivated)
         {
