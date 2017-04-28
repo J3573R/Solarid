@@ -11,12 +11,13 @@ public class InputController : MonoBehaviour
     public bool ListenInput = true;
     public bool CinematicMovement { get; set; }
     public bool ShootingDisabled { get; set; }
+    public float ShootStateHoldTime;
 
+    private float _cameraTapTimer;
+    private float _shootHoldTimer;
     private Player _player;
     private Camera _camera;
-    public bool Initialized;
-
-    
+    public bool Initialized;    
 
     void Awake()
     {
@@ -41,7 +42,7 @@ public class InputController : MonoBehaviour
         {
             if (ListenInput && !GameStateManager.Instance.GameLoop.Paused)
             {
-                _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                _player.Movement.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));                
             }
             else
             {
@@ -58,7 +59,10 @@ public class InputController : MonoBehaviour
         {
             GetMouseInput();
             GetKeyBoardInput();
-        }        
+        }
+
+        _shootHoldTimer -= Time.deltaTime;
+        _cameraTapTimer -= Time.deltaTime;
     }    
 
     /// <summary>
@@ -71,8 +75,10 @@ public class InputController : MonoBehaviour
         if (Input.GetButton("Ability") && !_player.AbilityController.AllAbilitiesDisabled)
         {
             GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
+            _cameraTapTimer = ShootStateHoldTime;
         } else
         {
+            if (_cameraTapTimer <= 0)
             GameStateManager.Instance.GameLoop.References.CameraScript.MouseOffset = Vector3.zero;
         }
 
@@ -98,20 +104,30 @@ public class InputController : MonoBehaviour
             if (!_player.Movement.Casting && !ShootingDisabled)
             {
                 GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
-                _player.Movement.SetShooting(true);                
+                _cameraTapTimer = ShootStateHoldTime;
+                _player.Movement.SetShooting(true);
+                _shootHoldTimer = ShootStateHoldTime;       
                 _player.Shoot();
             }    
         } else
         {
-            if (!_player.Movement.Casting)
+            if (!_player.Movement.Casting && _shootHoldTimer <= 0)
+            {
                 _player.Movement.SetShooting(false);
+                _player.Gun.SetShooting(false);
+                Debug.Log("False");
+            }
+                
         }
 
+        /*
         if (Input.GetButtonUp("Fire1"))
         {
             _player.Movement.SetShooting(false);
             _player.Gun.SetShooting(false);
         }
+        */
+        
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -132,7 +148,7 @@ public class InputController : MonoBehaviour
                 _player.AbilityController.ScrollWeapon(-1);
             else if (tmp > 0)
                 _player.AbilityController.ScrollWeapon(1);
-        }        
+        }
     }
 
     /// <summary>

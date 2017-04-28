@@ -86,8 +86,7 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            Shooting = false;
-            _recoil = 0;
+            Shooting = false;            
         }
     }
 
