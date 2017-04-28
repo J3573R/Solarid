@@ -61,7 +61,7 @@ public class PlayerMana : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (!GameStateManager.Instance.GameLoop.Paused && !_player.AbilityController.AllAbilitiesDisabled && Initialized)
+        if (!GameStateManager.Instance.GameLoop.Paused && Initialized)
         {
             if (_currentMana < _maxMana)
             {

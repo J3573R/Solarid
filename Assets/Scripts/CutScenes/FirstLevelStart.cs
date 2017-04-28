@@ -34,6 +34,7 @@ public class FirstLevelStart : MonoBehaviour {
         _player.Input.ShootingDisabled = true;
         _playerHealth = FindObjectOfType<PlayerHealth>();
         _playerHealth.TakeDamage(999);
+        _player.Mana.SubStractMana(1000);
         
         foreach (Image img in _hud)
         {
@@ -67,11 +68,16 @@ public class FirstLevelStart : MonoBehaviour {
         if (_giveHp)
         {
             _playerHealth.AddHealth(10);
+            _player.Mana.AddMana(10);
             
             if (_playerHealth.CurrentHealth >= 1000)
             {
                 Destroy(gameObject);
             }
+        }
+        else
+        {
+            _player.Mana.SubStractMana(1);
         }
 	}
 

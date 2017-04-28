@@ -44,11 +44,13 @@ public class AbilitySetter : MonoBehaviour {
 
             SetAbilities = false;
 
+            /*
             if (!Blink && !Vortex && !Clone)
             {
                 _controller.AllAbilitiesDisabled = true;
                 _player.Mana.GiveZeroMana();
             }
+            */
         }
 
 	}
