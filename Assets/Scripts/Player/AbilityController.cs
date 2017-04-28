@@ -161,7 +161,7 @@ public class AbilityController : MonoBehaviour {
         bool notExecuted = true;
         if (!AllAbilitiesDisabled)
         {
-            if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldownProgress() <= 0)
+            if (_player.Movement.Casting && GetCurrentCooldownProgress() <= 0)
             {
                 if (_player.Mana.HasEnoughMana(_currentAbility.ManaCost))
                 {
