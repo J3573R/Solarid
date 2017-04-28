@@ -13,6 +13,7 @@ public class InputController : MonoBehaviour
     public bool ShootingDisabled { get; set; }
     public float ShootStateHoldTime;
 
+    private float _cameraTapTimer;
     private float _shootHoldTimer;
     private Player _player;
     private Camera _camera;
@@ -61,6 +62,7 @@ public class InputController : MonoBehaviour
         }
 
         _shootHoldTimer -= Time.deltaTime;
+        _cameraTapTimer -= Time.deltaTime;
     }    
 
     /// <summary>
@@ -73,8 +75,10 @@ public class InputController : MonoBehaviour
         if (Input.GetButton("Ability") && !_player.AbilityController.AllAbilitiesDisabled)
         {
             GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
+            _cameraTapTimer = ShootStateHoldTime;
         } else
         {
+            if (_cameraTapTimer <= 0)
             GameStateManager.Instance.GameLoop.References.CameraScript.MouseOffset = Vector3.zero;
         }
 
@@ -100,6 +104,7 @@ public class InputController : MonoBehaviour
             if (!_player.Movement.Casting && !ShootingDisabled)
             {
                 GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
+                _cameraTapTimer = ShootStateHoldTime;
                 _player.Movement.SetShooting(true);
                 _shootHoldTimer = ShootStateHoldTime;       
                 _player.Shoot();

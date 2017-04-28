@@ -9,15 +9,14 @@ public class CameraFollow : MonoBehaviour
     public MonoBehaviour AnimationComponent;
     public Vector3 MouseOffset = Vector3.zero;
     public bool Initialized = false;
-
-    
+    public float OffsetResetTime;
 
     // Players gameobject
     private GameObject _player;
     // Cameras current position
     private Vector3 _vCurPos;
-    
 
+    private float _tapTimer;
     private Quaternion _originalRotation;
     private bool shake = false;
     private float shakeAmount = 0;
