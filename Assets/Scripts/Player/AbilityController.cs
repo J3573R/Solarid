@@ -24,7 +24,7 @@ public class AbilityController : MonoBehaviour {
     private ParticleSystem _cloneCharge;
 
     public ParticleSystem _currentCharge;
-    public bool _allAbilitiesDisabled;
+    public bool AllAbilitiesDisabled;
     public float CastDelayInSeconds;
     public Dictionary<Ability, bool> AbilityArray;
     public bool Initialized;
@@ -138,11 +138,11 @@ public class AbilityController : MonoBehaviour {
         if (tmpIndex == 0)
         {
             _hudController.AllAbilitesDisabled(true);
-            _allAbilitiesDisabled = true;
+            AllAbilitiesDisabled = true;
         }
         else
         {
-            _allAbilitiesDisabled = false;
+            AllAbilitiesDisabled = false;
         }            
 
         if (tmpIndex> 0)
@@ -159,7 +159,7 @@ public class AbilityController : MonoBehaviour {
     public void Execute()
     {
         bool notExecuted = true;
-        if (!_allAbilitiesDisabled)
+        if (!AllAbilitiesDisabled)
         {
             if (_player.Movement.Casting && !_player.Movement.Shooting && GetCurrentCooldownProgress() <= 0)
             {
@@ -215,7 +215,7 @@ public class AbilityController : MonoBehaviour {
     /// <returns></returns>
     public float GetCurrentCooldownProgress()
     {
-        if (!_allAbilitiesDisabled)
+        if (!AllAbilitiesDisabled)
         {
             float cd = Mathf.Clamp(_currentCooldown, 0, 1);
 
@@ -232,7 +232,7 @@ public class AbilityController : MonoBehaviour {
     /// <returns></returns>
     public float GetRange()
     {
-        if (!_allAbilitiesDisabled)
+        if (!AllAbilitiesDisabled)
             return _currentAbility.GetRange();
         else
             return 0;

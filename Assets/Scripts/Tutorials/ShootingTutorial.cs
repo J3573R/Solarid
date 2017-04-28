@@ -4,17 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ShootingTutorial : MonoBehaviour {
-
+        
+    private BoxCollider _collider;
     private Image _tutorial;
     private bool _tutorialActive;
     private Player _player;
+    private Text _bulletsRemaining;    
 
 	// Use this for initialization
 	void Start () {
         _tutorial = GameObject.Find("ShootingTutorial").GetComponent<Image>();
         _player = FindObjectOfType<Player>();
-        _tutorial.enabled = false;
-	}
+        _tutorial.CrossFadeAlpha(0, 0, true);
+        _bulletsRemaining = GameObject.Find("BulletsRemaining").GetComponent<Text>();
+        _collider = GetComponent<BoxCollider>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -23,9 +27,11 @@ public class ShootingTutorial : MonoBehaviour {
             if (Input.GetButton("Fire1"))
             {
                 _player.Gun.ForceShoot();
-                _tutorial.enabled = false;
+                _tutorial.CrossFadeAlpha(0, 0, true);
                 GameStateManager.Instance.GameLoop.UnPause();
-                Destroy(gameObject);
+                
+                StartCoroutine(DestroyDelay());
+                _tutorialActive = false;
             }
         }
 	}
@@ -34,9 +40,18 @@ public class ShootingTutorial : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
+            _bulletsRemaining.CrossFadeAlpha(1, 1, true);
+            _collider.enabled = false;
             GameStateManager.Instance.GameLoop.Pause(false, false);
             _tutorialActive = true;
-            _tutorial.enabled = true;
+            _tutorial.CrossFadeAlpha(1, 1, true);
+            _player.Input.ShootingDisabled = false;            
         }
+    }
+
+    private IEnumerator DestroyDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }

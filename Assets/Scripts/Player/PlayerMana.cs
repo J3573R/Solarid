@@ -22,7 +22,7 @@ public class PlayerMana : MonoBehaviour {
     private HudBarController _controller;
     private Image _manaFlashImage;
     private bool _flashManaBar;
-
+    private Player _player;
     private float _lerpTarget;
     private float _lerpStart;
     private float _lerpTime;
@@ -39,6 +39,11 @@ public class PlayerMana : MonoBehaviour {
         Init();
     }
 
+    public void GiveZeroMana()
+    {
+        CurrentMana = 0;
+    }
+
     public void Init()
     {
         if (!Initialized)
@@ -47,22 +52,25 @@ public class PlayerMana : MonoBehaviour {
             _manaFlashImage = GameObject.Find("HudNoMana").GetComponent<Image>();
             AddMana(_maxMana);
             _manaFlashImage.CrossFadeAlpha(0, 0, true);
-            Initialized = true; 
+            Initialized = true;
+            _player = GetComponent<Player>();
+            _player.AbilityController.Init();            
         }
     }
 
     // Update is called once per frame
     void Update () {
-        if (!GameStateManager.Instance.GameLoop.Paused)
+
+        if (!GameStateManager.Instance.GameLoop.Paused && Initialized)
         {
             if (_currentMana < _maxMana)
             {
                 PassiveManaRecharge();
-            }
-
-            UpdateManaDisplay();
-        }		
-	}
+            }            
+        }
+        UpdateManaDisplay();
+        
+    }
 
     /// <summary>
     /// Check if player has enough mana for certain ability

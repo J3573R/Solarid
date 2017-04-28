@@ -10,6 +10,7 @@ public class InputController : MonoBehaviour
     // Should the character face towards mouse?
     public bool ListenInput = true;
     public bool CinematicMovement { get; set; }
+    public bool ShootingDisabled { get; set; }
 
     private Player _player;
     private Camera _camera;
@@ -67,7 +68,7 @@ public class InputController : MonoBehaviour
     {
         //TODO: If this any larger, refactor whole shit. Or refactor anyways.
 
-        if (Input.GetButton("Ability") && !_player.AbilityController._allAbilitiesDisabled)
+        if (Input.GetButton("Ability") && !_player.AbilityController.AllAbilitiesDisabled)
         {
             GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
         } else
@@ -75,7 +76,7 @@ public class InputController : MonoBehaviour
             GameStateManager.Instance.GameLoop.References.CameraScript.MouseOffset = Vector3.zero;
         }
 
-        if (Input.GetButtonDown("Ability") && !_player.AbilityController._allAbilitiesDisabled)
+        if (Input.GetButtonDown("Ability") && !_player.AbilityController.AllAbilitiesDisabled)
         {
             _player.Movement.SetCasting(true);
             _player.AbilityController.DrawRange(true);                        
@@ -94,7 +95,7 @@ public class InputController : MonoBehaviour
 
         if (Input.GetButton("Fire1"))
         {                                           
-            if (!_player.Movement.Casting)
+            if (!_player.Movement.Casting && !ShootingDisabled)
             {
                 GameStateManager.Instance.GameLoop.References.CameraScript.AddMouseOffset(GetMousePosition());
                 _player.Movement.SetShooting(true);                
@@ -116,7 +117,7 @@ public class InputController : MonoBehaviour
         {
             _player.AbilityController.Execute();
 
-            if (!_player.Movement.Casting)
+            if (!_player.Movement.Casting && !ShootingDisabled)
             {
                 _player.Gun.SetShooting(true);
                 _player.Movement.SetShooting(true);
