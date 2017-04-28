@@ -115,9 +115,7 @@ public class InputController : MonoBehaviour
             {
                 _player.Movement.SetShooting(false);
                 _player.Gun.SetShooting(false);
-                Debug.Log("False");
-            }
-                
+            }                
         }
 
         /*
