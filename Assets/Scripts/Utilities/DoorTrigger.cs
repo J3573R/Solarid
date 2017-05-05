@@ -4,28 +4,47 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour {
 
-    public List<GameObject> Doors;
+	public List<Transform> Doors;
+	public bool LoweringDoor = false;
 
     private List<Door> _doorScripts;
+	private List<LoweringDoor> _loweringDoorScripts;
 
 	// Use this for initialization
 	void Start () {
+		_doorScripts = new List<Door> ();
+		_loweringDoorScripts = new List<LoweringDoor> ();
 
-		foreach (GameObject go in Doors)
-        {
-            _doorScripts.Add(go.GetComponent<Door>());
-        }
-	}
-	
+		if (!LoweringDoor) 
+		{
+			foreach (Transform tr in Doors)
+			{
+				_doorScripts.Add(tr.GetComponent<Door>());
+			}
+		} else 
+		{
+			foreach (Transform tr in Doors)
+			{
+				_loweringDoorScripts.Add(tr.GetComponent<LoweringDoor>());
+			}
+		}				
+	}	
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            foreach (Door door in _doorScripts)
-            {
-                door.ToggleDoor();
-            }
+			if (!LoweringDoor) {
+				foreach (Door door in _doorScripts) {
+					door.ToggleDoor ();
+				}
+			} else 
+			{
+				foreach (LoweringDoor door in _loweringDoorScripts) {
+					door.ToggleDoor ();
+				}
+			}
+			Destroy (gameObject);
         }
     }
 }
