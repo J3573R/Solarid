@@ -114,7 +114,9 @@ public class PlayerMovement : MonoBehaviour {
                 _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
                     Time.fixedDeltaTime * rotationSpeed);
 
+			Debug.Log (_moveDirection);
             _moveDirection = MovementBounds(_moveDirection);
+			Debug.Log (_moveDirection);
             if (!_audio.isPlaying)
             {
                 _audio.clip = AudioRun;
@@ -197,8 +199,7 @@ public class PlayerMovement : MonoBehaviour {
     /// <param name="vertical">Vertical movement direction</param>
     /// <returns></returns>
     private bool CanMoveDirection(float horizontal, float vertical)
-    {
-
+    {		
         _moveDirectionRay = _rigidbody.transform.position;
         _moveDirectionRay.x += horizontal;
         _moveDirectionRay.z += vertical;
@@ -210,7 +211,6 @@ public class PlayerMovement : MonoBehaviour {
         if (Physics.Raycast(ray, 2f))
         {
             Debug.Log(Physics.Raycast(ray, 2f));
-            
             return true;
         }
         return false;
