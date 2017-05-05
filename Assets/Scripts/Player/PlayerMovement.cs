@@ -114,9 +114,7 @@ public class PlayerMovement : MonoBehaviour {
                 _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, Quaternion.LookRotation(_moveDirection),
                     Time.fixedDeltaTime * rotationSpeed);
 
-			Debug.Log (_moveDirection);
             _moveDirection = MovementBounds(_moveDirection);
-			Debug.Log (_moveDirection);
             if (!_audio.isPlaying)
             {
                 _audio.clip = AudioRun;
