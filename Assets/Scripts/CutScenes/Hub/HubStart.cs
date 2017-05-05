@@ -40,6 +40,15 @@ public class HubStart : MonoBehaviour {
     [SerializeField]
     private GameObject _barrierBlack;
 
+    [SerializeField]
+    private GameObject _blockBlue;
+    [SerializeField]
+    private GameObject _blockRed;
+    [SerializeField]
+    private GameObject _blockYellow;
+    [SerializeField]
+    private GameObject _blockBlack;
+
     private Player _player;
     private Image _blackScreen;
     private SaveData.HubState _hubState;
@@ -64,7 +73,8 @@ public class HubStart : MonoBehaviour {
             _switchRed.SetActive(false);
             _switchYellow.SetActive(false);
             _player.transform.position = _startBlue.position;
-            _player.transform.rotation = _startBlue.rotation;            
+            _player.transform.rotation = _startBlue.rotation;
+            _blockBlue.SetActive(true);       
 
         } else if (_hubState == SaveData.HubState.BlueActivated)
         {
@@ -75,6 +85,8 @@ public class HubStart : MonoBehaviour {
             _player.transform.position = _startRed.position;
             _player.transform.rotation = _startRed.rotation;
             _barrierRed.SetActive(false);
+            _blockBlue.SetActive(true);
+            _blockRed.SetActive(true);
 
             if (SaveSystem.Instance.SaveData.GetCrystalWithPlayer() == SaveData.Crystal.none)
             {
@@ -92,6 +104,9 @@ public class HubStart : MonoBehaviour {
             _player.transform.rotation = _startYellow.rotation;
             _barrierRed.SetActive(false);
             _barrierYellow.SetActive(false);
+            _blockBlue.SetActive(true);
+            _blockRed.SetActive(true);
+            _blockYellow.SetActive(true);
 
             if (SaveSystem.Instance.SaveData.GetCrystalWithPlayer() == SaveData.Crystal.none)
             {
@@ -111,6 +126,10 @@ public class HubStart : MonoBehaviour {
             _barrierRed.SetActive(false);
             _barrierYellow.SetActive(false);
             _barrierBlack.SetActive(false);
+            _blockBlue.SetActive(true);
+            _blockRed.SetActive(true);
+            _blockYellow.SetActive(true);
+            _blockBlack.SetActive(true);
         }       
 
     }
