@@ -17,7 +17,6 @@ public class EnemyBase : MonoBehaviour
     public float ChaseTime = 3;
     public GameObject Target;
     public GameObject AttackTarget;
-    public int ManaAmount = 5;
     [HideInInspector] public bool Freeze = false;
 
     // Changes enemy state to alert when distance is smaller than this
@@ -35,6 +34,7 @@ public class EnemyBase : MonoBehaviour
     private Slider _healthBar;
     private bool _showHealth = false;
     private Player _player;
+    private ManaPool _manaPool;
 
     // Pull effect for black hole
     private Vector3 _pullPoint;
@@ -87,6 +87,7 @@ public class EnemyBase : MonoBehaviour
         _healthBar.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         _healthBar.maxValue = Health.CurrentHealth;
         _healthBar.gameObject.SetActive(false);
+        _manaPool = GetComponent<ManaPool>();
         Target = GetClosestTarget();
     }
 
@@ -202,9 +203,8 @@ public class EnemyBase : MonoBehaviour
             DeathEffect.GetComponent<ParticleSystem>().Play();
         }
 
-        GameStateManager.Instance.GameLoop.References.ManaExplosion.Explode(transform.position, ManaAmount);
-
         _healthBar.gameObject.SetActive(false);
+        _manaPool.Explode(transform.position);
 
         Light[] lights = GetComponentsInChildren<Light>();
         Collider[] colliders = GetComponentsInChildren<Collider>();
