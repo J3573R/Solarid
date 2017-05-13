@@ -154,6 +154,7 @@ public class GameStateManager : MonoBehaviour
         {
             _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
             _blackScreen.enabled = true;
+            _blackScreen.CrossFadeAlpha(1, time, true);
         }
 
     }

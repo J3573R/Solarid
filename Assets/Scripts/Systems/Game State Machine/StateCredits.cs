@@ -13,6 +13,7 @@ public class StateCredits : GameStateBase
     void Awake()
     {
         _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+        _blackScreen.enabled = true;
         _texts = FindObjectsOfType<CreditScroll>();
         _blackScreen.CrossFadeAlpha(0, 2, false);
         _ending = false;
@@ -33,6 +34,7 @@ public class StateCredits : GameStateBase
     IEnumerator ChangeLevel()
     {
         yield return new WaitForSeconds(2);
+        SaveSystem.Instance.ResetSave();
         GameStateManager.Instance.ChangeState(GameStateManager.GameState.MainMenu, "MainMenu");
     }
 }

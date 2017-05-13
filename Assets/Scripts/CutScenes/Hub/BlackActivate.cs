@@ -66,6 +66,7 @@ public class BlackActivate : MonoBehaviour {
     private IEnumerator ChangeClip()
     {
         yield return new WaitForSeconds(1);
+        Time.timeScale = 0.6f;
         _cameraAnimation.clip = _secondAnimationClip;
         _cameraAnimation.Play();
         _megaLaser.SetActive(true);
