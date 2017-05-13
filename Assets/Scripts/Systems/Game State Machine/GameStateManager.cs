@@ -34,6 +34,7 @@ public class GameStateManager : MonoBehaviour
         SplashScreen,
         MainMenu,
         Options,
+        Credits,
         GameLoop
     }
 
@@ -118,6 +119,10 @@ public class GameStateManager : MonoBehaviour
             case GameState.Options:
                 _gameStateObj.AddComponent<StateOptions>();
                 _gameStateObj.name = "Game State: Options";
+                break;
+            case GameState.Credits:
+                _gameStateObj.AddComponent<StateCredits>();
+                _gameStateObj.name = "Game State: Credits";
                 break;
             case GameState.GameLoop:
                 GameLoop = _gameStateObj.AddComponent<StateGameLoop>();
