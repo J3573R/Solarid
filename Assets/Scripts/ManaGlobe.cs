@@ -11,21 +11,21 @@ public class ManaGlobe : MonoBehaviour {
     private float _speed = -5;
     private Vector3 _moveToPoint;
     private AudioSource _audio;
-    private bool _returnToPool;
+    private bool _destroy;
 
     void OnEnable()
     {
         _speed = -5;
         _moveDirection = new Vector3(Random.Range(-100, 100), Random.Range(0, 100), Random.Range(-100, 100)).normalized;
         _audio = GetComponent<AudioSource>();
-        _returnToPool = false;
+        _destroy = false;
     }
 
     void Update()
     {
-        if (!_audio.isPlaying && _returnToPool)
+        if (_destroy && !_audio.isPlaying)
         {
-            GameStateManager.Instance.GameLoop.References.ManaExplosion.ReturnToPool(gameObject);
+            Destroy(gameObject);
         }
     }
 	
@@ -61,10 +61,10 @@ public class ManaGlobe : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" && !_returnToPool)
+        if(other.tag == "Player" && !_destroy)
         {
             _audio.Play();
-            _returnToPool = true;
+            _destroy = true;
             GameStateManager.Instance.GameLoop.Player.Mana.AddMana(10);
         }
     }
