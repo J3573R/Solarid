@@ -59,6 +59,5 @@ public class CreditScroll : MonoBehaviour
     {
         yield return new WaitForSeconds(1.9f);
         if (MainMenuOnDestroy) GameObject.Find("Game State: Credits").GetComponent<StateCredits>().End();
-        Destroy(gameObject);
     }
 }
