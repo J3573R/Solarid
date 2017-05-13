@@ -85,7 +85,7 @@ public class BlackActivate : MonoBehaviour {
     private IEnumerator GoToCredits()
     {
         yield return new WaitForSeconds(3);
-        //GameStateManager.Instance.ChangeState(GameStateManager.GameState)
+        GameStateManager.Instance.ChangeState(GameStateManager.GameState.Credits, "Credits");
     }
 
     // Update is called once per frame
