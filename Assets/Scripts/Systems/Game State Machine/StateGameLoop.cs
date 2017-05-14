@@ -51,7 +51,6 @@ public class StateGameLoop : GameStateBase
     {
 
         Player = GameStateManager.Instance.GameLoop.Player;
-
         Player = GameObject.FindObjectOfType<Player>();
         InputController = Player.GetComponent<InputController>();
         References.Init();

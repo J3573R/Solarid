@@ -4,6 +4,10 @@ using UnityEngine;
 
 [Serializable]
 public class SaveData {
+
+    public bool FpsMeter = false;
+    public bool Sounds = true;
+
     // Last level 
     private Level _currentLevel;
     private Crystal _crystalWithPlayer;
@@ -71,7 +75,7 @@ public class SaveData {
         _hubCrystals.Add(Crystal.Yellow, false);
         _hubCrystals.Add(Crystal.Black, false);
 
-    }    
+    }
 
     /// <summary>
     /// Set level to savedata

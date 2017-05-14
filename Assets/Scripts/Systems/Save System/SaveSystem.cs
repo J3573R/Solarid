@@ -49,7 +49,16 @@ public class SaveSystem : MonoBehaviour
             _player.init();
             _player.HubCrystals = SaveData.GetHubCrystals();
             _player.CrystalWithPlayer = SaveData.GetCrystalWithPlayer();
-        }        
+        }
+
+        if (SaveData.Sounds)
+        {
+            AudioListener.volume = 1;
+        }
+        else
+        {
+            AudioListener.volume = 0;
+        }
     }    
 
     
@@ -85,6 +94,8 @@ public class SaveSystem : MonoBehaviour
         SaveData.SetCrystals(SaveData.Crystal.none, tmp);
         SaveData.SetCurrentLevel(SaveData.Level.NoSave);
         SaveData.SetHubState(SaveData.HubState.NothingActivated);
+        SaveData.Sounds = true;
+        SaveData.FpsMeter = false;
 
         SaveToFile();
     }
@@ -94,8 +105,6 @@ public class SaveSystem : MonoBehaviour
         SaveCurrentLevel();
         SaveToFile();
     }
-    
-
 
     /// <summary>
     /// Sets the current level in use to SaveData and saves it to file
