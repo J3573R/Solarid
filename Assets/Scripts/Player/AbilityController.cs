@@ -168,18 +168,24 @@ public class AbilityController : MonoBehaviour {
                     Vector3 targetPosition = _player.Input.GetMouseGroundPosition();
                     bool inRange = true;
 
+                    Debug.Log(_rangeCheck.GetDistance());
                     if (GetRange() == 0)
                     {
                         _currentAbility.Execute(targetPosition);
                         notExecuted = false;
+                        Debug.Log("RANGE = 0");
                     }
                     if (_rangeCheck.GetDistance() > GetRange())
+                    {
                         inRange = false;
+                        Debug.Log("NOT IN RANGE");
+                    }                        
 
                     if (inRange && targetPosition != Vector3.zero && notExecuted)
                     {
                         _currentAbility.Execute(targetPosition);
                         notExecuted = false;
+                        Debug.Log("IN Range, valid position");
                     }
 
                     targetPosition = _rangeCheck.GetMaxRangePosition(GetRange());
@@ -188,6 +194,7 @@ public class AbilityController : MonoBehaviour {
                     {
                         _currentAbility.Execute(targetPosition);
                         notExecuted = false;
+                        Debug.Log("OUT OF RANGE, valid position");
                     }
 
                     targetPosition = _rangeCheck.GetNextSuitablePosition(GetRange());
@@ -196,9 +203,11 @@ public class AbilityController : MonoBehaviour {
                     {
                         _currentAbility.Execute(targetPosition);
                         notExecuted = false;
+                        Debug.Log("FOUND SUITABlE POSITION");
                     }
                     if (notExecuted)
                     {
+                        Debug.Log("Final check");
                         _currentAbility.Execute(new Vector3(transform.position.x, _rangeCheck.transform.position.y, transform.position.z));
                     }
 

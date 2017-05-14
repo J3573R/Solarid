@@ -188,8 +188,12 @@ public class InputController : MonoBehaviour
     /// <returns>Point of the mouse in world space. If ray didn't hit, return Vector3.zero</returns>
     public Vector3 GetMouseGroundPosition()
     {
-        var layerMask = 1 << 8;
-        layerMask = ~layerMask;
+        var layer1 = 1 << 2;
+        var layer2 = 1 << 8;
+        var combinedLayer = layer1 | layer2;
+
+        var layerMask = ~combinedLayer;
+        //layerMask = ~layerMask;
         Vector3 pos = _camera.transform.position;
         var heading = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)) - _camera.transform.position;
 
@@ -201,7 +205,10 @@ public class InputController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100f, layerMask))
         {
-            if (hit.transform.tag.Equals("Ground"))
+            if (hit.transform.tag.Equals("Enemy"))
+                Debug.Log("VIHU");
+
+                if (hit.transform.tag.Equals("Ground"))
                 return hit.point;
         }
              
