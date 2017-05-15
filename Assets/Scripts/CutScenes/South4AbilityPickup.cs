@@ -7,6 +7,7 @@ public class South4AbilityPickup : MonoBehaviour {
 
     public Transform PlayerStartPosition;
     public Transform PlayerEndPosition;
+    public Image NoMana;
 
     private bool _play = false;
     private bool _playerStopped = false;
@@ -73,6 +74,7 @@ public class South4AbilityPickup : MonoBehaviour {
         _blackScreen.CrossFadeAlpha(1, 0.5f, true);
         yield return new WaitForSeconds(0.5f);
         _hud.SetActive(true);
+        NoMana.CrossFadeAlpha(0, 0, true);
         _blackScreen.CrossFadeAlpha(0, 0.5f, true);        
         _finished = true;
     }
