@@ -6,7 +6,7 @@ public class FPSDisplay : MonoBehaviour
     private float deltaTime = 0.0f;
     private bool _active = true;
 
-    void Awake()
+    void Start()
     {
         _active = SaveSystem.Instance.SaveData.FpsMeter;
     }
