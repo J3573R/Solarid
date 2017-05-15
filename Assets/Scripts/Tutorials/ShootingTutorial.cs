@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShootingTutorial : MonoBehaviour {
-        
+
+    public GameObject DisableTrigger;
+
     private BoxCollider _collider;
     private Image _tutorial;
     private bool _tutorialActive;
@@ -25,11 +28,9 @@ public class ShootingTutorial : MonoBehaviour {
 		if (_tutorialActive)
         {
             if (Input.GetButton("Fire1"))
-            {
-                _player.Gun.ForceShoot();
-                _tutorial.CrossFadeAlpha(0, 0, true);
-                GameStateManager.Instance.GameLoop.UnPause();
-                
+            {                
+                _tutorial.CrossFadeAlpha(0, 1, true);
+                //GameStateManager.Instance.GameLoop.UnPause();                
                 StartCoroutine(DestroyDelay());
                 _tutorialActive = false;
             }
@@ -42,16 +43,24 @@ public class ShootingTutorial : MonoBehaviour {
         {
             _bulletsRemaining.CrossFadeAlpha(1, 1, true);
             _collider.enabled = false;
-            GameStateManager.Instance.GameLoop.Pause(false, false);
-            _tutorialActive = true;
-            _tutorial.CrossFadeAlpha(1, 1, true);
-            _player.Input.ShootingDisabled = false;            
+            //GameStateManager.Instance.GameLoop.Pause(false, false);            
+            _tutorial.CrossFadeAlpha(1, 1, true);            
+            StartCoroutine(TutorialDelay());
         }
+
+    }
+
+    private IEnumerator TutorialDelay()
+    {
+        yield return new WaitForSeconds(1);
+        _tutorialActive = true;
+        _player.Input.ShootingDisabled = false;
     }
 
     private IEnumerator DestroyDelay()
     {
         yield return new WaitForSeconds(1);
+        Destroy(DisableTrigger);
         Destroy(gameObject);
     }
 }
