@@ -7,6 +7,7 @@ public class East3AbilityPickup : MonoBehaviour {
 
     public Transform PlayerStartPosition;
     public Transform PlayerEndPosition;
+	public Image NoMana;
 
     private bool _play = false;
     private bool _playerStopped = false;
@@ -81,6 +82,7 @@ public class East3AbilityPickup : MonoBehaviour {
         _blackScreen.CrossFadeAlpha(1, 0.5f, true);
         yield return new WaitForSeconds(0.5f);
         _hud.SetActive(false);
+		NoMana.CrossFadeAlpha(0, 0, true);
         SetCinematicMode(true);
         GameStateManager.Instance.GameLoop.References.Player.transform.position = PlayerStartPosition.position;
         _cameraAnimation.Play();
