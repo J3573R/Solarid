@@ -7,6 +7,7 @@ public class South5Start : MonoBehaviour {
 
     public AnimationClip CameraAnimation;
     public Transform CameraPos;
+	public Image NoMana;
 
     private CameraFollow _cameraScript;
     private Animation _animation;
@@ -14,6 +15,7 @@ public class South5Start : MonoBehaviour {
     private Transform _playerTransform;
     private PlayerMovement _playerMovement;
     private bool _animationCompleted;
+	private GameObject _hud;
 
     // Use this for initialization
     void Start()
@@ -21,6 +23,8 @@ public class South5Start : MonoBehaviour {
         _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
         _blackScreen.CrossFadeAlpha(0, 4, true);
         GameStateManager.Instance.GameLoop.Pause(false, false);
+		_hud = GameObject.Find("HUD");
+		_hud.SetActive(false);
         _cameraScript = FindObjectOfType<CameraFollow>();
         _cameraScript.Init();
         _animation = _cameraScript.GetComponent<Animation>();
@@ -60,6 +64,8 @@ public class South5Start : MonoBehaviour {
         _cameraScript.transform.position = CameraPos.position;
         _cameraScript.transform.rotation = CameraPos.rotation;
         _cameraScript.ResetCamera(true);
+		_hud.SetActive(true);
+		NoMana.CrossFadeAlpha(0, 0, true);
         _blackScreen.CrossFadeAlpha(0, 2, true);
         GameStateManager.Instance.GameLoop.Paused = false;
         _playerTransform.GetComponent<InputController>().CinematicMovement = false;

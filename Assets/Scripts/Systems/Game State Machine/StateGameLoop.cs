@@ -88,6 +88,12 @@ public class StateGameLoop : GameStateBase
                     co.enabled = true;
                 }
             }
+			MyUnitySingleton script = GameObject.Find("Music").GetComponent<MyUnitySingleton>();
+
+			if (script != null) {
+				script.PlayMusic ();
+			}
+
             _gameInitialized = true;
         }
     }

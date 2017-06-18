@@ -26,10 +26,11 @@ public class South5Crystal : MonoBehaviour {
     private ParticleSystem _crystalParticle;
     private Light _crystalLight;
     private Door _door;
-
+	private GameObject _hud;
     private CameraFollow _cameraScript;
     private bool _cutSceneEnabled;
     private Image _blackScreen;
+
 
     // Use this for initialization
     void Start() {
@@ -42,49 +43,9 @@ public class South5Crystal : MonoBehaviour {
         _crystalParticle = GameObject.Find("BluePower").GetComponent<ParticleSystem>();
         _crystalLight = GameObject.Find("BlueLight").GetComponent<Light>();
         _door = GameObject.Find("Rising Platform Cutscene").GetComponent<Door>();
+		_hud = GameObject.Find("HUD");
 
-        /*
-        _healths = new List<Health>();
-        GetEnemies();
-        */
     }
-
-    /*
-    private void GetEnemies()
-    {
-        foreach (GameObject charger in _chargers)
-        {
-            _healths.Add(charger.GetComponent<Health>());
-        }
-    }
-	*/
-
-	// Update is called once per frame
-	void Update () {
-        //CheckEnemiesAlive();
-	}
-
-    /*
-    private void CheckEnemiesAlive()
-    {
-        if (!_collider.enabled)
-        {
-            int tmp = 0;
-            foreach (Health hp in _healths)
-            {
-                if (!hp.IsDead())
-                    tmp += 1;
-
-                Debug.Log(tmp);
-            }
-
-            if (tmp == 0)
-            {
-                _collider.enabled = true;
-            }
-        }
-    }
-    */
 
     private void OnTriggerEnter(Collider other)
     {
@@ -109,7 +70,7 @@ public class South5Crystal : MonoBehaviour {
         yield return new WaitForSeconds(2);
 
          Physics.OverlapSphere(_playerPos.position, 5f);
-
+		_hud.SetActive(false);
         _cameraScript.StopNormalCameraMovement = true;
         _player.transform.position = new Vector3(_playerPos.position.x, _player.transform.position.y, _playerPos.position.z);
         _player.transform.rotation = Quaternion.identity;

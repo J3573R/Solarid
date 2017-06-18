@@ -28,6 +28,7 @@ public class PauseMenu : MonoBehaviour {
 
     private void PressMainMenu()
     {
+		Destroy (GameObject.Find ("Music"));
         gameObject.SetActive(false);
         GameStateManager.Instance.ChangeState(GameStateManager.GameState.MainMenu, "MainMenu");
     }
