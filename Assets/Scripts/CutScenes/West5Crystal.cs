@@ -48,49 +48,7 @@ public class West5Crystal : MonoBehaviour
         _crystalLight = GameObject.Find("RedLight").GetComponent<Light>();
         _hud = GameObject.Find("HUD");
 
-        /*
-        _healths = new List<Health>();
-        GetEnemies();
-        */
     }
-
-    /*
-    private void GetEnemies()
-    {
-        foreach (GameObject charger in _chargers)
-        {
-            _healths.Add(charger.GetComponent<Health>());
-        }
-    }
-	*/
-
-    // Update is called once per frame
-    void Update()
-    {
-        //CheckEnemiesAlive();
-    }
-
-    /*
-    private void CheckEnemiesAlive()
-    {
-        if (!_collider.enabled)
-        {
-            int tmp = 0;
-            foreach (Health hp in _healths)
-            {
-                if (!hp.IsDead())
-                    tmp += 1;
-
-                Debug.Log(tmp);
-            }
-
-            if (tmp == 0)
-            {
-                _collider.enabled = true;
-            }
-        }
-    }
-    */
 
     private void OnTriggerEnter(Collider other)
     {
